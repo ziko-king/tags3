@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.engine.mapper.ModelMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap"
+                  type="cn.itcast.tag.web.engine.bean.ModelBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap"
+               type="cn.itcast.tag.web.engine.bean.ModelBean"/>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+		id,tag_id,type,model_name,model_main,model_path,sche_time,args,ctime,utime,state,remark
+	</sql>
+
+    <!-- 新增模型 -->
+    <insert id="addModel" parameterMap="BaseParamsMap" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			tbl_model(tag_id,TYPE,model_name,model_main,model_path,sche_time,ctime,state,args,remark)
+		VALUES(
+			#{tagId,jdbcType=BIGINT},
+			#{type,jdbcType=INTEGER},
+			#{modelName,jdbcType=VARCHAR},
+			#{modelMain,jdbcType=VARCHAR},
+			#{modelPath,jdbcType=VARCHAR},
+			#{scheTime,jdbcType=INTEGER},
+			NOW(),
+			1,
+			#{args,jdbcType=VARCHAR},
+			#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+    <!-- 根据ID删除模型 -->
+    <delete id="delModelForId" parameterMap="BaseParamsMap">
+		DELETE FROM 
+			tbl_model
+		WHERE 
+			id=#{id,jdbcType=BIGINT}
+	</delete>
+
+    <!-- 根据TagID删除模型 -->
+    <delete id="delModelForTagId" parameterMap="BaseParamsMap">
+		DELETE FROM 
+			tbl_model
+		WHERE 
+			tag_id=#{tagId,jdbcType=BIGINT}
+	</delete>
+
+    <!-- 修改模型状态 -->
+    <update id="updModelForState" parameterMap="BaseParamsMap">
+		UPDATE tbl_model SET
+			state=#{state,jdbcType=INTEGER},utime=NOW()
+		WHERE
+			id=#{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 修改模型名称 -->
+    <update id="updModelForName" parameterMap="BaseParamsMap">
+		UPDATE tbl_model SET
+			model_name=#{modelName,jdbcType=INTEGER},utime=NOW()
+		WHERE
+			id=#{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 根据标签ID修改模型 -->
+    <update id="updModelForTagId" parameterMap="BaseParamsMap">
+        UPDATE tbl_model
+        <set>
+            <if test="modelName != null and modelName != ''">model_name=#{modelName,jdbcType=INTEGER},</if>
+            <if test="modelMain != null and modelMain != ''">model_main=#{modelMain,jdbcType=INTEGER},</if>
+            <if test="modelPath != null and modelPath != ''">model_path=#{modelPath,jdbcType=INTEGER},</if>
+            <if test="scheTime != null and scheTime != ''">sche_time=#{scheTime,jdbcType=INTEGER},</if>
+            utime=NOW()
+        </set>
+        WHERE
+        tag_id=#{tagId,jdbcType=BIGINT}
+    </update>
+
+    <!-- 根据ID查询模型 -->
+    <select id="queryModelForId" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_model
+        WHERE
+        id=#{id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 根据标签ID查询模型 -->
+    <select id="get" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+		SELECT
+			id,tag_id AS tagId,type,model_name AS modelName,model_main AS modelMain,model_path AS modelPath,sche_time AS scheTime,args,ctime,utime,state,remark
+		FROM 
+			tbl_model 
+		WHERE 
+			tag_id=#{tagId,jdbcType=BIGINT}
+	</select>
+
+    <!-- 根据标签ID查询模型 -->
+    <select id="queryModelForTagId" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+		SELECT
+			id,tag_id AS tagId,type,model_name AS modelName,model_main AS modelMain,model_path AS modelPath,sche_time AS scheTime,ctime,utime,state,remark
+		FROM 
+			tbl_model 
+		WHERE 
+			tag_id=#{tagId,jdbcType=BIGINT}
+	</select>
+
+    <!-- 查询所有模型 -->
+    <select id="queryModelForScan" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_model
+    </select>
+
+    <!-- 根据标签ID、标签类型查询模型 -->
+    <select id="queryModelForTagIdAndType" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_model
+        WHERE
+        tag_id = #{tagId,jdbcType=BIGINT}
+        AND
+        type = #{type}
+    </select>
+
+</mapper>

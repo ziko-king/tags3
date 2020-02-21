@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.user.mapper.DataMapper">
+
+    <!-- result -->
+    <resultMap id="basicTag" type="cn.itcast.tag.web.basictag.bean.BasicTagBean"/>
+    <resultMap id="mergeTag" type="cn.itcast.tag.web.mergetag.bean.MergeTagBean"/>
+
+    <!-- column -->
+    <sql id="basicTagCols">
+		id, name, username, password, idcard, phone, email, state , ctime ,utime ,remark
+	</sql>
+    <sql id="mergeTagCols">
+		id, name, username, password, idcard, phone, email, state , ctime ,utime ,remark
+	</sql>
+
+    <!-- 用户（超级管理员）持有的基础标签 -->
+    <select id="getBasicTag" resultMap="basicTag">
+		SELECT bg.* FROM tbl_basic_tag bg
+	</select>
+
+    <!-- 用户（超级管理员）持有的组合标签 -->
+    <select id="getMergeTag" resultMap="mergeTag">
+		SELECT DISTINCT
+			tb1.id,
+			tb1.`name`,
+			tb1.`condition`,
+			tb1.intro,
+			tb1.purpose,
+			tb1.state,
+			tb1.ctime,
+			tb1.utime,
+			tb1.remark
+		FROM
+			(
+				SELECT
+					*
+				FROM
+					tbl_merge_tag
+				WHERE
+					state != 6
+			) tb1
+		INNER JOIN (
+			SELECT
+				*
+			FROM
+				tbl_user_merge_tag_map
+		) tb2 ON tb1.id = tb2.merge_tag_id
+		INNER JOIN tbl_merge_tag_tag_map tb3 ON tb1.id = tb3.merge_tag_id
+		INNER JOIN tbl_basic_tag tb4 ON tb3.basic_tag_id = tb4.id
+	</select>
+
+    <!-- 用户（管理员、普通用户）持有的基础标签 -->
+    <select id="getUserBasicTag" resultMap="basicTag" parameterType="java.lang.Long">
+		SELECT bg.* FROM tbl_user_tag_map utm INNER JOIN tbl_user u ON (utm.`user_id`=u.id) INNER JOIN tbl_basic_tag bg ON (bg.`id`=utm.`tag_id`)
+		WHERE u.id=#{userId} GROUP BY bg.id
+	</select>
+
+    <!-- 角色（管理员、普通用户）持有的基础标签 -->
+    <select id="getRoleBasicTag" resultMap="basicTag" parameterType="java.lang.Long">
+    	SELECT bt.* FROM tbl_role_data_map rdm INNER JOIN tbl_basic_tag bt ON (bt.id=rdm.tag_id) 
+    	WHERE rdm.tag_type=1 AND rdm.role_id=#{roleId} GROUP BY bt.id
+    </select>
+
+    <!-- 用户（管理员、普通用户）持有的组合标签 -->
+    <select id="getUserMergeTag" resultMap="mergeTag" parameterType="java.lang.Long">
+    	SELECT a.* FROM `tbl_merge_tag` a
+		JOIN `tbl_user_merge_tag_map` c ON ( a.`id` = c.`merge_tag_id` AND c.`user_id` = #{userId} )GROUP BY a.id
+	</select>
+    <!-- SELECT mt.* FROM tbl_user_merge_tag_map umtm INNER JOIN tbl_user u ON (umtm.`user_id`=u.id) INNER JOIN tbl_merge_tag mt ON (mt.`id`=umtm.`merge_tag_id`)
+        WHERE u.id=#{userId} GROUP BY mt.id -->
+
+    <!-- 角色（管理员、普通用户）持有的组合标签 -->
+    <select id="getRoleMergeTag" resultMap="mergeTag" parameterType="java.lang.Long">
+		SELECT a.* FROM `tbl_merge_tag` a
+		JOIN `tbl_role_data_map` b ON ( a.`id` = b.`tag_id` AND b.`role_id` = #{roleId} AND b.tag_type=2)GROUP BY a.id
+    </select>
+    <!--  SELECT bt.* FROM tbl_role_data_map rdm INNER JOIN tbl_user_merge_tag_map bt ON (bt.id=rdm.tag_id)
+           WHERE rdm.tag_type=2 AND rdm.role_id=#{roleId} GROUP BY bt.id -->
+
+    <!-- 统计组合标签含有基础标签个数 -->
+    <select id="getBasicTagNum" resultMap="mergeTag" parameterType="java.lang.Long">
+		SELECT merge_tag_id AS id,COUNT(*) AS tagNum FROM tbl_merge_tag_tag_map 
+		WHERE merge_tag_id in (#{id}) GROUP BY merge_tag_id
+    </select>
+
+</mapper>

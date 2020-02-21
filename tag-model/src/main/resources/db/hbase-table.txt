@@ -1,0 +1,41 @@
+#### HBase表说明 ####
+
+一、## 行为表：tbl_logs
+	1、如果行为表存在先删除
+		disable 'tbl_logs'
+		drop 'tbl_logs'
+	2、创建行为表
+		create 'tbl_logs','detail'
+	
+二、## 商品表：tbl_goods
+	1、如果商品表存在先删除
+		disable 'tbl_goods'
+		drop 'tbl_goods'
+	2、创建商品表
+		create 'tbl_goods','detail'
+		
+三、## 订单表：tbl_orders
+	1、如果订单表存在先删除
+		disable 'tbl_orders'
+		drop 'tbl_orders'
+	2、创建订单表
+		create 'tbl_orders','detail'
+	
+四、## 用户表：tbl_users
+	1、如果用户表存在先删除
+		disable 'tbl_users'
+		drop 'tbl_users'
+		或者清空表
+		truncate 'tbl_users'
+	2、创建用户表
+		create 'tbl_users','detail'
+
+五、## 画像表：tbl_profile（user列簇为用户画像，有userId和tagIds两个列；item列簇为物品画像，有userId和tagIds两个列）
+	1、如果画像表存在先删除
+		disable 'tbl_profile'
+		drop 'tbl_profile'
+	2、创建画像表
+		create 'tbl_profile','user','item'
+	3、创建画像表协处理器(同步user列簇下的RowKey、email、phone到solr索引)
+		HBaseSolrIndexCoprocesser
+		

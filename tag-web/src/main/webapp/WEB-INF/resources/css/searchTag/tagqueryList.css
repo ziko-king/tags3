@@ -1,0 +1,346 @@
+body {
+    background: #eff5fa;
+}
+
+/**��������ʽ**/
+.nav_wrap {
+    margin-top: 52px;
+    height: 38px;
+    width: 100%;
+}
+
+/* ������Ч ȫ�� �û�Ⱥ*/
+.small_nav {
+    height: 33px;
+    width: 100%;
+    background: #eff5fa;
+}
+
+.centerIN_top3:hover, .centerIN_top3:focus,
+.centerIN_top3_inner_one:hover, .centerIN_top3_inner_one:focus,
+.centerIN_top3_inner_two:hover, .centerIN_top3_inner_two:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+/**�Ҳ�����**/
+.cont_right_label_wrap {
+    width: 100%;
+    float: left;
+    position: relative;
+    margin-left: 193px;
+}
+
+/**��������ʽ**/
+
+.label_cont_top_addlabel {
+    height: 38px;
+    background: #fff;
+    margin-top: 10px;
+    border-bottom: 1px solid #3385ff;
+    position: relative;
+}
+
+.label_cont_top_l_addlabel {
+    font-size: 14px;
+    color: #3385ff;
+    float: left;
+    line-height: 38px;
+}
+
+.User_radio {
+
+    height: 33px;
+    line-height: 33px;
+}
+
+/****/
+.useroption {
+    font-size: 12px;
+}
+
+.User_radio_sosuo {
+    float: right;
+    font-size: 0;
+    margin-top: 0px;
+    text-align: center;
+    margin-right: 23px;
+}
+
+.User_input {
+    padding-left: 15px;
+    width: 215px;
+    height: 22px;
+    line-height: 22px;
+    font-size: 12px;
+    vertical-align: middle;
+    display: inline-block;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid #ddd;
+    border-right: none;
+}
+
+.Userl_radio6 {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+    font-size: 12px;
+    display: inline-block;
+    width: 50px;
+    background: #fff url(../imgs/search.png) no-repeat center center;
+    height: 22px;
+    color: #fff;
+    cursor: pointer;
+}
+
+/**��������**/
+.centent_wrap {
+    width: 100%;
+    height: 100%;
+
+}
+
+.User_center {
+    padding: 0 22px;
+    margin-top: 40px;
+}
+
+.User_centerIN {
+    border: 1px solid #e4e4e4;
+    background: #fff;
+}
+
+.User_centerIN_top1, .User_centerIN_top2 {
+    height: 49px;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* border-bottom: 1px solid rgb(211,211,211); */
+    position: relative;
+    top: 0px;
+    z-index: 1;
+}
+
+.User_centerIN_top2 {
+    border-bottom: 1px solid rgb(211, 211, 211);
+}
+
+.User_centerIN_top span {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.centerIN_top1, .centerIN_top2, .centerIN_top_export {
+    width: 73px;
+    height: 44px;
+    display: inline-block;
+    line-height: 44px;
+    margin-top: 4px;
+    margin-left: 4px;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    color: #2fa4ff;
+    /* border-bottom: 1px solid rgb(211,211,211); */
+}
+
+.centerIN_top1 {
+    float: left;
+    font-size: 14px;
+    width: 100px;
+}
+
+.centerIN_top1 img {
+    width: 15px;
+    margin-left: 10px;
+    margin-top: -2px;
+}
+
+.centerIN_top2 {
+    margin-left: 0px;
+}
+
+.centerIN_top_export {
+    float: right;
+}
+
+.centerIN_top_export img {
+    width: 15px;
+}
+
+.choicebox {
+    display: inline-block;
+}
+
+.choicebox dl {
+    width: 200px;
+    border: 1px solid #2fa4ff;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    float: left;
+    margin: 10px 20px 10px 0;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.choicebox dl dt {
+    width: 168px;
+    float: left;
+}
+
+.choicebox dl dt p, .choicebox dl dt div {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.choicebox dl dt div {
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.choicebox dl .del {
+    cursor: pointer;
+}
+
+a:hover, a:focus {
+    /*color: #fff;*/
+    text-decoration: none;
+}
+
+/**����**/
+.User_centerIN_tubiao {
+    display: block;
+    padding: 0 30px;
+    background: #fff;
+}
+
+
+/**���**/
+.User_centerIN_liebiao {
+    /* display: none; */
+    padding: 0 10px;
+    background: #fff;
+}
+
+.User_liebiao {
+    width: 100%;
+    border: 1px solid #000;
+}
+
+.table_wrap {
+    margin-top: 40px;
+}
+
+thead > tr > th {
+    text-align: center;
+    font-size: 14px;
+}
+
+tbody > tr > td {
+    text-align: center;
+    font-size: 14px;
+}
+
+tbody > tr > td {
+    text-align: center;
+    font-size: 14px;
+}
+
+tbody > tr > td > a {
+    text-align: center;
+    font-size: 14px;
+    color: #0068b5;
+}
+
+tbody > tr > td span {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+tbody > tr > td img {
+    width: 14px;
+}
+
+tbody > tr > td span:first-child(1) img {
+    width: 25px;
+}
+
+/**���**/
+.pages {
+    height: 35px;
+    line-height: 35px;
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #e4e4e4;
+    margin-left: 0;
+}
+
+.page_num_right {
+    float: right;
+}
+
+.home_page, .end_page {
+    width: 42px;
+    height: 18px;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 2px;
+    border: 1px solid #e4e4e4;
+    background: #fff;
+}
+
+.up_page {
+    width: 56px;
+    height: 18px;
+    padding: 5px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid #e4e4e4;
+    background: #ddd;
+}
+
+.next_page {
+    width: 56px;
+    height: 18px;
+    border-radius: 2px;
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid #e4e4e4;
+    background: #fff;
+}
+
+.search_page_num {
+    background: none;
+    outline: none;
+    vertical-align: middle;
+    border: 1px solid #e4e4e4;
+    width: 42px;
+    height: 26px;
+    margin-top: -2px;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+.search_page {
+    outline: none;
+    width: 56px;
+    height: 18px;
+    border-radius: 2px;
+    padding: 5px;
+    cursor: pointer;
+    background: #0068b5;
+    color: #fff;
+}
+
+.clear {
+    clear: both;
+}
+
+

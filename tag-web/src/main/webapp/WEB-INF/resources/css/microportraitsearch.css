@@ -1,0 +1,485 @@
+body {
+    background: rgb(239, 245, 250);
+}
+
+a {
+    color: #333;
+}
+
+.nav_wrap {
+    margin-top: 51px;
+}
+
+.centent_wrap {
+    height: 100%;
+    width: 100%;
+}
+
+.centent_wrap_middle {
+    background: #cbe0fa;
+    width: 100%;
+    height: 38px;
+    line-height: 38px;
+}
+
+.centent_gid {
+    font-size: 14px;
+    color: #0068b5;
+    margin-left: 26px;
+}
+
+/*涓嬮潰鐨勫乏渚у鑸互鍙婂彸渚х殑鍥捐〃*/
+.content_wrap_bottom {
+    width: 100%;
+    height: 85%;
+}
+
+.left_spnal {
+    width: 195px;
+    height: 100%;
+    background: #f5f7fa;
+    float: left;
+    border: 1px solid #eee;
+    position: fixed;
+    top: 126px;
+    left: 0;
+    z-index: 3;
+}
+
+.iteminfo {
+    width: 190px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.item_description {
+    margin-left: 10px;
+    width: 58px;
+    float: left;
+
+}
+
+.item_description_email {
+    padding-left: 14px;
+}
+
+.item_description_qq {
+    padding-left: 20px;
+}
+
+.item_detils_email, .item_detils_phone, .item_detils_qq {
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    display: inline-block;
+}
+
+/*浜虹墿鐨勭敾鍍�*/
+.right_spnal {
+    width: 100%; /*984*/
+    height: 100%;
+    margin-left: 195px;
+}
+
+.right_spal_wrap {
+    width: 83%;
+    /* height: 590px;*/
+    min-height: 590px;
+    background: #fff;
+    border: 1px solid #ddd;
+    margin: 12px;
+}
+
+.Microcosmic_centerIN_top {
+    height: 44px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 1px solid #ddd;
+
+}
+
+.Microcosmic_centerIN_top1 {
+    width: 73px;
+    height: 39px;
+    display: inline-block;
+    line-height: 40px;
+    margin-top: 5px;
+    text-align: center;
+    background: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    color: #000;
+    border-bottom: 2px solid #1e8af9;
+}
+
+/**鏍戠姸鍒楄〃**/
+/**************鏍戠姸鐨勫垪琛�***********/
+
+
+/**杩涘害鏉�***/
+progress {
+    display: inline-block;
+    width: 150px;
+    height: 10px;
+    background-color: #c6c6c6;
+    border: 0;
+    color: #f6992b; /*IE*/
+}
+
+/*ie6-ie9*/
+progress ie {
+    display: block;
+    height: 100%;
+    background: #f6992b;
+}
+
+progress::-moz-progress-bar {
+    background: #f6992b;
+}
+
+progress::-ms-progress-bar {
+    background: #f6992b;
+}
+
+progress::-webkit-progress-bar {
+    background: #c6c6c6;
+}
+
+progress::-webkit-progress-value {
+    background: #f6992b;
+}
+
+progress::-ms-progress-value {
+    background: #f6992b;
+}
+
+progress::-moz-progress-value {
+    background: #f6992b;
+}
+
+/*E  鏍戠姸鍒楄〃*/
+/**S 鐢ㄦ埛鐢诲儚**/
+/**寰鐢诲儚浜虹墿鍥惧儚**/
+.microcosmic_people {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    margin-top: 100px;
+    /*鍙渶瑕佸湪鐖跺厓绱犱笂鍔犺繖涓夊彞*/
+    justify-content: center; /*瀛愬厓绱犳按骞冲眳涓�*/
+    align-items: center; /*瀛愬厓绱犲瀭鐩村眳涓�*/
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.microcosmic_people_img {
+    width: 283px;
+    height: 283px;
+    background: url(../../res/imgs/microportraitsearch/people.png);
+}
+
+/*  S label_item   ----   left   */
+.label_item1 {
+    margin-left: -150px !important;
+    height: 100px;
+    /*margin-bottom: 10px;*/
+    background: url(../../res/imgs/microportraitsearch/left_line.png) no-repeat -15px 15px;
+}
+
+/*S 宸︿笅*/
+.label_item_leftbottom {
+    position: relative;
+    margin-left: -150px;
+    margin-top: 3px;
+    height: 100px;
+    background: url(../../res/imgs/microportraitsearch/left_bottom_line.png) no-repeat -35px 53px;
+}
+
+/*E 宸︿笅*/
+/*鏂囧瓧*/
+.label_item1_text1 {
+    color: #000;
+    position: absolute;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 140px;
+}
+
+/*宸︿笅*/
+.label_item1_text_leftbottom {
+    color: #000;
+    position: absolute;
+    top: 65px;
+}
+
+.label_item1_div1 {
+    float: left;
+    margin-top: -30px;
+    margin-left: -190px;
+    display: inline-flex;
+    display: flex;
+    position: relative;
+    border: 1px solid #eee;
+}
+
+.label_item1_div2 {
+    float: left;
+    margin-top: -30px;
+    margin-left: -100px;
+    display: inline-flex;
+    display: flex;
+    position: relative;
+    border: 1px solid #eee;
+}
+
+.people_li {
+    color: #000;
+    list-style-type: none;
+    width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    background: #cbe0fa;
+    border-radius: 5px;
+    /*   padding-left: 5px; */
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+/*浜岀骇鏍囩鍦栫墖*/
+.label_item_label_top {
+    width: 32px;
+    height: 60px;
+    font-size: 12px;
+    padding: 8px 1px 0px 2px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    background: url(../../res/imgs/microportraitsearch/twolabel_top.png) no-repeat;
+
+}
+
+.label_item_label_top_leftbottom {
+    width: 32px;
+    height: 60px;
+    margin-top: 35px;
+    font-size: 12px;
+    padding: 8px 1px 0px 2px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    background: url(../../res/imgs/microportraitsearch/twolabel_top.png) no-repeat;
+}
+
+/*浜岀骇鏍囩鍦栫墖*/
+.label_item_label_bottom {
+    width: 32px;
+    height: 32px;
+    display: table-cell;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+    background: url(../../res/imgs/microportraitsearch/twolabel_bottom.png) no-repeat;
+}
+
+/**浜岀礆鑿滃崟涓殑鏂囧瓧***/
+.label_item_label_top_text {
+    display: inline-block;
+    cursor: pointer;
+    width: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 2px;
+    text-align: center;
+}
+
+/*  E label_item   ----   left   */
+.left {
+    margin-left: 100px;
+}
+
+.right {
+    margin-top: 30px;
+}
+
+.label_item_right {
+    height: 100px;
+    width: 150px;
+    /* margin-bottom: 10px;*/
+    background: url('../../res/imgs/microportraitsearch/right_line.png') no-repeat;
+}
+
+.label_item_right_top {
+    margin-left: -150px;
+    margin-top: -60px;
+    height: 100px;
+    width: 100px;
+    background: url('../../res/imgs/microportraitsearch/right_line.png') no-repeat;
+}
+
+.label_item1_div_leftbottom {
+    margin-left: -45px;
+}
+
+.label_item_rightbottom {
+    margin-top: 20px;
+    height: 100px;
+    width: 150px;
+    background: url(../../res/imgs/microportraitsearch/right_bottom_line.png) no-repeat;
+    position: absolute;
+}
+
+.label_item_bottom {
+    margin-left: -150px;
+    margin-top: 90px;
+    height: 100px;
+    width: 150px;
+    background: url(../../res/imgs/microportraitsearch/right_bottom_line.png) no-repeat;
+    position: absolute;
+}
+
+.label_item1_text_right {
+    color: #000;
+    position: absolute;
+    display: inline-flex;
+    display: flex;
+    margin-top: -15px;
+    margin-left: 40px;
+}
+
+.label_item1_text_rightbottom {
+    color: #000;
+    position: absolute;
+    display: inline-flex;
+    display: flex;
+    margin-top: 8px;
+    margin-left: 80px;
+}
+
+.label_item1_div_right {
+    float: left;
+    margin-top: -40px;
+    margin-left: 190px;
+    display: inline-flex;
+    display: flex;
+    position: relative;
+    border: 1px solid #eee;
+}
+
+.people_li_right {
+    width: 80px;
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 100px;
+    color: #000;
+    cursor: pointer;
+    list-style-type: none;
+    margin-bottom: 5px;
+    background: #cbe0fa;
+    border-radius: 5px;
+    /*   padding-left: 5px; */
+    margin-left: 5px;
+    text-align: center;
+}
+
+.label_item1_div_rightbottom {
+    float: left;
+    margin-top: -30px;
+    margin-left: 100px;
+    display: inline-flex;
+    display: flex;
+    position: relative;
+}
+
+/*浜岀骇鏍囩鍦栫墖*/
+.label_item_label_top_right {
+    position: relative;
+    top: 8px;
+    height: 60px;
+    font-size: 12px;
+    padding: 10px 10px 0px 0px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    background: url(../../res/imgs/microportraitsearch/twolabel_top_right.png) no-repeat;
+    background-size: 32px 32px;
+}
+
+.label_item_label_top_right_bottom {
+    height: 60px;
+    position: relative;
+    left: -110px;
+    top: 70px;
+    font-size: 12px;
+    padding: 10px 10px 0px 0px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    background: url(../../res/imgs/microportraitsearch/rightbottom.png) no-repeat;
+    background-size: 32px 32px;
+}
+
+/*浜岀骇鏍囩鍦栫墖*/
+.label_item_label_bottom_right {
+    width: 32px;
+    height: 32px;
+    display: table-cell;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+    background: url(../../res/resimgs/microportraitsearch/twolabel_bottom.png) no-repeat;
+}
+
+/**浜岀礆鑿滃柈涓殑鏂囧瓧***/
+.label_item_label_top_text_right {
+    display: inline-block;
+    margin-left: -2px;
+    width: 25px;
+}
+
+/**宸︿笅鐨勫垪琛�**/
+.left_bottom {
+    width: 200px;
+    height: 50px;
+    background: #f60;
+}
+
+.label_item1_div1 ul {
+    padding: 3px 4px 3px 3px;
+}
+
+.label_item1_div_right ul {
+    padding: 3px 4px 3px 0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

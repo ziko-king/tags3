@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/mvc  
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        ">
+
+    <!-- 控制器组件扫描 -->
+    <context:component-scan base-package="cn.itcast.tag.web" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 拦截器链 -->
+    <mvc:interceptors>
+        <!-- 日志拦截 -->
+        <bean class="cn.itcast.tag.web.etc.interceptor.LogInterceptor"/>
+    </mvc:interceptors>
+
+    <!-- 欢迎页控制 -->
+    <mvc:view-controller path="/" view-name="login"/>
+
+    <!-- 静态资源访问 -->
+    <mvc:resources location="/WEB-INF/resources/" mapping="/res/**"/>
+
+    <!-- 允许跨域请求 -->
+    <mvc:cors>
+        <mvc:mapping path="/**/**"
+                     allowed-origins="*"
+                     allowed-methods="POST, GET, OPTIONS, DELETE, PUT"
+                     allowed-headers="Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+                     allow-credentials="true"/>
+    </mvc:cors>
+
+    <!-- 启动注解驱动，支持对象与json的转换。 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 文件上传解析器 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="resolveLazily" value="true"/>
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="512000000"/>
+        <!-- <property name="maxUploadSize" value="10485760000" /> -->
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+
+    <!-- 视图解析器 -->
+    <bean id="jspViewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="1"/>
+        <property name="prefix" value="/WEB-INF/resources/pages/"/>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!-- Freemaker视图 -->
+    <bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="order" value="0"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="requestContextAttribute" value="request"/>
+        <property name="suffix" value=".ftl"/>
+    </bean>
+    <!-- Freemarker配置 -->
+    <bean id="freemarkerConfig" class="cn.itcast.tag.web.user.service.FreeMarkerConfigExtend">
+        <property name="templateLoaderPath" value="/WEB-INF/resources/pages/"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">0</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="number_format">0.##########</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="whitespace_stripping">true</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="template_exception_handler">ignore</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>  

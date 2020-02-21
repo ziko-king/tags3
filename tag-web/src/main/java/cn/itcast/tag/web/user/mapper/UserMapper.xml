@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.user.mapper.UserMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap" type="cn.itcast.tag.web.user.bean.UserBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap" type="cn.itcast.tag.web.user.bean.UserBean"/>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+		id, name, username, password, idcard, phone, email, state , ctime ,utime ,remark
+	</sql>
+
+    <resultMap id="User" type="cn.itcast.tag.web.user.bean.UserBean">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="idcard" property="idcard" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="state" property="state"/>
+        <result column="ctime" property="ctime" jdbcType="TIMESTAMP"/>
+        <result column="utime" property="utime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <collection property="roleMaps" ofType="cn.itcast.tag.web.user.bean.UserRoleMapBean"
+                    select="cn.itcast.tag.web.user.mapper.UserRoleMapMapper.queryForUserId" column="id">
+        </collection>
+        <collection property="orgMaps" ofType="cn.itcast.tag.web.user.bean.UserOrgMapBean"
+                    select="cn.itcast.tag.web.user.mapper.UserOrgMapMapper.queryForUserId" column="id">
+        </collection>
+    </resultMap>
+
+    <!-- 根据用户名和密码查询 -->
+    <select id="queryForUsernameAndPassword" parameterMap="BaseParamsMap" resultMap="User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from tbl_user
+        where username = #{username} AND password=#{password}
+    </select>
+
+    <select id="queryForId" resultMap="User" parameterMap="BaseParamsMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_user
+        where id = #{id}
+    </select>
+
+    <select id="queryForUsername" resultMap="User" parameterMap="BaseParamsMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_user
+        where state=1 and username = #{username}
+    </select>
+
+    <!-- 新增用户 -->
+    <insert id="addUser" parameterType="cn.itcast.tag.web.user.bean.UserBean" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="idcard != null">
+                idcard,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="state != 0">
+                state,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="utime != null">
+                utime,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="idcard != null">
+                #{idcard},
+            </if>
+            <if test="phone != null">
+                #{phone},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="state != 0">
+                #{state},
+            </if>
+            <if test="ctime != null">
+                #{ctime},
+            </if>
+            <if test="utime != null">
+                #{utime},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据ID删除用户 -->
+    <delete id="delUserForId" parameterMap="BaseParamsMap">
+		DELETE FROM tbl_user WHERE id=#{id}
+	</delete>
+
+    <!-- 根据ID修改用户密码 -->
+    <update id="updateForPassword" parameterMap="BaseParamsMap">
+		UPDATE tbl_user SET password=#{password},utime=NOW() WHERE id=#{id}
+	</update>
+
+    <!-- 根据ID修改用户 -->
+    <update id="update" parameterMap="BaseParamsMap">
+        UPDATE tbl_user SET
+        <if test="username != null">
+            username = #{username},
+        </if>
+        <if test="password != null">
+            password = #{password},
+        </if>
+        <if test="name != null">
+            name = #{name},
+        </if>
+        <if test="idcard != null">
+            idcard = #{idcard},
+        </if>
+        <if test="phone != null">
+            phone = #{phone},
+        </if>
+        <if test="email != null">
+            email = #{email},
+        </if>
+        <if test="state != 0">
+            state = #{state},
+        </if>
+        <if test="ctime != null">
+            ctime = #{ctime},
+        </if>
+        <if test="remark != null">
+            remark = #{remark},
+        </if>
+        utime=NOW()
+        WHERE id=#{id}
+    </update>
+
+    <select id="queryAll" resultMap="User">
+		SELECT * FROM `tbl_user`
+	</select>
+
+    <!-- 按照条件查询用户数据 -->
+    <select id="queryForConditions" parameterMap="BaseParamsMap" resultMap="User">
+        SELECT * FROM `tbl_user` a JOIN `tbl_user_organization_map` b
+        ON (a.id = b.user_id AND b.org_id = #{orgMaps[0].orgId})
+        where 1=1
+        <if test="username != null">
+            AND a.username = #{username}
+        </if>
+        <if test="password != null">
+            AND a.password = #{password}
+        </if>
+        <if test="name != null">
+            AND a.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="idcard != null">
+            AND a.idcard = #{idcard}
+        </if>
+        <if test="phone != null">
+            AND a.phone = #{phone}
+        </if>
+        <if test="email != null">
+            AND a.email = #{email},
+        </if>
+        <if test="state != 0">
+            AND a.state = #{state}
+        </if>
+        <if test="ctime != null">
+            AND DATE_FORMAT(a.ctime,'%Y-%m-%d') = DATE_FORMAT(#{ctime},'%Y-%m-%d')
+        </if>
+        <if test="utime != null">
+            AND DATE_FORMAT(a.utime,'%Y-%m-%d') = DATE_FORMAT(#{utime},'%Y-%m-%d')
+        </if>
+        <if test="remark != null">
+            AND a.remark LIKE CONCAT('%', #{remark}, '%')
+        </if>
+        ORDER BY a.utime DESC
+        <if test="pr != 0">
+            LIMIT #{sr},#{pr}
+        </if>
+    </select>
+
+    <!-- 按照条件查询用户记录数 -->
+    <select id="queryCountForConditions" parameterMap="BaseParamsMap" resultType="int">
+        SELECT COUNT(*) FROM `tbl_user` a JOIN `tbl_user_organization_map` b
+        ON (a.id = b.user_id AND b.org_id = #{orgMaps[0].orgId})
+        WHERE 1=1
+        <if test="username != null">
+            AND a.username = #{username}
+        </if>
+        <if test="password != null">
+            AND a.password = #{password}
+        </if>
+        <if test="name != null">
+            AND a.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="idcard != null">
+            AND a.idcard = #{idcard}
+        </if>
+        <if test="phone != null">
+            AND a.phone = #{phone}
+        </if>
+        <if test="email != null">
+            AND a.email = #{email},
+        </if>
+        <if test="state != 0">
+            AND state = #{state}
+        </if>
+        <if test="ctime != null">
+            AND DATE_FORMAT(a.ctime,'%Y-%m-%d') = DATE_FORMAT(#{ctime},'%Y-%m-%d')
+        </if>
+        <if test="utime != null">
+            AND DATE_FORMAT(a.utime,'%Y-%m-%d') = DATE_FORMAT(#{utime},'%Y-%m-%d')
+        </if>
+        <if test="remark != null">
+            AND a.remark LIKE CONCAT('%', #{remark}, '%')
+        </if>
+    </select>
+
+</mapper>

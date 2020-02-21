@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.user.mapper.ResourceMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap" type="cn.itcast.tag.web.user.bean.ResourceBean"/>
+    <parameterMap id="RoleParamsMap" type="cn.itcast.tag.web.user.bean.RoleBean"/>
+    <parameterMap id="UserRoleParamsMap" type="cn.itcast.tag.web.user.bean.UserRoleMapBean"/>
+    <parameterMap id="UserRoleResFormMap" type="cn.itcast.tag.web.user.form.UserRoleResForm"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap" type="cn.itcast.tag.web.user.bean.ResourceBean"/>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+        id,name,url,`type`,sign,sort,pid,ctime,utime,remark
+    </sql>
+
+    <resultMap id="Resource" type="cn.itcast.tag.web.user.bean.ResourceBean">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name"/>
+        <result column="url" property="url"/>
+        <result column="type" property="type"/>
+        <result column="sign" property="sign"/>
+        <result column="sort" property="sort"/>
+        <result column="pid" property="pid"/>
+        <result column="ctime" property="ctime"/>
+        <result column="utime" property="utime"/>
+        <result column="remark" property="remark"/>
+        <!-- <collection property="children" ofType="com.mengyao.tag.user.bean.ResourceBean" 
+            select="queryForPId" column="id">
+        </collection> -->
+    </resultMap>
+
+    <resultMap id="ResourceBean" type="cn.itcast.tag.web.user.bean.ResourceBean">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name"/>
+        <result column="url" property="url"/>
+        <result column="type" property="type"/>
+        <result column="sign" property="sign"/>
+        <result column="sort" property="sort"/>
+        <result column="pid" property="pid"/>
+        <result column="perm_ids" property="permIds"/>
+        <result column="ctime" property="ctime"/>
+        <result column="utime" property="utime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <select id="queryForId" resultMap="ResourceBean" parameterMap="BaseParamsMap">
+        SELECT a.*,b.perm_ids FROM `tbl_sys_res` a
+        JOIN `tbl_role_res_map` b ON ( a.`id` = b.`res_id` AND a.id = #{id})
+        GROUP BY a.id
+        ORDER BY sort ASC
+    </select>
+
+    <select id="queryForPId" resultMap="ResourceBean" parameterType="java.lang.Long">
+        SELECT a.*,b.perm_ids FROM `tbl_sys_res` a
+        JOIN `tbl_role_res_map` b ON ( a.`id` = b.`res_id` AND a.pid = #{pid})
+        GROUP BY a.id
+        ORDER BY sort ASC
+    </select>
+
+    <select id="queryForType" resultMap="ResourceBean" parameterType="java.lang.Integer">
+        SELECT a.*,b.perm_ids FROM `tbl_sys_res` a
+        JOIN `tbl_role_res_map` b ON ( a.`id` = b.`res_id` AND a.`type` = #{type})
+        GROUP BY a.id
+        ORDER BY sort ASC
+    </select>
+
+    <!-- 查询用户的资源，包括权限 -->
+    <select id="queryForRoleBean" resultMap="ResourceBean" parameterMap="RoleParamsMap">
+        SELECT a.*,b.perm_ids FROM `tbl_sys_res` a
+        JOIN `tbl_role_res_map` b ON ( a.`id` = b.`res_id` AND b.`role_id` = #{id})
+        GROUP BY a.id
+        ORDER BY sort ASC
+    </select>
+
+    <!-- 查询用户的资源，包括权限 -->
+    <select id="queryForUserRoleMap" resultMap="ResourceBean" parameterMap="UserRoleResFormMap">
+        (SELECT a.*,b.perm_ids FROM `tbl_sys_res` a
+		JOIN `tbl_role_res_map` b ON ( a.`id` = b.`res_id` AND b.`role_id` = #{roleId})GROUP BY a.id)
+		UNION
+		(SELECT a.*,c.perm_ids FROM `tbl_sys_res` a
+		JOIN `tbl_user_res_map` c ON ( a.`id` = c.`res_id` AND c.`user_id` = #{userId} )GROUP BY a.id)
+		ORDER BY sort ASC
+    </select>
+
+    <!-- 查询用户的资源，包括权限 -->
+    <select id="queryForUserRoleResId" resultMap="ResourceBean" parameterMap="UserRoleParamsMap">
+        (SELECT a.*,b.perm_ids FROM `tbl_sys_res` a
+        JOIN `tbl_role_res_map` b ON ( a.`id` = b.`res_id` AND a.pid=#{resourceId} AND b.`role_id` = #{roleId})GROUP BY a.id)
+        UNION
+        (SELECT a.*,c.perm_ids FROM `tbl_sys_res` a
+        JOIN `tbl_user_res_map` c ON ( a.`id` = c.`res_id` AND a.pid=#{resourceId} AND c.`user_id` = #{userId} )GROUP BY a.id)
+        ORDER BY sort ASC
+    </select>
+
+    <!-- 新增用户 -->
+    <insert id="addResource" parameterType="cn.itcast.tag.web.user.bean.ResourceBean" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into tbl_sys_res
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="type != 0">
+                `type`,
+            </if>
+            <if test="sign != null">
+                sign,
+            </if>
+            <if test="sort != 0">
+                sort,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            ctime,
+            utime,
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="url != null">
+                #{url},
+            </if>
+            <if test="type != 0">
+                #{type},
+            </if>
+            <if test="sign != null">
+                #{sign},
+            </if>
+            <if test="sort != 0">
+                #{sort},
+            </if>
+            <if test="pid != null">
+                #{pid},
+            </if>
+            NOW(),
+            NOW(),
+            <if test="remark != null">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据ID删除资源 -->
+    <delete id="delResourceForId" parameterMap="BaseParamsMap">
+        DELETE FROM tbl_sys_res
+        WHERE id=#{id}
+    </delete>
+
+    <!-- 根据ID修改用户密码 -->
+    <update id="updateResource" parameterMap="BaseParamsMap">
+        UPDATE tbl_role SET
+        <if test="name != null">
+            name=#{name},
+        </if>
+        <if test="url != null">
+            url=#{url},
+        </if>
+        <if test="type != 0">
+            `type`=#{type},
+        </if>
+        <if test="sign != null">
+            sign=#{sign},
+        </if>
+        <if test="sort != 0">
+            sort=#{sort},
+        </if>
+        <if test="pid != null">
+            `pid`=#{pid},
+        </if>
+        <if test="remark != null">
+            `remark`=#{remark},
+        </if>
+        utime=NOW() WHERE id=#{id}
+    </update>
+
+    <!-- 按照条件查询资源数据 -->
+    <select id="queryForConditions" resultMap="BaseResultMap" parameterMap="BaseParamsMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_sys_res
+        where 1=1
+        <if test="name != null">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="type != 0">
+            AND `type` = #{type}
+        </if>
+        <if test="sign != null">
+            AND sign = #{sign}
+        </if>
+        <if test="sort != 0">
+            AND sort = #{sort}
+        </if>
+        <if test="pid != null">
+            AND pid = #{pid}
+        </if>
+        <if test="url != null">
+            AND url = #{url}
+        </if>
+        <if test="ctime != null">
+            AND DATE_FORMAT(ctime,'%Y-%m-%d') = DATE_FORMAT(#{ctime},'%Y-%m-%d')
+        </if>
+        <if test="utime != null">
+            AND DATE_FORMAT(utime,'%Y-%m-%d') = DATE_FORMAT(#{utime},'%Y-%m-%d')
+        </if>
+        <if test="remark != null">
+            AND remark LIKE CONCAT('%', #{remark}, '%')
+        </if>
+        ORDER BY sort ASC
+        <if test="pr != 0">
+            LIMIT #{sr},#{pr}
+        </if>
+    </select>
+
+    <!-- 按照条件查询资源记录数 -->
+    <select id="queryCountForConditions" resultType="int" parameterMap="BaseParamsMap">
+        SELECT COUNT(*) AS count FROM tbl_role
+        WHERE 1=1
+        <if test="name != null">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="type != 0">
+            AND `type` = #{type}
+        </if>
+        <if test="sign != null">
+            AND sign = #{sign}
+        </if>
+        <if test="sort != 0">
+            AND sort = #{sort}
+        </if>
+        <if test="pid != null">
+            AND pid = #{pid}
+        </if>
+        <if test="url != null">
+            AND url = #{url}
+        </if>
+        <if test="ctime != null">
+            AND DATE_FORMAT(ctime,'%Y-%m-%d') = DATE_FORMAT(#{ctime},'%Y-%m-%d')
+        </if>
+        <if test="utime != null">
+            AND DATE_FORMAT(utime,'%Y-%m-%d') = DATE_FORMAT(#{utime},'%Y-%m-%d')
+        </if>
+        <if test="remark != null">
+            AND remark LIKE CONCAT('%', #{remark}, '%')
+        </if>
+        <if test="pr != 0">
+            LIMIT #{sr},#{pr}
+        </if>
+    </select>
+</mapper>

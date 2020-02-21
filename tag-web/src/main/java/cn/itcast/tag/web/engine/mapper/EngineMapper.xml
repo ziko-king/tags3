@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.engine.mapper.EngineMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap"
+                  type="cn.itcast.tag.web.engine.bean.EngineBean"/>
+    <parameterMap id="ModelMetaParamsMap"
+                  type="cn.itcast.tag.web.engine.bean.ModelMetaDataBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap"
+               type="cn.itcast.tag.web.engine.bean.EngineBean"/>
+    <resultMap id="ModelMetaResultMap" type="cn.itcast.tag.web.engine.bean.ModelMetaDataBean">
+        <result column="tag_id" property="tagId" jdbcType="BIGINT"/>
+        <result column="modelName" property="model_name" jdbcType="VARCHAR"/>
+        <result column="model_main" property="modelMain" jdbcType="VARCHAR"/>
+        <result column="model_path" property="modelPath" jdbcType="VARCHAR"/>
+        <result column="sche_time" property="scheTime" jdbcType="VARCHAR"/>
+        <result column="in_type" property="inType" jdbcType="VARCHAR"/>
+        <result column="driver" property="driver" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="db_table" property="schemaOrFile" jdbcType="VARCHAR"/>
+        <result column="sql" property="speratorOrsql" jdbcType="VARCHAR"/>
+        <result column="in_fields" property="inFields" jdbcType="VARCHAR"/>
+        <result column="cond_fields" property="condFields" jdbcType="VARCHAR"/>
+        <result column="out_fields" property="outFields" jdbcType="VARCHAR"/>
+        <result column="args" property="args" jdbcType="VARCHAR"/>
+        <result column="business" property="business" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 新增-->
+    <insert id="addMonitorInfo" parameterMap="BaseParamsMap" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			tbl_app_info(tag_id,jobid,status)
+		VALUES(
+			#{tagId,jdbcType=BIGINT},
+			#{jobid,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR}
+		)
+	</insert>
+
+    <!-- 根据ID查询任务状态 -->
+    <!-- 	<select id="queryMonitorInfo" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+            SELECT
+            t. NAME,
+            t.rule,
+            t.tagId,
+            t.applyPerson,
+            t.ModelName,
+            t.operation,
+            t.jobid,
+          case WHEN u.username is null THEN applyPerson
+          else u.username
+          end as operator
+        FROM
+            (
+                SELECT
+                    tag.NAME,
+                    tag.rule,
+                    tag.id AS tagId,
+                    u.username AS applyPerson,
+                    mt.model_name AS ModelName,
+                    mt.operator,mt.operation,
+                ap.jobid
+            FROM
+                tbl_basic_tag tag
+            JOIN tbl_user_tag_map ut ON tag.id = ut.tag_id
+            JOIN tbl_user u ON u.id = ut.user_id
+            JOIN tbl_model mt ON tag.id = mt.tag_id
+            JOIN tbl_app_info ap ON tag.id = ap.tag_id
+            WHERE
+                tag.id =#{tagId,jdbcType=BIGINT}
+            ) t LEFT JOIN tbl_user u
+        on t.operator = u.id
+        </select> -->
+
+    <!-- 根据三级标签查询所有所属四级标签的任务状态 -->
+    <select id="queryEngineInfo" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        t.name,t.business,
+        t.tagId,
+        t.tagType,
+        t.applyPerson,
+        t.ModelName,
+        t.operation,
+        t.jobid,
+        t.status,
+        t.starttime,
+        t.endtime,
+        CASE
+        WHEN u.username IS NULL THEN
+        applyPerson
+        ELSE
+        u.username
+        END AS operator
+        FROM
+        (
+        SELECT
+        tag.name,
+        tag.business,
+        tag.id AS tagId,
+        '基础标签' as tagType,
+        u.username AS applyPerson,
+        mt.model_name AS ModelName,
+        mt.operator,
+        mt.operation,
+        ap.jobid,
+        ap.status,
+        ap.starttime,
+        ap.endtime
+        FROM
+        tbl_basic_tag tag
+        JOIN tbl_user_tag_map ut ON tag.id = ut.tag_id
+        JOIN tbl_user u ON u.id = ut.user_id
+        JOIN tbl_model mt ON tag.id = mt.tag_id
+        JOIN tbl_app_info ap ON tag.id = ap.tag_id
+        WHERE 1=1
+        <if test="queryCode==0">
+            <if test="tagId != 0">
+                AND tag.id =#{tagId,jdbcType=BIGINT}
+            </if>
+            <if test="status != null">
+                and ap.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null">
+                and (tag.name like CONCAT('%',#{name},'%')
+                or mt.model_name like CONCAT('%',#{name},'%'))
+            </if>
+        </if>
+        <if test="queryCode==1">
+            AND tag.id =#{tagId,jdbcType=BIGINT}
+            <if test="status != null">
+                and ap.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null">
+                and (tag.name like CONCAT('%',#{name},'%')
+                or mt.model_name like CONCAT('%',#{name},'%'))
+            </if>
+        </if>
+        <if test="queryCode==2">
+            AND tag.id IN (
+            SELECT id FROM tbl_basic_tag tag WHERE tag.pid=#{tagId,jdbcType=BIGINT}
+            )
+            <if test="status != null">
+                and ap.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null">
+                and (tag.name like CONCAT('%',#{name},'%')
+                or mt.model_name like CONCAT('%',#{name},'%'))
+            </if>
+        </if>
+        ) t LEFT JOIN tbl_user u
+        on t.operator = u.id
+    </select>
+
+    <!-- 根据标签id查询 模型数据和元数据传递给oozie -->
+    <select id="queryTaskArgs" parameterMap="BaseParamsMap" resultMap="ModelMetaResultMap">
+		select
+			md.tag_id,
+			md.model_main,
+			md.model_name,
+			md.model_path,
+			md.sche_time,
+			mt.in_type,
+			mt.driver,
+			mt.url,
+			mt.username,
+			mt.password,
+			mt.db_table,
+			mt.sql,
+			mt.in_fields,
+			mt.cond_fields,
+			mt.out_fields,
+			md.args 
+			from tbl_model md 
+			join tbl_metadata mt 
+			on md.tag_id = mt.tag_id 
+		where md.tag_id = #{tagId,jdbcType=BIGINT}
+	</select>
+
+    <update id="updateStatus">
+		update tbl_app_info set status=#{status} where tag_id=#{tagId}
+	</update>
+
+    <update id="updateStatusAndJobid">
+		update tbl_app_info set status=#{status},jobid=#{jobid} where tag_id=#{tagId}
+	</update>
+</mapper>

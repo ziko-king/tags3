@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.mergetag.mapper.MergeTagMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap"
+                  type="cn.itcast.tag.web.mergetag.bean.MergeTagBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap"
+               type="cn.itcast.tag.web.mergetag.bean.MergeTagBean"/>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+		id,`name`,`condition`,intro,purpose,state,ctime,utime,remark
+	</sql>
+
+    <!-- 新增组合标签模型 -->
+    <insert id="addMergeTag" parameterMap="BaseParamsMap"
+            useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			tbl_merge_tag(
+			`name`,
+			`condition`,
+			intro,
+			purpose,
+			state,
+			ctime,
+			utime,
+			remark
+		)
+		VALUES(
+			#{name,jdbcType=VARCHAR},
+			#{condition,jdbcType=VARCHAR},
+			#{intro,jdbcType=VARCHAR},
+			#{purpose,jdbcType=VARCHAR},
+			#{state,jdbcType=INTEGER},
+			#{ctime,jdbcType=DATE},
+			#{utime,jdbcType=DATE},
+			#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+    <!-- 修改组合标签 -->
+    <update id="updateMergeTag" parameterMap="BaseParamsMap">
+		UPDATE tbl_merge_tag SET
+			`name`=#{name,jdbcType=VARCHAR},
+			`condition`=#{condition,jdbcType=VARCHAR},
+			intro=#{intro,jdbcType=VARCHAR},
+			purpose=#{purpose,jdbcType=VARCHAR},
+			state=#{state,jdbcType=INTEGER},
+			utime=#{utime,jdbcType=DATE},
+			remark=#{remark,jdbcType=VARCHAR}
+		WHERE
+			id=#{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 根据ID删除组合标签 -->
+    <delete id="delMergeTagForId" parameterMap="BaseParamsMap">
+		DELETE 
+		FROM 
+			tbl_merge_tag
+		WHERE id=#{id,jdbcType=BIGINT}
+	</delete>
+
+    <!-- 根据ID查询组合标签 -->
+    <select id="queryMergeTagById" resultMap="BaseResultMap">
+		SELECT * FROM tbl_merge_tag WHERE id = #{id}
+	</select>
+
+    <select id="isExistMergeTagForName" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        tb.id,
+        tb.`name`,
+        tb.intro,
+        tb.purpose,
+        tb.state,
+        tb.ctime,
+        tb.utime,
+        tb.remark
+        FROM
+        (
+        SELECT
+        bg.*
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_merge_tag bg
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_user_tag_map utm
+            INNER JOIN tbl_user u ON (utm.`user_id` = u.id)
+            INNER JOIN tbl_merge_tag bg ON (bg.`id` = utm.`tag_id`)
+            WHERE u.id = #{loginUser.id}
+        </if>
+        GROUP BY bg.id
+        UNION ALL
+        SELECT
+        bt.*
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_merge_tag bt
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_role_data_map rdm
+            INNER JOIN tbl_merge_tag bt ON (bt.id = rdm.tag_id)
+            WHERE
+            rdm.tag_type = 1
+            AND rdm.role_id = #{roleBean.id}
+        </if>
+        )tb
+        WHERE
+        1 = 1 AND tb.state != - 1
+        <if test="bean.name != null and bean.name != ''">
+            AND tb.name = #{bean.name}
+        </if>
+        GROUP BY tb.id
+    </select>
+
+    <!-- 用户（超级管理员）持有的组合标签 -->
+    <select id="getMergeTag" resultMap="BaseResultMap">
+        SELECT DISTINCT
+        tb1.id,
+        tb1.`name`,
+        tb1.`condition`,
+        tb1.intro,
+        tb1.purpose,
+        tb1.state,
+        tb1.ctime,
+        tb1.utime,
+        tb1.remark
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        tbl_merge_tag
+        WHERE 1=1 AND
+        state != 6
+        <if test="mbean.name != null and mbean.name != ''">
+            AND name LIKE CONCAT('%',#{mbean.name},'%')
+        </if>
+        ) tb1
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        tbl_user_merge_tag_map
+        ) tb2 ON tb1.id = tb2.merge_tag_id
+        INNER JOIN tbl_merge_tag_tag_map tb3 ON tb1.id = tb3.merge_tag_id
+        INNER JOIN tbl_basic_tag tb4 ON tb3.basic_tag_id = tb4.id
+        ORDER BY tb1.id
+        <if test="bean.sr != null and bean.sr != '' and bean.er != null and bean.er != '' ">
+            LIMIT #{bean.sr,jdbcType=BIGINT},#{bean.er,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 用户（管理员、普通用户）持有的组合标签 -->
+    <!-- 角色（管理员、普通用户）持有的组合标签 -->
+    <select id="getURMergeTag" resultMap="BaseResultMap">
+        SELECT tb.*
+        FROM (
+        SELECT
+        a.*
+        FROM
+        `tbl_merge_tag` a
+        JOIN `tbl_user_merge_tag_map` c ON (
+        a.`id` = c.`merge_tag_id`
+        AND c.`user_id` = #{userId}
+        )
+        GROUP BY
+        a.id
+        UNION ALL
+        SELECT
+        a.*
+        FROM
+        `tbl_merge_tag` a
+        JOIN `tbl_role_data_map` b ON (
+        a.`id` = b.`tag_id`
+        AND b.`role_id` = #{roleId}
+        AND b.tag_type = 2
+        )
+        GROUP BY
+        a.id
+        ) tb
+        WHERE
+        1 = 1
+        <if test="mbean.name != null and mbean.name != ''">
+            AND tb.name LIKE CONCAT('%',#{mbean.name},'%')
+        </if>
+        ORDER BY tb.id
+        <if test="bean.sr != null and bean.sr != '' and bean.er != null and bean.er != '' ">
+            LIMIT #{bean.sr},#{bean.er}
+        </if>
+    </select>
+
+    <!-- 用户（超级管理员）持有的组合标签 -->
+    <select id="getMergeTagCount" resultType="java.lang.Integer">
+        SELECT count(*) AS count FROM (
+        SELECT DISTINCT
+        tb1.id,
+        tb1.`name`,
+        tb1.`condition`,
+        tb1.intro,
+        tb1.purpose,
+        tb1.state,
+        tb1.ctime,
+        tb1.utime,
+        tb1.remark
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        tbl_merge_tag
+        WHERE
+        state != 6
+        ) tb1
+        INNER JOIN (
+        SELECT
+        *
+        FROM
+        tbl_user_merge_tag_map
+        ) tb2 ON tb1.id = tb2.merge_tag_id
+        INNER JOIN tbl_merge_tag_tag_map tb3 ON tb1.id = tb3.merge_tag_id
+        INNER JOIN tbl_basic_tag tb4 ON tb3.basic_tag_id = tb4.id
+        ) tb WHERE 1=1
+        <if test="mbean.name != null and mbean.name != ''">
+            AND tb.name LIKE CONCAT('%',#{mbean.name},'%')
+        </if>
+    </select>
+
+    <!-- 用户（管理员、普通用户）持有的组合标签 -->
+    <!-- 角色（管理员、普通用户）持有的组合标签 -->
+    <select id="getURMergeTagCount" resultType="java.lang.Integer">
+        SELECT count(*) AS count
+        FROM (
+        SELECT
+        a.*
+        FROM
+        `tbl_merge_tag` a
+        JOIN `tbl_user_merge_tag_map` c ON (
+        a.`id` = c.`merge_tag_id`
+        AND c.`user_id` = #{userId}
+        )
+        GROUP BY
+        a.id
+        UNION ALL
+        SELECT
+        a.*
+        FROM
+        `tbl_merge_tag` a
+        JOIN `tbl_role_data_map` b ON (
+        a.`id` = b.`tag_id`
+        AND b.`role_id` = #{roleId}
+        AND b.tag_type = 2
+        )
+        GROUP BY
+        a.id
+        ) tb
+        WHERE
+        1 = 1
+        <if test="mbean.name != null and mbean.name != ''">
+            AND tb.name LIKE CONCAT('%',#{mbean.name},'%')
+        </if>
+    </select>
+
+</mapper>

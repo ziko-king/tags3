@@ -1,0 +1,120 @@
+/***login CSS***/
+body {
+    background: url('../imgs/login_center.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+body > .grid {
+    height: 74%;
+}
+
+.user {
+    width: 263px !important;
+}
+
+.image {
+    margin-top: -100px;
+}
+
+.popuwindow {
+    margin-top: 76px;
+    margin-left: 200px;
+    float: left;
+}
+
+.wrap_form {
+    width: 430px;
+    height: 262px;
+}
+
+.login_label {
+    font-size: 22px;
+}
+
+.login_hr {
+    filter: alpha(opacity=100, finishopacity=0, style=3)
+}
+
+.login_forgetpwd {
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 5px;
+    float: left !important;
+}
+
+.login_btn {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.login_forget_span {
+    color: #797a79;
+    margin-left: -145px;
+}
+
+.login_submit {
+    background: #3385ff;
+    width: 280px !important;
+}
+
+.loginbtn {
+    display: inline-block !important;
+    margin-top: 10px !important;
+}
+
+.login_public {
+    width: 100%;
+    margin-top: 180px;
+    justify-content: center;
+    align-items: center;
+    display: -webkit-flex;
+}
+
+.public {
+    width: 100%;
+    margin-top: 180px;
+    justify-content: center;
+    align-items: center;
+    display: -webkit-flex;
+    display: flex;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
+.login_forgetpwd_text {
+    color: #797a79;
+    display: inline-block;
+    vertical-align: middle;
+    float: left;
+    margin-top: -1px;
+}
+
+.login_a {
+    background: #3385ff !important;
+    width: 280px !important;
+}
+
+.login_title {
+    position: absolute;
+    left: 10%;
+    top: 47%;
+    margin-top: -55px;
+    width: 500px;
+    color: rgb(255, 255, 255);
+    font-family: 宋体;
+}
+
+.login_title h1 {
+    color: #fff;
+    font-size: 30px;
+    line-height: 66px;
+    font-weight: 700;
+}
+
+.login_title p {
+    line-height: 25px;
+    font-size: 18px;
+    font-family: 宋体;
+    font-weight: 500;
+}

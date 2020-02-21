@@ -1,0 +1,245 @@
+
+li {
+    list-style: none;
+}
+
+/***瀹革缚鏅堕崚娑樼紦娑擄拷缁狙冨瀻缁崵娈戝鍦崶**/
+.typename_span {
+    display: inline-block;
+}
+
+.typename_input {
+    display: inline-block;
+    width: 374px;
+}
+
+select.makeupCoSe {
+    position: absolute;
+    left: 101px;
+    width: 299px;
+    top: 30px;
+    z-index: 5;
+    height: 81px;
+    border-top: none;
+    border-radius: 3px
+}
+
+input.makeup {
+    width: 300px;
+    outline: none;
+    height: 30px;
+    border: 1px solid #ccc;
+}
+
+/*         .second ul {  
+    position: absolute;  
+    top: 27px;  
+    border: 1px solid #999;  
+    left: 8px;  
+    width: 125px;  
+    line-height: 16px;  
+}  
+.ul li{  
+    list-style: none;  
+    width: 161px;  
+    left: 15px;  
+    margin-left: -40px;  
+    font-family: 瀵邦喛钂嬮梿鍛寸拨;  
+    padding-left: 4px;  
+}  
+.blue {   
+    background:#1e91ff;   
+}  */
+/**娑撳濯洪崚妤勩�冮惃鍕絹缁�锟�**/
+.typename_datatype {
+    margin-top: 10px;
+}
+
+#oneModal .modal-body {
+    padding-left: 70px;
+}
+
+#childrenModal .modal-body, #smallchildrenModal .modal-body {
+    padding-left: 40px;
+}
+
+#childrenModal select {
+    vertical-align: top;
+    border: 1px solid #ccc;
+    width: 122px;
+    border-radius: 3px;
+    height: 30px;
+}
+
+.sortoneLabel, .sorttwoLabel, .sortthreeLabel {
+    border: 1px solid #ccc;
+    width: 122px;
+    border-radius: 3px;
+    height: 30px;
+    padding-left: 10px;
+}
+
+.algorithm {
+    position: relative;
+    margin-bottom: 8px;
+}
+
+#sub_autoupload, #sub_autouploads {
+    display: inline-block;
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+    width: 15%;
+    margin-left: 77px;
+    cursor: pointer;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    left: 301px;
+}
+
+.file {
+    height: 34px;
+    width: 78px;
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    opacity: 0;
+    z-index: 110;
+    cursor: pointer;
+    float: right;
+    position: absolute;
+    top: 0px;
+    left: 382px;
+}
+
+.modal-body .commondel img {
+    margin-top: -3px;
+}
+
+/**娑撴艾濮熼崥顐＄疅 閺嶅洨顒风憴鍕灟 閺傚洦婀板锟� **/
+.type_wrap {
+    margin: 5px 0 10px;
+}
+
+.type_wrap textarea {
+    vertical-align: middle;
+}
+
+.business_mean {
+    width: 374px;
+    overflow: hidden;
+    height: 60px !important;
+    resize: none;
+    display: inline-block;
+}
+
+.label_cont_buttom_conl_click {
+    background: #0068b5;
+    color: #fff !important;
+}
+
+/*safari*/
+.safari_wrap {
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+}
+
+.safari_wrap_datatype {
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+}
+
+.taskmean {
+    margin-top: 15px;
+    margin-left: 5px;
+}
+
+.data_type {
+    padding-top: 0px;
+}
+
+.typename_worn_teaxtareanone {
+    display: block;
+    margin-left: 120px;
+    margin-top: -35px;
+    margin-bottom: 5px;
+    color: #999;
+    font-size: 12px;
+}
+
+.typename_worn_teaxtareantwo {
+    display: block;
+    margin-left: 120px;
+    margin-top: -35px;
+    margin-bottom: 10px;
+    color: #999;
+    font-size: 12px;
+}
+
+label.error {
+    color: red;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.fourwrong, .fivewrong {
+    width: 92px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.firstGr {
+    border-left: 1px solid #9098a0;
+    color: #a3a3a3;
+}
+
+.leftNav {
+    background: #525c65;
+}
+
+.secondGr, .four, .we {
+    background-color: #424a51;
+}
+
+.fourth, .secondzi {
+    display: none;
+}
+
+.we {
+    display: block;
+}
+
+.zi {
+    display: none;
+}
+
+#leftList .zi:nth-child(3) {
+    display: block;
+}
+
+.leftNav img {
+    height: 14px;
+}
+
+.label_cont {
+    margin: 0px 20px 0px 12px;
+    padding: 0;
+    border: 1px solid #e4e4e4;
+    background: #fff;
+}
+
+.add_tab_n {
+    position: relative;
+    /* top: -30px; */
+    color: #fff;
+}
+
+.successtip {
+    margin-left: 5px;
+    display: none;
+    color: #1dcd6c;
+}

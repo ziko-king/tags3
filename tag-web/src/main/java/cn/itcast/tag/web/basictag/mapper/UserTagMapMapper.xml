@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.basictag.mapper.UserTagMapMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap"
+                  type="cn.itcast.tag.web.basictag.bean.form.UserTagFormBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap"
+               type="cn.itcast.tag.web.basictag.bean.form.UserTagFormBean"/>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+		id, user_id AS userId, tag_id AS tagId, state, ctime, utime, state, remark
+	</sql>
+
+    <!-- 更新用户和基础标签关联表-->
+    <insert id="insertUserTagMap">
+		INSERT INTO 
+		tbl_user_tag_map (
+			user_id,
+			tag_id,
+			state,
+			ctime,
+			utime,
+			remark
+		)
+		VALUES
+		(
+			#{userId,jdbcType=INTEGER}, 
+			#{tagId,jdbcType=INTEGER}, 
+			#{state,jdbcType=INTEGER}, 
+			NOW(), 
+			NOW(),
+			#{remark,jdbcType=INTEGER}
+		)
+	</insert>
+
+    <update id="updateState" parameterMap="BaseParamsMap">
+		UPDATE
+		tbl_user_tag_map
+		SET
+		state = #{state}
+		WHERE
+		id = #{id}
+	</update>
+
+    <!-- 根据ID查询 -->
+    <select id="queryUserTagForId" parameterMap="BaseParamsMap"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_user_tag_map
+        WHERE
+        id = #{id,jdbcType=INTEGER}
+    </select>
+
+</mapper>

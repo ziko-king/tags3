@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.mergetag.mapper.UserMergeTagTagMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap"
+                  type="cn.itcast.tag.web.mergetag.bean.form.UserMergeTagTagFormBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap"
+               type="cn.itcast.tag.web.mergetag.bean.form.UserMergeTagTagFormBean"/>
+
+    <!-- 查询组合标签 -->
+    <!-- 状态：1申请中、2审核通过、3运行中、4未运行、5已禁用 tb.userId,tb2.user_id AS userId,-->
+    <select id="queryMergeTagData" resultMap="BaseResultMap">
+        SELECT
+        tb.mergeTagId,
+        tb.mergeTagName,
+        tb.basicTagId,
+        tb.basicTagName,
+        tb.`condition`,
+        tb.intro,
+        tb.purpose,
+        tb.state,
+        tb.ctime,
+        tb.utime,
+        tb.remark
+        FROM
+        (
+        SELECT
+        tb1.id AS mergeTagId,
+        tb1.`name` AS mergeTagName,
+        tb4.id AS basicTagId,
+        tb4.`name` AS basicTagName,
+        tb1.`condition`,
+        tb1.intro,
+        tb1.purpose,
+        tb1.state,
+        tb1.ctime,
+        tb1.utime,
+        tb1.remark
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        tbl_merge_tag
+        WHERE
+        state != 6
+        ) tb1
+        <if test="roleBean.id != 1">
+            INNER JOIN (
+            SELECT
+            *
+            FROM
+            tbl_user_merge_tag_map
+            WHERE 1=1 AND user_id = #{loginUser.id,jdbcType=BIGINT}
+            ) tb2 ON tb1.id = tb2.merge_tag_id
+        </if>
+        INNER JOIN tbl_merge_tag_tag_map tb3 ON tb1.id = tb3.merge_tag_id
+        INNER JOIN tbl_basic_tag tb4 ON tb3.basic_tag_id = tb4.id
+        ) tb
+        WHERE 1=1
+        <if test="mergeTagBean.state != null and mergeTagBean.state != ''">
+            AND tb.state = #{mergeTagBean.state,jdbcType=BIGINT}
+        </if>
+        <if test="mergeTagBean.state == null or mergeTagBean.state == ''">
+            AND tb.state != 4
+        </if>
+    </select>
+    <!-- <if test="bean.sr != null and bean.sr != '' and bean.er != null and bean.er != '' ">
+           LIMIT #{bean.sr,jdbcType=BIGINT},#{bean.er,jdbcType=BIGINT}
+    </if> -->
+    <!-- 查询组合标签 -->
+    <!-- 状态：1申请中、2审核通过、3运行中、4未运行、5已禁用 -->
+    <select id="queryMergeTagById" resultMap="BaseResultMap">
+		SELECT
+			tb.mergeTagId,
+			tb.mergeTagName,
+			tb.basicTagId,
+			tb.basicTagName,
+			tb.userId,
+			tb.`condition`,
+			tb.intro,
+			tb.purpose,
+			tb.state,
+			tb.ctime,
+			tb.utime,
+			tb.remark
+		FROM
+			(
+				SELECT
+					tb1.id AS mergeTagId,
+					tb1.`name` AS mergeTagName,
+					tb4.id AS basicTagId,
+					tb4.`name` AS basicTagName,
+					tb2.user_id AS userId,
+					tb1.`condition`,
+					tb1.intro,
+					tb1.purpose,
+					tb1.state,
+					tb1.ctime,
+					tb1.utime,
+					tb1.remark
+				FROM
+					(
+						SELECT
+							*
+						FROM
+							tbl_merge_tag
+						WHERE
+							state != 6
+					) tb1
+				INNER JOIN (
+					SELECT
+						*
+					FROM
+						tbl_user_merge_tag_map
+					WHERE
+						user_id = #{loginUser.id,jdbcType=BIGINT}
+				) tb2 ON tb1.id = tb2.merge_tag_id
+				INNER JOIN tbl_merge_tag_tag_map tb3 ON tb1.id = tb3.merge_tag_id
+				INNER JOIN tbl_basic_tag tb4 ON tb3.basic_tag_id = tb4.id
+			) tb
+		WHERE 1=1	
+		AND tb.mergeTagId = #{mergeTagBean.id,jdbcType=BIGINT}
+	</select>
+
+    <!-- 查询组合和基础标签 -->
+    <!-- 状态：1申请中、2审核通过、3运行中、4未运行、5已禁用 -->
+    <select id="updateQueryMergeTag" resultMap="BaseResultMap">
+		SELECT DISTINCT
+			tb.mergeTagId,
+			tb.mergeTagName,
+			tb.basicTagId,
+			tb.basicTagName,
+			tb.pid,
+			tb.userId,
+			tb.`condition`,
+			tb.conditions,
+			tb.intro,
+			tb.purpose,
+			tb.state,
+			tb.ctime,
+			tb.utime,
+			tb.remark
+		FROM
+			(
+				SELECT
+					tb3.id AS mergeTagId,
+					tb3.`name` AS mergeTagName,
+					tb5.id AS basicTagId,
+					tb5.`name` AS basicTagName,
+					tb5.pid,
+					tb1.id AS userId,
+					tb3.`condition`,
+					tb4.id,
+					tb4.conditions,
+					tb3.intro,
+					tb3.purpose,
+					tb3.state,
+					tb3.ctime,
+					tb3.utime,
+					tb3.remark
+				FROM
+					(
+						SELECT
+							*
+						FROM
+							tbl_user
+						WHERE
+							id = #{loginUser.id}
+					) tb1
+				INNER JOIN tbl_user_merge_tag_map tb2 ON tb1.id = tb2.user_id
+				INNER JOIN (
+					SELECT
+						*
+					FROM
+						tbl_merge_tag
+					WHERE
+						state != 6
+				) tb3 ON tb3.id = tb2.merge_tag_id
+				INNER JOIN tbl_merge_tag_tag_map tb4 ON tb3.id = tb4.merge_tag_id
+				INNER JOIN (
+					SELECT
+						*
+					FROM
+						tbl_basic_tag
+					WHERE
+						state != 6
+				) tb5 ON tb5.id = tb4.basic_tag_id
+			) tb
+		WHERE
+			tb.mergeTagId = #{mergeTagBean.id,jdbcType=BIGINT}
+			ORDER BY tb.id
+	</select>
+
+</mapper>

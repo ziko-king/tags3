@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <properties resource="mybatis/generatorConfig.properties"/>
+    <classPathEntry
+            location="C:/Users/zhaocs/git/mengyao/src/main/resources/mybatis/mysql-connector-java-5.1.30-bin.jar"/>
+    <context id="context1" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$"/>
+            <property name="replaceString" value="Conditions"/>
+        </plugin>
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.1.229:3306/mengyao?useUnicode=true&amp;characterset=utf-8"
+                        userId="root" password="bjqt*20180101"/>
+
+        <!--
+		<javaModelGenerator targetPackage="com.mengyao.tag.usergroup.bean"
+			targetProject="E:/project/workspace/tag/src/main/java">
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="com.mengyao.tag.usergroup.mapper"
+			targetProject="E:/project/workspace/tag/src/main/java">
+		</sqlMapGenerator>
+		<javaClientGenerator targetPackage="com.mengyao.tag.usergroup.mapper"
+			targetProject="E:/project/workspace/tag/src/main/java" type="XMLMAPPER">
+		</javaClientGenerator>
+		-->
+
+        <!-- entity -->
+        <javaModelGenerator targetPackage="${generator.entity}" targetProject="${generator.targetProject}">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- sql mapper -->
+        <sqlMapGenerator targetPackage="${generator.mapper}" targetProject="${generator.targetProject}">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- mapper接口 -->
+        <javaClientGenerator type="${generator.type}" targetPackage="${generator.mapper}"
+                             targetProject="${generator.targetProject}">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+        <!-- 		<table tableName="tbl_basic_tag_map" domainObjectName="BasicTagMapBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 			<columnOverride column="p_id" javaType="long" /> -->
+        <!-- 			<columnOverride column="p_level" javaType="int" /> -->
+        <!-- 			<columnOverride column="c_id" javaType="long" /> -->
+        <!-- 			<columnOverride column="state" javaType="int" /> -->
+        <!-- 		</table> -->
+
+
+        <!-- 		<table tableName="tbl_data_type" domainObjectName="DataTypeBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_merge_tag_map" domainObjectName="MergeTagMapBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 			<columnOverride column="p_id" javaType="long" /> -->
+        <!-- 			<columnOverride column="p_level" javaType="int" /> -->
+        <!-- 			<columnOverride column="c_id" javaType="long" /> -->
+        <!-- 			<columnOverride column="state" javaType="int" /> -->
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_tag" domainObjectName="TagBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 			<columnOverride column="level" javaType="int" /> -->
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_tag_desc" domainObjectName="TagDescBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 			<columnOverride column="tag_id" javaType="long" /> -->
+        <!-- 			<columnOverride column="rule_id" javaType="long" /> -->
+        <!-- 			<columnOverride column="data_type_id" javaType="long" /> -->
+
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_tag_rule" domainObjectName="TagRuleBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_user_group" domainObjectName="UserGroupBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 			<columnOverride column="status" javaType="int" /> -->
+
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_user_group_tag" domainObjectName="UserGroupTagBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 			<columnOverride column="user_group_id" javaType="long" /> -->
+        <!-- 			<columnOverride column="tag_id" javaType="String" /> -->
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_coverage_rate" domainObjectName="CoverageRateBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 			<columnOverride column="mId" javaType="long" /> -->
+        <!-- 			<columnOverride column="type" javaType="int" /> -->
+        <!-- 			<columnOverride column="totalNum" javaType="int" /> -->
+        <!-- 			<columnOverride column="coverageNum" javaType="int" /> -->
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_user" domainObjectName="UserBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 			<columnOverride column="companyId" javaType="long" /> -->
+        <!-- 			<columnOverride column="roleId" javaType="long" /> -->
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_role" domainObjectName="RoleBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 			<columnOverride column="uId" javaType="long" /> -->
+        <!-- 			<columnOverride column="privilege" javaType="int" /> -->
+        <!-- 		</table> -->
+
+        <!-- 		<table tableName="tbl_company" domainObjectName="CompanyBean" -->
+        <!-- 			enableCountByExample="false" enableUpdateByExample="false" -->
+        <!-- 			enableDeleteByExample="false" enableSelectByExample="false" -->
+        <!-- 			selectByExampleQueryId="false"> -->
+        <!-- 			<property name="modelOnly" value="false" /> -->
+        <!-- 			<generatedKey column="id" sqlStatement="JDBC" /> -->
+        <!-- 			<columnOverride column="id" javaType="long" /> -->
+        <!-- 		</table> -->
+
+        <!-- <table tableName="tbl_excavate_coverage" domainObjectName="excavateCoverageBean"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false">
+            <property name="modelOnly" value="false" />
+            <generatedKey column="id" sqlStatement="JDBC" />
+            <columnOverride column="id" javaType="long" />
+            <columnOverride column="userGroupId" javaType="long" />
+            <columnOverride column="tagId" javaType="long" />
+            <columnOverride column="value" javaType="int" />
+        </table> -->
+
+        <!-- 权限管理开始 -->
+
+        <table tableName="tbl_user" domainObjectName="UserBean"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="modelOnly" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="tbl_organization" domainObjectName="OrganizationBean"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="modelOnly" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="tbl_role" domainObjectName="RoleBean"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="modelOnly" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+
+        <table tableName="tbl_permission" domainObjectName="PermissionBean"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="modelOnly" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="tbl_sys_res" domainObjectName="ResourceBean"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="modelOnly" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <!-- <table tableName="tbl_role_organization_map" domainObjectName="RoleOrgMapBean"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false">
+            <property name="modelOnly" value="false" />
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC" />
+        </table> -->
+
+        <table tableName="tbl_user_role_map" domainObjectName="UserRoleMapBean"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="modelOnly" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="tbl_role_res_map" domainObjectName="RoleResMapBean"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="modelOnly" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="tbl_res_dat_perm_map" domainObjectName="ResDatPermMapBean"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="modelOnly" value="false"/>
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+        <!-- 权限管理结束 -->
+
+    </context>
+</generatorConfiguration>

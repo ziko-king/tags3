@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.user.mapper.OrganizationMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap" type="cn.itcast.tag.web.user.bean.OrganizationBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap" type="cn.itcast.tag.web.user.bean.OrganizationBean"/>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+        id,name,pid,level,state,ctime,utime,remark
+    </sql>
+
+    <resultMap id="Organization" type="cn.itcast.tag.web.user.bean.OrganizationBean">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name"/>
+        <result column="pid" property="pid"/>
+        <result column="level" property="level"/>
+        <result column="state" property="state"/>
+        <result column="ctime" property="ctime"/>
+        <result column="utime" property="utime"/>
+        <result column="remark" property="remark"/>
+        <collection property="userMaps" ofType="cn.itcast.tag.web.user.bean.UserOrgMapBean"
+                    select="cn.itcast.tag.web.user.mapper.UserOrgMapMapper.queryForOrgId" column="id">
+        </collection>
+        <collection property="children" ofType="cn.itcast.tag.web.user.bean.OrganizationBean"
+                    select="queryForPId" column="id">
+        </collection>
+    </resultMap>
+
+    <select id="queryForId" resultMap="Organization" parameterMap="BaseParamsMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_organization
+        where id = #{id}
+    </select>
+
+    <select id="queryForPId" resultMap="Organization" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_organization
+        where pid = #{id}
+    </select>
+
+    <select id="queryForPid" resultMap="Organization" parameterMap="BaseParamsMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_organization
+        where pid = #{pid}
+    </select>
+
+    <select id="query" resultMap="Organization" parameterMap="BaseParamsMap">
+        SELECT a.* FROM tbl_organization a JOIN `tbl_user_organization_map` b
+        ON (a.id = b.org_id AND b.id = #{id})
+        <if test="name != null">
+            AND a.name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="pid != null">
+            AND a.pid=#{pid}
+        </if>
+        <if test="level != 0">
+            AND a.level=#{level}
+        </if>
+        <if test="state != 0">
+            AND a.state=#{state}
+        </if>
+        <if test="remark != null">
+            AND a.remark=#{remark}
+        </if>
+    </select>
+
+    <!-- 新增 -->
+    <insert id="addOrganization" parameterType="cn.itcast.tag.web.user.bean.OrganizationBean" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into tbl_organization
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="level != 0">
+                level,
+            </if>
+            <if test="state != 0">
+                state,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="utime != null">
+                utime,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="pid != null">
+                #{pid},
+            </if>
+            <if test="level != 0">
+                #{level},
+            </if>
+            <if test="state != 0">
+                #{state},
+            </if>
+            <if test="ctime != null">
+                #{ctime},
+            </if>
+            <if test="utime != null">
+                #{utime},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据ID删除-->
+    <delete id="delOrganizationForId" parameterMap="BaseParamsMap">
+        DELETE FROM tbl_organization
+        WHERE id=#{id}
+    </delete>
+
+    <!-- 根据ID修改 -->
+    <update id="updateOrganization" parameterMap="BaseParamsMap">
+        UPDATE tbl_organization SET
+        <if test="name != null">
+            name=#{name},
+        </if>
+        <if test="pid != null">
+            pid=#{pid},
+        </if>
+        <if test="level != 0">
+            level=#{level},
+        </if>
+        <if test="state != 0">
+            state=#{state},
+        </if>
+        <if test="remark != null">
+            remark=#{remark},
+        </if>
+        utime=NOW() WHERE id=#{id}
+    </update>
+
+</mapper>

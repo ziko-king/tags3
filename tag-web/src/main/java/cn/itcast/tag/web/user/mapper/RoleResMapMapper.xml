@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.user.mapper.RoleResMapMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap" type="cn.itcast.tag.web.user.bean.RoleResMapBean"/>
+
+    <!-- result -->
+    <!-- <resultMap id="BaseResultMap" type="com.mengyao.tag.user.bean.RoleResMapBean" /> -->
+    <resultMap id="BaseResultMap" type="cn.itcast.tag.web.user.bean.RoleResMapBean">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <id column="role_id" property="roleId" jdbcType="BIGINT"/>
+        <id column="res_id" property="resId" jdbcType="BIGINT"/>
+        <result column="perm_ids" property="permIds"/>
+        <result column="state" property="state"/>
+        <result column="ctime" property="ctime" jdbcType="TIMESTAMP"/>
+        <result column="utime" property="utime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+        id,role_id,res_id,perm_ids,state,ctime,utime,remark
+    </sql>
+
+    <select id="queryForId" resultMap="BaseResultMap" parameterMap="BaseParamsMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_role_res_map
+        where id = #{id}
+        <if test="state != 0">
+            AND state = #{state}
+        </if>
+    </select>
+
+    <select id="queryForUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_role_res_map
+        where id = #{id}
+    </select>
+
+    <!-- 新增角色资源关联 -->
+    <insert id="addRoleResMap" parameterType="cn.itcast.tag.web.user.bean.RoleResMapBean" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into tbl_role_res_map
+        (role_id,res_id,perm_ids,state,ctime,utime,remark)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.roleId}, #{item.resId},#{item.permIds},#{item.state},#{item.ctime},#{item.utime},#{item.remark})
+        </foreach>
+    </insert>
+
+    <!-- 根据ID删除角色资源关联 -->
+    <delete id="delRoleResMapForId" parameterMap="BaseParamsMap">
+        DELETE FROM tbl_role_res_map
+        WHERE id=#{id}
+    </delete>
+
+    <!-- 根据角色ID删除角色资源关联 -->
+    <delete id="delRoleResMapForRoleId" parameterMap="BaseParamsMap">
+        DELETE FROM tbl_role_res_map
+        WHERE role_id=#{roleId}
+    </delete>
+
+    <!-- 根据ID修改角色资源关联 -->
+    <update id="updateRoleResMap" parameterMap="BaseParamsMap">
+        UPDATE tbl_role_res_map SET
+        <if test="resId != null">
+            res_id=#{resId},
+        </if>
+        <if test="roleId != null">
+            role_id=#{roleId},
+        </if>
+        <if test="permIds != null">
+            perm_ids=#{permIds},
+        </if>
+        <if test="state != 0">
+            state=#{state},
+        </if>
+        <if test="remark != null">
+            remark=#{remark},
+        </if>
+        utime=NOW() WHERE id=#{id}
+    </update>
+
+</mapper>

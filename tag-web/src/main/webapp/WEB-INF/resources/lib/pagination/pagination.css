@@ -1,0 +1,28 @@
+﻿@charset "utf-8";
+/* pagination */
+.pagination {
+    font-size: 80%;
+}
+
+.pagination a {
+    text-decoration: none; /* border:solid 1px #1988f9;color:#1988f9; */
+    color: #333;
+}
+
+.pagination a, .pagination span {
+    display: inline-block;
+    float: left;
+    padding: 0.3em 0.5em;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.pagination .current { /* background:#1988f9;color:#fff;border:solid 1px #1988f9; */
+    color: #409eff;
+}
+
+.pagination .current.prev, .pagination .current.next {
+    color: #999;
+    border-color: #999;
+    background: #fff;
+}

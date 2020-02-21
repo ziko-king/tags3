@@ -1,0 +1,41 @@
+body {
+    background: #fff;
+}
+
+.chartbox {
+    width: 92%;
+    height: 250px;
+    margin: 30px auto 20px;
+}
+
+.chartbar {
+    width: 48%;
+    height: 250px;
+    float: left;
+    box-shadow: 0 0 10px #ddd;
+    padding: 16px;
+    border-radius: 5px;
+}
+
+.chartTwo {
+    float: right;
+}
+
+.chartbar > div {
+    width: 100%;
+    height: 200px;
+    margin-top: -20px;
+}
+
+.chartOneNum, .chartTwoNum {
+    line-height: 30px;
+}
+
+.chartbar > h5 {
+    font-weight: bolder;
+}
+
+.chartbar > h5 span {
+    font-size: 16px;
+    margin-left: 12px;
+}

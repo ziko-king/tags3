@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.engine.mapper.MetaDataMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap"
+                  type="cn.itcast.tag.web.engine.bean.MetaDataBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap" type="cn.itcast.tag.web.engine.bean.MetaDataBean">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="tag_id" property="tagId" jdbcType="BIGINT"/>
+        <result column="in_type" property="inType" jdbcType="VARCHAR"/>
+        <result column="driver" property="driver" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="db_table" property="dbTable" jdbcType="VARCHAR"/>
+        <result column="sql" property="sql" jdbcType="VARCHAR"/>
+        <result column="in_path" property="inPath" jdbcType="VARCHAR"/>
+        <result column="sperator" property="sperator" jdbcType="VARCHAR"/>
+        <result column="in_fields" property="inFields" jdbcType="VARCHAR"/>
+        <result column="cond_fields" property="condFields" jdbcType="VARCHAR"/>
+        <result column="out_fields" property="outFields" jdbcType="VARCHAR"/>
+        <result column="out_path" property="outPath" jdbcType="VARCHAR"/>
+        <result column="zk_hosts" property="zkHosts" jdbcType="VARCHAR"/>
+        <result column="zk_port" property="zkPort" jdbcType="INTEGER"/>
+        <result column="hbase_table" property="hbaseTable" jdbcType="VARCHAR"/>
+        <result column="family" property="family" jdbcType="VARCHAR"/>
+        <result column="select_field_names" property="selectFieldNames" jdbcType="VARCHAR"/>
+        <result column="where_field_names" property="whereFieldNames" jdbcType="VARCHAR"/>
+        <result column="where_field_values" property="whereFieldValues" jdbcType="VARCHAR"/>
+        <result column="ctime" property="ctime" jdbcType="TIMESTAMP"/>
+        <result column="utime" property="utime" jdbcType="TIMESTAMP"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+		id,tag_id,in_type,driver,url,username,password,db_table,`sql`,in_path,sperator,in_fields,cond_fields,out_fields,out_path,zk_hosts,zk_port,hbase_table,family,select_field_names,where_field_names,where_field_values,ctime,utime,state,remark
+	</sql>
+
+    <!-- 新增元数据 -->
+    <insert id="addMetaData" parameterMap="BaseParamsMap" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			tbl_metadata(tag_id,in_type,driver,url,username,password,db_table,`sql`,in_path,sperator,in_fields,cond_fields,out_fields,out_path,zk_hosts,zk_port,hbase_table,family,select_field_names,where_field_names,where_field_values,ctime,utime,state,remark)
+		VALUES(
+			#{tagId, jdbcType=BIGINT},
+			#{inType, jdbcType=VARCHAR},
+			#{driver, jdbcType=VARCHAR},
+			#{url, jdbcType=VARCHAR},
+			#{username, jdbcType=VARCHAR},
+			#{password, jdbcType=VARCHAR},
+			#{dbTable, jdbcType=VARCHAR},
+			#{sql, jdbcType=VARCHAR},
+			#{inPath, jdbcType=VARCHAR},
+			#{sperator, jdbcType=VARCHAR},
+			#{inFields, jdbcType=VARCHAR},
+			#{condFields, jdbcType=VARCHAR},
+			#{outFields, jdbcType=VARCHAR},
+			#{outPath, jdbcType=VARCHAR},
+			#{zkHosts, jdbcType=VARCHAR},
+			#{zkPort, jdbcType=INTEGER},
+			#{hbaseTable, jdbcType=VARCHAR},
+			#{family, jdbcType=VARCHAR},
+			#{selectFieldNames, jdbcType=VARCHAR},
+			#{whereFieldNames, jdbcType=VARCHAR},
+			#{whereFieldValues, jdbcType=VARCHAR},
+			NOW(),
+			NOW(),
+			1,
+			#{remark, jdbcType=VARCHAR}
+		)
+	</insert>
+
+    <!-- 根据ID删除元数据 -->
+    <delete id="delMetaDataForId" parameterMap="BaseParamsMap">
+		DELETE FROM 
+			tbl_metadata 
+		WHERE 
+			id=#{id,jdbcType=BIGINT}
+	</delete>
+
+    <!-- 修改元数据 -->
+    <update id="updMetaDataForId" parameterMap="BaseParamsMap">
+        UPDATE tbl_metadata SET
+        <set>
+            <if test="select_field_names != null and select_field_names != ''">
+                select_field_names=#{selectFieldNames,jdbcType=VARCHAR},
+            </if>
+            <if test="where_field_names != null and where_field_names != ''">
+                where_field_names=#{whereFieldNames,jdbcType=VARCHAR},
+            </if>
+        </set>
+        utime=NOW()
+        WHERE
+        id=#{id,jdbcType=BIGINT}
+    </update>
+
+    <!-- 根据ID查询模型 -->
+    <select id="get" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_metadata
+        WHERE
+        tag_id=#{tagId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 根据ID查询模型 -->
+    <select id="queryMetaDataForId" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_metadata
+        WHERE
+        id=#{id,jdbcType=BIGINT}
+    </select>
+</mapper>

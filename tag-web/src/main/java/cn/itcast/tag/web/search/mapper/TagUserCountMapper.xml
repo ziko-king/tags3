@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.search.mapper.TagUserCountMapper">
+    <select id="queryUserCountByTagIdAndType" resultType="java.lang.Long">
+    	select COALESCE(sum(user_count),0) from tbl_tag_user_count where tag_id=#{tagId} and tag_type = #{tagType}
+    </select>
+
+    <insert id="insert">
+    	insert into tbl_tag_user_count(tag_id,tag_type,user_count) values(#{tagId},#{tagType},#{userCount})
+    </insert>
+
+    <select id="queryAllUserCount" resultType="java.lang.Long">
+    	select COALESCE(sum(user_count),0) from tbl_tag_user_count where tag_type = #{tagType}
+    </select>
+</mapper>

@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.basictag.mapper.BasicTagMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap" type="cn.itcast.tag.web.basictag.bean.BasicTagBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap" type="cn.itcast.tag.web.basictag.bean.BasicTagBean"/>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+		id, name, industry, rule, business,level, pid, ctime, utime, state, remark
+	</sql>
+
+    <!-- 新增基础标签 (一至三级)-->
+    <insert id="addMainBasicTag" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cn.itcast.tag.web.basictag.bean.BasicTagBean">
+		INSERT INTO 
+		tbl_basic_tag (
+			NAME,
+			industry,
+			rule,
+			business,
+			LEVEL,
+			pid,
+			ctime,
+			utime,
+			state,
+			remark
+		)
+		VALUES
+		(
+			#{name,jdbcType=VARCHAR}, 
+			#{industry,jdbcType=VARCHAR}, 
+			#{rule,jdbcType=VARCHAR},
+			#{business,jdbcType=VARCHAR}, 
+			#{level,jdbcType=INTEGER}, 
+			#{pid,jdbcType=INTEGER}, 
+			NOW(), 
+			NOW(),
+			#{state,jdbcType=INTEGER}, 
+			#{remark,jdbcType=INTEGER}
+		)
+	</insert>
+
+    <!-- 更新用户和基础标签关联表-->
+    <insert id="insertUserTagMap">
+		INSERT INTO 
+		tbl_user_tag_map (
+			user_id,
+			tag_id,
+			state,
+			ctime,
+			utime,
+			remark
+		)
+		VALUES
+		(
+			#{userId,jdbcType=INTEGER}, 
+			#{tagId,jdbcType=INTEGER}, 
+			#{state,jdbcType=INTEGER}, 
+			NOW(), 
+			NOW(),
+			#{remark,jdbcType=INTEGER}
+		)
+	</insert>
+
+    <!-- 根据ID更新基础标签(一至三级) -->
+    <update id="updateMainBasicTagForId" parameterMap="BaseParamsMap">
+		UPDATE 
+		tbl_basic_tag
+		SET 
+			NAME = #{name,jdbcType=VARCHAR},
+			utime=NOW() 
+		WHERE
+			id = #{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 根据ID更新基础标签状态 -->
+    <update id="updateStateForId" parameterMap="BaseParamsMap">
+		UPDATE 
+		tbl_basic_tag
+		SET 
+			state = #{state,jdbcType=INTEGER},
+			utime=NOW() 
+		WHERE
+			id = #{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 新增基础标签(四级) -->
+    <insert id="addFourthBasicTag" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cn.itcast.tag.web.basictag.bean.BasicTagBean">
+		INSERT INTO 
+		tbl_basic_tag (
+			NAME,
+			industry,
+			rule,
+			business,
+			LEVEL,
+			pid,
+			ctime,
+			utime,
+			state,
+			remark
+		)
+		VALUES
+		(
+			#{name,jdbcType=VARCHAR}, 
+			#{industry,jdbcType=VARCHAR}, 
+			#{rule,jdbcType=VARCHAR},
+			#{business,jdbcType=VARCHAR}, 
+			#{level,jdbcType=INTEGER}, 
+			#{pid,jdbcType=INTEGER}, 
+			NOW(), 
+			NOW(),
+			#{state,jdbcType=INTEGER}, 
+			#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+    <!-- 根据ID更新基础标签(四级) -->
+    <update id="updateFourthBasicTag" parameterMap="BaseParamsMap">
+		UPDATE 
+		tbl_basic_tag
+		SET 
+			NAME = #{name,jdbcType=VARCHAR}, 
+			industry=#{industry,jdbcType=VARCHAR}, 
+			utime=NOW(),
+			rule=#{rule,jdbcType=VARCHAR}, 
+			business=#{business,jdbcType=VARCHAR}
+		WHERE
+			id = #{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 新增基础标签(五级) -->
+    <insert id="addFifthBasicTag" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cn.itcast.tag.web.basictag.bean.BasicTagBean">
+		INSERT INTO 
+		tbl_basic_tag (
+			NAME,
+			industry,
+			rule,
+			business,
+			LEVEL,
+			pid,
+			ctime,
+			utime,
+			state,
+			remark
+		)
+		VALUES
+		(
+			#{name,jdbcType=VARCHAR}, 
+			#{industry,jdbcType=VARCHAR}, 
+			#{rule,jdbcType=VARCHAR},
+			#{business,jdbcType=VARCHAR}, 
+			#{level,jdbcType=INTEGER}, 
+			#{pid,jdbcType=INTEGER},
+			NOW(),
+			NOW(),
+			#{state,jdbcType=INTEGER}, 
+			#{remark,jdbcType=INTEGER}
+		)
+	</insert>
+
+    <!-- 根据ID更新基础标签(五级) -->
+    <update id="updateFifthBasicTag" parameterMap="BaseParamsMap">
+		UPDATE 
+		tbl_basic_tag
+		SET 
+			NAME = #{name,jdbcType=VARCHAR}, 
+			business=#{business,jdbcType=VARCHAR},
+			utime=NOW(),
+			rule = #{rule,jdbcType=VARCHAR}
+		WHERE
+			id = #{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 根据Level查询基础标签 -->
+    <select id="queryBasicTagForLevel" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_basic_tag
+        WHERE
+        LEVEL = #{bean.level,jdbcType=INTEGER}
+        AND state != -1
+    </select>
+    <!-- SELECT
+            tb1.id,
+            tb1.name,
+            tb1.industry,
+            tb1.rule,
+            tb1.business,
+            tb1.level,
+            tb1.pid,
+            tb1.ctime,
+            tb1.utime,
+            tb1.state,
+            tb1.remark
+        FROM
+            tbl_basic_tag tb1
+        INNER JOIN (
+            SELECT
+                *
+            FROM
+                tbl_user_tag_map
+            WHERE
+                user_id = #{loginUser.id}
+            AND state != - 1
+        ) tb2 ON tb1.id = tb2.tag_id
+        WHERE
+            tb1.state != - 1
+        AND tb1.`level` = #{bean.level} -->
+    <!-- 根据userid查询基础标签 -->
+    <select id="queryBasicTagForUserId" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        tb1.id,
+        tb1.name,
+        tb1.industry,
+        tb1.rule,
+        tb1.business,
+        tb1.level,
+        tb1.pid,
+        tb1.ctime,
+        tb1.utime,
+        tb1.state,
+        tb1.remark
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag tb1
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_basic_tag tb1
+            INNER JOIN (
+            SELECT
+            *
+            FROM
+            tbl_user_tag_map
+            WHERE
+            user_id = #{loginUser.id}
+            AND state != - 1
+            ) tb2 ON tb1.id = tb2.tag_id
+        </if>
+        WHERE
+        tb1.state != - 1
+        AND tb1.pid = #{bean.id}
+    </select>
+
+    <!-- 根据pid和level查询基础标签(根据名称模糊查询) -->
+    <select id="queryBasicTagForWithPid1" resultMap="BaseResultMap">
+        SELECT DISTINCT
+        tb.id,
+        tb.`name`,
+        tb.industry,
+        tb.rule,
+        tb.business,
+        tb.`level`,
+        tb.pid,
+        tb.ctime,
+        tb.utime,
+        tb.state,
+        tb.remark
+        FROM
+        (
+        SELECT
+        bg.*
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bg
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_user_tag_map utm
+            INNER JOIN tbl_user u ON (utm.`user_id` = u.id)
+            INNER JOIN tbl_basic_tag bg ON (bg.`id` = utm.`tag_id`)
+            WHERE u.id = #{loginUser.id}
+        </if>
+        GROUP BY bg.id
+        UNION ALL
+        SELECT
+        bt.*
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bt
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_role_data_map rdm
+            INNER JOIN tbl_basic_tag bt ON (bt.id = rdm.tag_id)
+            WHERE
+            rdm.tag_type = 1
+            AND rdm.role_id = #{roleBean.id}
+        </if>
+        GROUP BY bt.id
+        ) tb
+        WHERE
+        tb.state != - 1
+        AND tb.pid = #{bean.id}
+        <if test="bean.name != null and bean.name != ''">
+            AND tb.`name` LIKE CONCAT('%',#{bean.name},'%')
+        </if>
+    </select>
+
+    <!-- 根据id查询基础标签 -->
+    <select id="queryBasicTagForWithPid2" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+		SELECT
+			tb1.id,
+			tb1.`name`,
+			tb1.industry,
+			tb1.rule,
+			tb1.business,
+			tb1.`level`,
+			tb1.pid,
+			tb1.ctime,
+			tb1.utime,
+			tb1.state,
+			tb1.remark
+		FROM
+			tbl_basic_tag tb1
+		WHERE
+			tb1.state != - 1
+		AND tb1.id = #{bean.id}
+	</select>
+
+    <!-- 根据ID查询基础标签 -->
+    <select id="queryBasicTagForId" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT DISTINCT
+        tb.id,
+        tb.`name`,
+        tb.industry,
+        tb.rule,
+        tb.business,
+        tb.`level`,
+        tb.pid,
+        tb.ctime,
+        tb.utime,
+        tb.state,
+        tb.remark
+        FROM
+        (
+        SELECT
+        bg.*
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bg
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_user_tag_map utm
+            INNER JOIN tbl_user u ON (utm.`user_id` = u.id)
+            INNER JOIN tbl_basic_tag bg ON (bg.`id` = utm.`tag_id`)
+            WHERE 1=1
+            AND u.id = #{loginUser.id}
+        </if>
+        GROUP BY bg.id
+        UNION ALL
+        SELECT
+        bt.*
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bt
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_role_data_map rdm
+            INNER JOIN tbl_basic_tag bt ON (bt.id = rdm.tag_id)
+            WHERE
+            rdm.tag_type = 1
+            AND rdm.role_id = #{roleBean.id}
+        </if>
+        GROUP BY bt.id
+        ) tb
+        WHERE
+        tb.state != - 1
+        AND tb.id = #{bean.id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据PID查询基础标签 -->
+    <select id="queryBasicTagForPid" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT DISTINCT * FROM (
+        SELECT bg.* FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bg WHERE 1=1
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_user_tag_map utm INNER JOIN tbl_user u
+            ON (utm.`user_id`=u.id)
+            INNER JOIN tbl_basic_tag bg ON (bg.`id`=utm.`tag_id`)
+            WHERE 1=1 AND u.id=#{loginUser.id}
+        </if>
+        AND bg.pid = #{bean.pid,jdbcType=INTEGER}
+        AND bg.state != - 1
+        UNION ALL
+        SELECT
+        bt.*
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bt
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_role_data_map rdm
+            INNER JOIN tbl_basic_tag bt ON (bt.id = rdm.tag_id)
+        </if>
+        WHERE 1=1
+        AND bt.pid = #{bean.pid,jdbcType=INTEGER}
+        <if test="roleBean.id != 1">
+            AND rdm.tag_type = 1
+            AND rdm.role_id = #{roleBean.id}
+        </if>
+        ) tb WHERE 1=1
+        <if test="bean.name != null and bean.name != ''">
+            AND tb.`name` LIKE "%"#{bean.name}"%"
+        </if>
+        GROUP BY tb.id
+    </select>
+
+    <!-- 根据行业名称查询基础标签 -->
+    <select id="queryBasicTagForName" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT DISTINCT * FROM (
+        SELECT bg.* FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bg WHERE 1=1
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_user_tag_map utm INNER JOIN tbl_user u
+            ON (utm.`user_id`=u.id)
+            INNER JOIN tbl_basic_tag bg ON (bg.`id`=utm.`tag_id`)
+            WHERE 1=1 AND u.id=#{loginUser.id}
+        </if>
+        AND bg.state != - 1
+        UNION ALL
+        SELECT
+        bt.*
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bt
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_role_data_map rdm
+            INNER JOIN tbl_basic_tag bt ON (bt.id = rdm.tag_id)
+        </if>
+        WHERE 1=1
+        <if test="roleBean.id != 1">
+            AND rdm.tag_type = 1
+            AND rdm.role_id = #{roleBean.id}
+        </if>
+        ) tb WHERE 1=1
+        <if test="bean.name != null and bean.name != ''">
+            AND name LIKE CONCAT('%',#{bean.name},'%')
+        </if>
+        GROUP BY tb.id
+    </select>
+
+    <!-- 根据ID删除基础标签 -->
+    <delete id="delBasicTagForId" parameterMap="BaseParamsMap">
+		DELETE
+		FROM
+			tbl_basic_tag
+		WHERE
+			id = #{id,jdbcType=BIGINT}
+	</delete>
+
+    <!-- 根据PID删除基础标签 -->
+    <delete id="delBasicTagForPid" parameterMap="BaseParamsMap">
+		DELETE
+		FROM
+			tbl_basic_tag
+		WHERE
+			pid = #{pid,jdbcType=BIGINT}
+	</delete>
+
+    <!-- 根据tagid删除用户和基础标签关联表 -->
+    <delete id="delUserTagForId" parameterMap="BaseParamsMap">
+		DELETE
+		FROM
+			tbl_user_tag_map
+		WHERE
+			tag_id = #{tagId,jdbcType=BIGINT}
+	</delete>
+
+    <!-- 根据行业名称查询基础标签 -->
+    <select id="searchBasicTagForName" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        tb.id,
+        tb.`name`,
+        tb.industry,
+        tb.rule,
+        tb.business,
+        tb.`level`,
+        tb.pid,
+        tb.ctime,
+        tb.utime,
+        tb.state,
+        tb.remark
+        FROM
+        (
+        SELECT
+        tbt2.id,
+        tbt2.`name`,
+        tbt2.industry,
+        tbt2.rule,
+        tbt2.business,
+        tbt2.`level`,
+        tbt2.pid,
+        tbt2.ctime,
+        tbt2.utime,
+        tbt2.state,
+        tbt2.remark
+        FROM
+        (
+        SELECT
+        id,
+        `name`,
+        industry,
+        rule,
+        business,
+        `level`,
+        pid,
+        ctime,
+        utime,
+        state,
+        remark
+        FROM
+        tbl_basic_tag
+        WHERE
+        id = #{id,jdbcType=INTEGER}
+        AND state != - 1
+        ) tbt1
+        LEFT OUTER JOIN (
+        SELECT
+        id,
+        `name`,
+        industry,
+        rule,
+        business,
+        `level`,
+        pid,
+        ctime,
+        utime,
+        state,
+        remark
+        FROM
+        tbl_basic_tag
+        WHERE
+        state != - 1
+        ) tbt2 ON tbt1.id = tbt2.pid
+        ) tb
+        WHERE
+        1 = 1
+        <if test="name != null and name != ''">
+            AND tb.name LIKE CONCAT('%',#{name},'%')
+        </if>
+    </select>
+
+    <!-- 根据PID查询基础标签 -->
+    <select id="queryAllBasicTags" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_basic_tag
+        WHERE
+        state != -1
+    </select>
+
+    <select id="isExistBasicTagForName" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT DISTINCT * FROM (
+        SELECT bg.* FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bg WHERE 1=1
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_user_tag_map utm INNER JOIN tbl_user u
+            ON (utm.`user_id`=u.id)
+            INNER JOIN tbl_basic_tag bg ON (bg.`id`=utm.`tag_id`)
+            WHERE 1=1 AND u.id=#{loginUser.id}
+        </if>
+        AND bg.pid = #{bean.pid,jdbcType=INTEGER}
+        AND bg.state != - 1
+        UNION ALL
+        SELECT
+        bt.*
+        FROM
+        <if test="roleBean.id == 1">
+            tbl_basic_tag bt
+        </if>
+        <if test="roleBean.id != 1">
+            tbl_role_data_map rdm
+            INNER JOIN tbl_basic_tag bt ON (bt.id = rdm.tag_id)
+        </if>
+        WHERE 1=1
+        AND bt.pid = #{bean.pid,jdbcType=INTEGER}
+        <if test="roleBean.id != 1">
+            AND rdm.tag_type = 1
+            AND rdm.role_id = #{roleBean.id}
+        </if>
+        ) tb WHERE 1=1
+        <if test="bean.name != null and bean.name != ''">
+            AND tb.`name` = #{bean.name}
+        </if>
+        GROUP BY tb.id
+    </select>
+
+    <select id="queryTagCountByLevel" resultType="java.lang.Long">
+    	select count(1) from tbl_basic_tag where level = #{level}
+    </select>
+
+</mapper>

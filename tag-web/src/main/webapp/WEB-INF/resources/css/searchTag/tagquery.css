@@ -1,0 +1,106 @@
+.ztree li span.button.pIcon01_ico_open {
+    margin-right: 2px;
+    background: url(../../lib/zTreeStyle/img/diy/u930.png) no-repeat scroll 0 0 transparent;
+    vertical-align: top;
+    *vertical-align: middle
+}
+
+.ztree li span.button.pIcon01_ico_close {
+    margin-right: 2px;
+    background: url(../../lib/zTreeStyle/img/diy/u932.png) no-repeat scroll 0 0 transparent;
+    vertical-align: top;
+    *vertical-align: middle
+}
+
+.ztree li span.button.icon01_ico_docu {
+    margin-right: 2px;
+    background: url(../../lib/zTreeStyle/img/diy/3.png) no-repeat scroll 0 0 transparent;
+    vertical-align: top;
+    *vertical-align: middle
+}
+
+.ztree li span.button.chk {
+    margin-top: 4px;
+}
+
+.ztree li span.button.roots_close,
+.ztree li span.button.bottom_close,
+.ztree li span.button.center_close {
+    background-image: url(../../imgs/jia.png);
+    background-size: 100% 100%;
+    background-position: 0 0;
+    width: 13px;
+    height: 13px;
+    margin-top: 4px;
+}
+
+.ztree li span.button.roots_open,
+.ztree li span.button.center_open,
+.ztree li span.button.bottom_open {
+    background-image: url(../../imgs/jian.png);
+    background-size: 100% 100%;
+    background-position: 0 0;
+    width: 13px;
+    height: 13px;
+    margin-top: 4px;
+}
+
+.ztree li span.button.chk.checkbox_true_full_focus,
+.ztree li span.button.chk.checkbox_true_full {
+    background-image: url(../../imgs/check.png);
+    background-size: 100% 100%;
+    background-position: 0 0;
+}
+
+.ztree li span.button.chk.checkbox_true_part,
+.ztree li span.button.chk.checkbox_true_part_focus {
+    background-image: url(../../imgs/checkhalf.png);
+    background-size: 100% 100%;
+    background-position: 0 0;
+}
+
+.ztree li span.button.chk.checkbox_false_full_focus {
+    background-position: 0 0;
+}
+
+.ztree li span.button.chk {
+    background-image: url(../../imgs/uncheck.png);
+    background-size: 100% 100%;
+    background-position: 0 0;
+}
+
+#Pagination {
+    float: right;
+}
+
+.searchBtn {
+    text-align: right;
+}
+
+.searchBtn span {
+    display: inline-block;
+    padding: 2px 10px;
+    background-color: #2fa4ff;
+    border-radius: 3px;
+    margin: 5px 10px 5px 0;
+    cursor: pointer;
+    color: #fff;
+    font-size: 12px;
+}
+
+#treeDemo::-webkit-scrollbar { /*������������ʽ*/
+    width: 4px; /*�߿�ֱ��Ӧ�����������ĳߴ�*/
+    height: 4px;
+}
+
+#treeDemo::-webkit-scrollbar-thumb { /*����������С����*/
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#treeDemo::-webkit-scrollbar-track { /*������������*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/tx  
+        http://www.springframework.org/schema/tx/spring-tx.xsd  
+
+
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 非controller组件扫描service、dao、other -->
+    <context:component-scan base-package="cn.itcast.tag.web">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 加载配置文件 -->
+    <context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true"/>
+
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!-- MyBatis配置，跟SqlMapConfig文件作用相同 -->
+    <bean id="mybatisConfiguration" class="org.apache.ibatis.session.Configuration">
+        <!-- MyBatis（SQL）日志输出配置 -->
+        <property name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>
+    </bean>
+
+    <!-- 配置mybatis的sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 扫描mappers.xml文件 -->
+        <property name="mapperLocations" value="classpath:cn/itcast/tag/web/**/*.xml"/>
+        <!-- 引用MyBatis配置 -->
+        <property name="configuration" ref="mybatisConfiguration"/>
+    </bean>
+
+    <!-- 配置mybatis扫描dao层接口 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.itcast.tag.web.**.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!-- Spring 声明式事务 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 注解方式配置事物 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- <bean id="taskJob" class="cn.itcast.tag.web.job.DataConvertionTask"/>
+
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="group" value="job_work"/>
+        <property name="name" value="job_work_name"/>
+        <property name="concurrent" value="false"/>
+        <property name="targetObject" ref="taskJob"/>
+        <property name="targetMethod" value="run"/>
+    </bean> -->
+
+    <!--  调度触发器 -->
+    <!-- <bean id="myTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="name" value="work_default_name"/>
+        <property name="group" value="work_default"/>
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="cronExpression" value="0/5 * * * * ?"/>
+    </bean> -->
+
+    <!--Quartz动态定时任务配置 -->
+    <!-- <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    	<property name="triggers" ref="myTrigger"></property>
+    </bean> -->
+
+    <!--自动注入工厂-->
+    <!-- <bean id="jobFactory" class="com.mengyao.tag.job.JobFactory"/> -->
+    <!-- 总配置 -->
+    <!-- <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobFactory" ref="jobFactory"></property>
+        <property name="configLocation" value="classpath:config.properties"/>
+    </bean> -->
+
+    <!--
+    <aop:config>
+        <aop:pointcut id="targetMethod" expression="execution(* com.mengyao.tag.*.service.*.*(..))" />
+        <aop:advisor pointcut-ref="targetMethod" advice-ref="transactionAdvice" />
+    </aop:config>
+
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+            <tx:method name="create*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="insert*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="update*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="edit*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+            <tx:method name="drop*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="modify*" propagation="REQUIRED"
+                rollback-for="java.lang.Exception" />
+            <tx:method name="*" propagation="REQUIRED" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+     -->
+</beans>  

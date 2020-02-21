@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.engine.mapper.RuleMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap"
+                  type="cn.itcast.tag.web.engine.bean.RuleBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap"
+               type="cn.itcast.tag.web.engine.bean.RuleBean"/>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+		id,tag_id,type,rule,ctime,utime,state,remark
+	</sql>
+
+    <!-- 新增规则 -->
+    <insert id="addRule" parameterMap="BaseParamsMap" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			tbl_rule(tag_id,TYPE,rule,ctime,state,remark)
+		VALUES(
+			#{tagId,jdbcType=BIGINT},
+			#{type,jdbcType=INTEGER},
+			#{rule,jdbcType=VARCHAR},
+			NOW(),
+			1,
+			#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+
+    <!-- 根据ID删除规则 -->
+    <delete id="delRuleForId" parameterMap="BaseParamsMap">
+		DELETE FROM 
+			tbl_rule
+		WHERE 
+			id=#{id,jdbcType=BIGINT}
+	</delete>
+
+    <!-- 修改规则状态 -->
+    <update id="updRuleForState" parameterMap="BaseParamsMap">
+		UPDATE tbl_rule SET
+			state=#{state,jdbcType=INTEGER},utime=NOW()
+		WHERE
+			id=#{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 修改规则名称 -->
+    <update id="updRuleForName" parameterMap="BaseParamsMap">
+		UPDATE tbl_rule SET
+			rule=#{rule,jdbcType=VARCHAR},utime=NOW()
+		WHERE
+			id=#{id,jdbcType=BIGINT}
+	</update>
+
+    <!-- 根据标签ID修改规则 -->
+    <update id="updRuleForTagId" parameterMap="BaseParamsMap">
+		UPDATE tbl_rule SET
+			rule=#{rule,jdbcType=VARCHAR},utime=NOW()
+		WHERE
+			tag_id=#{tagId,jdbcType=BIGINT}
+	</update>
+
+    <!-- 根据ID查询规则 -->
+    <select id="queryRuleForId" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_rule
+        WHERE
+        id=#{id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 根据标签ID查询规则 -->
+    <select id="queryRuleForTagId" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_rule
+        WHERE
+        tag_id=#{tagId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 查询所有规则 -->
+    <select id="queryRuleForScan" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_rule
+    </select>
+
+    <!-- 根据标签ID、标签类型查询规则 -->
+    <select id="queryRuleForTagIdAndType" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        tbl_rule
+        WHERE
+        tag_id = #{tagId,jdbcType=BIGINT}
+        AND
+        type = #{type}
+    </select>
+
+</mapper>

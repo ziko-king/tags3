@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coordinator-app name="cron-coord" frequency="${coord:days(1)}"
+                 start="${start}" end="${end}" timezone="Asia/Shanghai" xmlns="uri:oozie:coordinator:0.5">
+    <action>
+        <workflow>
+            <app-path>${oozieWorkflowAppPath}</app-path>
+            <configuration>
+                <property>
+                    <name>oozieWorkflowAppPath</name>
+                    <value>${oozieWorkflowAppPath}</value>
+                </property>
+            </configuration>
+        </workflow>
+    </action>
+</coordinator-app>

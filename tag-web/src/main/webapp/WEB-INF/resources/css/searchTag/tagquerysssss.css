@@ -1,0 +1,156 @@
+body {
+    background: rgb(239, 245, 250);
+}
+
+.nav_wrap {
+    margin-top: 50px;
+}
+
+.centent_wrap {
+    width: 100%;
+}
+
+.centent_wrap_middle {
+    height: 100px;
+    padding-top: 40px;
+    text-align: center;
+
+}
+
+.search_span {
+    margin-left: 10px;
+    display: inline-block;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+
+.centent_box {
+    border: 1px solid #ccc;
+    background: #fff;
+    width: 96%;
+    margin: 0 auto;
+    padding: 20px;
+
+}
+
+.centent_box > div {
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid #ccc;
+}
+
+.centent_box > div.choice {
+    border-bottom: none;
+
+}
+
+.centent_box > div.choice h1, .centent_box > div.choice > div {
+    float: left;
+}
+
+.centent_box > div.choice > div {
+    padding-left: 70px;
+}
+
+.centent_box > div.choice dl {
+    width: 200px;
+    border: 1px solid #2fa4ff;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    float: left;
+    margin: 10px 20px 10px 0;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.centent_box > div.choice dl dt {
+    width: 168px;
+    float: left;
+}
+
+.centent_box > div.choice dl dt p, .centent_box > div.choice dl dt div {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.centent_box > div.choice dl dt div {
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.centent_box > div.choice dl .del {
+    cursor: pointer;
+}
+
+.centent_box h1, .centent_box .ulbox {
+    float: left;
+}
+
+.centent_box .more {
+    float: right;
+    cursor: pointer;
+    color: #8a8a8a;
+    font-size: 12px;
+    display: none;
+}
+
+.centent_box .more img {
+    width: 10px;
+}
+
+.centent_box h1 {
+    font-size: 16px;
+    color: #2fa4ff;
+    line-height: 30px;
+}
+
+.centent_box .ulbox {
+    width: 850px;
+    margin-left: 70px;
+
+}
+
+.centent_box .ulbox > div {
+    overflow: hidden;
+}
+
+.centent_box ul li {
+    float: left;
+    line-height: 30px;
+    height: 30px;
+    width: 25%;
+}
+
+.centent_box ul li input {
+    margin-right: 7px;
+    vertical-align: middle;
+    margin-top: 0;
+}
+
+.centent_box ul li span {
+    vertical-align: middle;
+}
+
+.clear {
+    clear: both;
+}
+
+.searchbtn {
+    text-align: center;
+    margin: 20px;
+}
+
+.searchbtn input {
+    width: 64px;
+    font-size: 14px;
+    border: none;
+    background: #0068b5;
+    color: #fff;
+    height: 30px;
+}

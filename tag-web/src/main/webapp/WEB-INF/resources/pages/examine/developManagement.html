@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--S logo-->
+    <link href="../../image/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="../../image/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <!--E logo-->
+    <title>审核管理-标签管理系统</title>
+    <meta content="大数据，用户标签管理系统" name="keywords">
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+          name="viewport"/>
+    <!--优先使用 IE 最新版本和 Chrome -->
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <!--忽略数字自动识别为电话号码 -->
+    <meta content="telephone=no" name="format-detection"/>
+    <!--忽略识别邮箱 -->
+    <meta content="email=no" name="format-detection"/>
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta content="true" name="HandheldFriendly"/>
+    <link href="../../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/base.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/jquery-confirm.min.css" rel="stylesheet">
+    <link href="../../css/fileinput.min.css" rel="stylesheet"/>
+    <link href="../../css/dataTables.bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../css/releaseManagement.css" rel="stylesheet" type="text/css"/>
+    <script src="../../assets/jquery.min.js"></script>
+    <script src="../../assets/laydate.dev.js"></script>
+    <script src="../../assets/jquery-confirm.min.js"></script>
+    <script src="../../assets/jquery.dataTables.min.js"></script>
+    <script src="../../assets/dataTables.bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <!--S 顶部导航-->
+    <nav class="navbar navbar-default navbar-fixed-top g_row">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img src="../../image/logo/logo.png" style="width:32px;margin-top:-6px;"/>
+                    <span style="display:inline-block;">标签管理系统</span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav nav_b_text">
+                    <li ${(navigation??&&navigation='tagmanager' )?string(
+                    "class=active","")} class="active"><a href="${basePath}/mge">基础标签</a></li>
+                    <li ${(navigation??&&navigation='statisticstag ' )?string(
+                    "class=active","")}><a href="${basePath}/userGroup/statistics">组合标签</a></li>
+                    <li ${(navigation??&&navigation='microportrait' )?string(
+                    "class=active","")}><a href="${basePath}/micro">微观画像</a></li>
+                    <li ${(navigation??&&navigation='tagquery' )?string(
+                    "class=active","")}><a href="${basePath}/tagquery">标签查询</a></li>
+                    <li ${(navigation??&&navigation='appmanagement' )?string(
+                    "class=active","")}><a href="${basePath}/appmanage">审核管理</a></li>
+                    <li ${(navigation??&&navigation='labeltask' )?string(
+                    "class=active","")}><a href="${basePath}/task/">标签任务</a></li>
+                    <li ${(navigation??&&navigation='system' )?string(
+                    "class=active","")}><a href="${basePath}/systemSet">系统设置</a></li>
+                    <li class="outlogin">
+                        <a class="outlogin_a" href="${basePath}/quit">
+                            <span class="outlogin_exit">退出</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="centent clearfix">
+        <div class="cont_left_label">
+            <!--S 左侧的一级标签-->
+            <div class="leftNav">
+                <div class="con_gr">
+                    <div class="left_gr">
+                        <div class="firstGr" style="transition: 0.5s;position: relative;">
+                            <img src="../../image/71.png">
+                            <span title=${var1.name} value=${var1.id}>申请管理</span>
+                        </div>
+                        <div class="firstGr" style="transition: 0.5s;position: relative;">
+                            <img src="../../image/71.png">
+                            <span title=${var1.name} value=${var1.id}>审批管理</span>
+                        </div>
+                        <div class="firstGr" style="transition: 0.5s;position: relative;">
+                            <img src="../../image/71.png">
+                            <span title=${var1.name} value=${var1.id}>开发管理</span>
+                        </div>
+                        <div class="firstGr" style="transition: 0.5s;position: relative;">
+                            <img src="../../image/71.png">
+                            <span title=${var1.name} value=${var1.id}>发布管理</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--S cont_right_label-->
+        <div class="cont_right_label">
+            <!--S 导航-->
+            <div class="label_nav">
+                <img src="../../image/labelsystem/home.png" style="margin-left:12px;margin-top: -5px;"/>
+                <span class="label_nav_sp2">您当前的位置：</span>
+                <a class="label_nav_sp1" href="${basePath}/home">首页</a>
+                <span class="label_nav_sp2">></span>
+                <a class="label_nav_sp3" href="">审核管理</a>
+                <span class="label_nav_sp2">></span>
+                <a class="label_nav_sp3" href="">开发管理</a>
+            </div>
+            <!--E 导航-->
+
+            <!--S 据顶部的div-->
+            <div class="labeltask_middle_wrap"></div>
+            <!--E 据顶部的div-->
+            <!--S 图表的内容-->
+            <div class="labeltask_bottom_wrap">
+                <section class="label_bottom_wrap">
+                    <div class="User_center">
+
+                        <div class="User_centerIN" id="User_centerIN">
+                            <div class="User_centerIN_top">
+                                <div class="User_radio_sosuo">
+                                    <input class="User_input" id="query" name="" placeholder="请输入关键词检索" type="text"
+                                           value=""/>
+                                    <span class="Userl_radio6"></span>
+                                </div>
+                            </div>
+                            <div class="User_centerIN_tubiao current_table">
+                                <!--table-->
+                                <section class="table_wrap clearfix all-table-container">
+                                    <div class="cover_style">
+                                        <!--用户列表失败-->
+                                        <div>
+                                            <table class="table table-striped table-bordered table-hover table-text-center"
+                                                   id="failtable">
+                                                <thead class="all-table-header">
+                                                <tr>
+                                                    <th width="">申请类型</th>
+                                                    <th width="">申请要求</th>
+                                                    <th width="">标签名称</th>
+                                                    <th width="">标签规则</th>
+                                                    <th width="">算法模型</th>
+                                                    <th width="">申请人</th>
+                                                    <th width="">最后处理人</th>
+                                                    <th>最后处理时间</th>
+                                                    <th width="">处理结果</th>
+                                                    <th width="">审批理由</th>
+                                                    <th width="">审批状态</th>
+                                                    <th width="">操作</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>组合标签</td>
+                                                    <td>组合标签创建</td>
+                                                    <td>A小A</td>
+                                                    <td style="cursor: pointer;" title="123123123123">
+                                                        <div style="    width: 66px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                            123123123123
+                                                        </div>
+                                                    </td>
+                                                    <td style="cursor: pointer;" title="模型1模型1模型1模型1">
+                                                        <div style="width: 66px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                            模型1模型1模型1模型1
+                                                        </div>
+                                                    </td>
+                                                    <td>demo</td>
+                                                    <td>--</td>
+                                                    <td>2016-01-10 18:10:10</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>
+                                                        <div class="work workFail">申请中</div>
+                                                    </td>
+                                                    <td class="resale" data-target="#popermodal" data-toggle="modal">
+                                                        开发
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!--/.table-->
+                                <!--pages-->
+                                <!--number-->
+                                <!--  <section class="pages">
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_info page-num"  role="status" aria-live="polite">
+                                            当前第<span id='curr'>1</span>/<span id='tota'>50</span>页，每页<span id='size'>10</span>条，共<span id='reco'>1</span>条记录
+                                        </div>
+                                    </div>
+                                    上一頁，下一頁
+                                    <div class="col-sm-6">
+                                        <div class="dataTables_info page-num page_num_right" id="fail-table_info" role="status" aria-live="polite">
+                                            <span class="home_page" id='home_page'>首页</span>
+                                            <span class="up_page" id='up_page'>上一页</span>
+                                            <span class="next_page" id='next_page'>下一页</span>
+                                            <input class="search_page_num" onkeyup="this.value=this.value.replace(/[^\d]/g,'');"></input>
+                                            <span class="home_page" id='end_page'>尾页</span>
+                                            <span class="search_page" id='search_page'>跳页</span>
+                                        </div>
+                                    </div>
+                                </section> -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            <!--E 图表的内容-->
+        </div>
+        <!--E cont_right_label-->
+    </div>
+    <!-- 模态框（Modal） -->
+    <section>
+        <div aria-hidden="true" aria-labelledby="popermodalLabel" class="modal fade" id="popermodal"
+             role="dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="popermodalLabel">
+                            开发审批
+                        </h4>
+                    </div>
+                    <div class="modal-body modal-body_wrap">
+                        <span class="typename_span">标签名称：</span>
+                        <span class=""></span>
+                    </div>
+                    <div class="modal-body modal-body_wrap">
+                        <span class="typename_span">标签分类：</span>
+                        <span class=""></span>
+                    </div>
+                    <div class="modal-body modal-body_wrap">
+                        <span class="typename_span">更新周期：</span>
+                        <span class=""></span>
+                    </div>
+                    <div class="modal-body modal-body_wrap">
+                        <span class="typename_span">业务含义：</span>
+                        <span></span>
+                    </div>
+                    <div class="modal-body modal-body_wrap">
+                        <span class="typename_span">算法引擎：</span>
+                        <span></span>
+                    </div>
+                    <div class="instruction_upload" style="color: red;">
+                        *请开发人员自行到指定路径补完算法逻辑，再行启用该标签算法算法存储路径：http://192.168.0.0/123/234/789
+                    </div>
+                    <div class="modal-footer" style="text-align:center;">
+                        <button class="btn btn-primary execute" id="createchildrentype" type="button">
+                            启用
+                        </button>
+                        <button class="btn btn-default" data-dismiss="modal" type="button">
+                            取消
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $.ajax({
+                url: basePath + '/taskListAll',
+                type: 'POST',
+                async: true,
+                data: JSON.stringify(req),
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    $.fn.jqLoading("destroy");
+                    if (data.code == 200 && data.data != null) {
+
+                    } else {
+                        popMessage(data.msg, 'red');
+                    }
+                },
+                error: function (xhr) {
+                    $.fn.jqLoading("destroy");
+                    popMessage('服务器错误', 'red');
+                }
+            });
+            $("#createonetype").on('click', function (e) {
+                $("#oneModal").modal("hide");
+                // $("#oneModal input[type='text']").val("");
+            });
+        </script>
+    </section>
+    <!--S 群体模态框（Modal） -->
+    <!-- <section >
+        <div class="modal fade" id="userpopermodal" tabindex="-1" role="dialog"
+             aria-labelledby="userpopermodalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="userfileupload" action="" method="post" style="width:72%">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="userpopermodalLabel">
+                            上传算法
+                        </h4>
+                    </div>
+                    一级标签
+                    <div class="modal-body modal-body_wrap">
+                        <span class="typename_span">一级标签：</span>
+                        <input type="text" id = "userlevelone" class="form-control typename_input" value="" readonly>
+                    </div>
+    
+                    二级标签
+                    <div class="modal-body modal-body_wrap">
+                        <span class="typename_span">二级标签：</span>
+                        <input type="text" id = "userleveltwo" class="form-control typename_input"value="" readonly>
+                    </div>
+    
+                    定义条件
+                    <div class="modal-body modal-body_wrap type_wrap">
+                        <span class="typename_datatype">定义条件：&nbsp;</span>
+                        <textarea readonly type="text" id = "definiteconditions" maxlength="50" class="form-control  form-input  business_mean"
+                                  placehodler="定义条件"></textarea>
+                    </div>
+    
+                    群体含义文本框
+                    <div class="modal-body modal-body_wrap type_wrap">
+                        <span class="typename_datatype">群体含义：&nbsp;</span>
+                        <textarea readonly type="text" maxlength="50" id = "usermeanings" class="form-control  form-input  business_mean"
+                                  placehodler="请描述该标签在业务山过的作用"></textarea>
+                    </div>
+    
+                    群体用途文本框
+                    <div class="modal-body modal-body_wrap type_wrap">
+                        <span class="typename_datatype">群体用途：&nbsp;</span>
+                        <textarea readonly type="text" maxlength="50" id = "userpurpose" class="form-control  form-input  business_mean"
+                                  placehodler="请描述该标签产出规则"></textarea>
+                    </div>
+    
+                    有效时间
+                    <div class="modal-body modal-body_wrap">
+                        <span class="typename_span">有效时间：</span>
+                        <input type="text" class="form-control typename_input" id="validtime"  value="" readonly>
+                    </div>
+    
+                    上传算法
+                    <div class="modal-body modal-body_wrap type_wrap">
+    
+                        <span class="typename_datatype">上传文件：&nbsp;</span>
+                        
+                            <input id="userfile-Portrait" type="file" class="file" data-show-preview="false">
+                        
+                    </div>
+                    <div class="instruction_upload">*上传算法包需包含完整输入、输出形式，算法包规则，数据源接入形式以及更新周期规则</div>
+                    <div class="modal-footer" style="text-align:center;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            取消
+                        </button>
+                        <button  type="button" class="btn btn-primary execute" >
+                            执行
+                        </button>
+                    </div>
+                    </form>
+                </div>
+                /.modal-content
+            </div>
+            /.modal
+        </div>
+    </section> -->
+    <!--E 群体模态框（Modal） -->
+
+    <!--E 中间的内容-->
+    <script src="../../bootstrap/js/bootstrap.js"></script>
+    <script src="../../assets/jqPaginator.js"></script>
+    <script src="../../assets/jquery-ui-jqloding.js"></script>
+    <script src="../../assets/jquery-confirm.min.js"></script>
+    <script src="../../js/base.js"></script>
+    <script src="../../js/echarts/echarts.min.js"></script>
+    <script src="../../assets/fileinput.min.js"></script>
+    <script src="../../js/layer/layer.js" type="text/javascript"></script>
+    <script src="../../js/reviewManagement/developManagement.js"></script>
+</body>
+</html>
+

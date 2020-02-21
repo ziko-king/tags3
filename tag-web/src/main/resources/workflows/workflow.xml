@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow-app name="tag_model_wf" xmlns="uri:oozie:workflow:0.5">
+    <start to="tagModelJob"/>
+    <action name="tagModelJob">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <master>${oozieSparkjobMaster}</master>
+            <mode>${oozieSparkjobMode}</mode>
+            <name>${oozieWorkflowName}</name>
+            <class>${oozieSparkjobMain}</class>
+            <jar>${oozieSparkjobJar}</jar>
+            <spark-opts>${oozieSparkjobOptions}</spark-opts>
+            <arg>${oozie}</arg>
+        </spark>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>${wf:errorMessage(wf:lastErrorNode())}</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

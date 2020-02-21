@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.user.mapper.RoleMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap" type="cn.itcast.tag.web.user.bean.RoleBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap" type="cn.itcast.tag.web.user.bean.RoleBean"/>
+
+    <!-- column -->
+    <sql id="Base_Column_List">
+        id,name,flag,ctime,utime,remark
+    </sql>
+
+    <resultMap id="Role" type="cn.itcast.tag.web.user.bean.RoleBean">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="flag" property="flag" jdbcType="INTEGER"/>
+        <result column="ctime" property="ctime" jdbcType="TIMESTAMP"/>
+        <result column="utime" property="utime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <collection property="resMaps" ofType="cn.itcast.tag.web.user.bean.RoleResMapBean"
+                    select="cn.itcast.tag.web.user.mapper.RoleResMapMapper.queryForUserId" column="id">
+        </collection>
+    </resultMap>
+
+    <select id="queryForId" resultMap="Role" parameterMap="BaseParamsMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_role
+        where id = #{id}
+    </select>
+
+    <!-- 新增角色 -->
+    <insert id="addRole" parameterType="cn.itcast.tag.web.user.bean.RoleBean" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="flag != 0">
+                flag,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="utime != null">
+                utime,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="flag != 0">
+                #{flag},
+            </if>
+            <if test="ctime != null">
+                #{ctime},
+            </if>
+            <if test="utime != null">
+                #{utime},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据ID删除角色 -->
+    <delete id="delRoleForId" parameterMap="BaseParamsMap">
+        DELETE FROM tbl_role
+        WHERE id=#{id}
+    </delete>
+
+    <!-- 根据ID修改角色 -->
+    <update id="updateRole" parameterMap="BaseParamsMap">
+        UPDATE tbl_role SET
+        <if test="name != null">
+            name=#{name},
+        </if>
+        <if test="flag != 0">
+            flag=#{flag},
+        </if>
+        <if test="remark != null">
+            remark=#{remark},
+        </if>
+        utime=NOW() WHERE id=#{id}
+    </update>
+
+    <!-- 按照条件查询角色数据 -->
+    <select id="queryForConditions" resultMap="BaseResultMap" parameterMap="BaseParamsMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_role
+        where 1=1
+        <if test="id != null">
+            AND id != #{id}
+        </if>
+        <if test="name != null">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="ctime != null">
+            AND DATE_FORMAT(ctime,'%Y-%m-%d') = DATE_FORMAT(#{ctime},'%Y-%m-%d')
+        </if>
+        <if test="utime != null">
+            AND DATE_FORMAT(utime,'%Y-%m-%d') = DATE_FORMAT(#{utime},'%Y-%m-%d')
+        </if>
+        <if test="remark != null">
+            AND remark LIKE CONCAT('%', #{remark}, '%')
+        </if>
+        AND id !=1
+        <if test="pr != 0">
+            LIMIT #{sr},#{pr}
+        </if>
+    </select>
+
+    <!-- 按照条件查询角色记录数 -->
+    <select id="queryCountForConditions" resultType="int" parameterMap="BaseParamsMap">
+        SELECT COUNT(*) AS count FROM tbl_role
+        WHERE 1=1
+        <if test="id != null">
+            AND id != #{id}
+        </if>
+        <if test="name != null">
+            AND name LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="ctime != null">
+            AND DATE_FORMAT(ctime,'%Y-%m-%d') = DATE_FORMAT(#{ctime},'%Y-%m-%d')
+        </if>
+        <if test="utime != null">
+            AND DATE_FORMAT(utime,'%Y-%m-%d') = DATE_FORMAT(#{utime},'%Y-%m-%d')
+        </if>
+        <if test="remark != null">
+            AND remark LIKE CONCAT('%', #{remark}, '%')
+        </if>
+        AND id !=1
+    </select>
+
+</mapper>

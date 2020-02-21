@@ -1,0 +1,157 @@
+/**公共的样式**/
+.nav_wrap {
+    margin-top: 52px;
+    height: 38px;
+    width: 100%;
+}
+
+.centent_wrap {
+    width: 100%;
+    height: 100%;
+}
+
+/**左侧的面板**/
+.cont_left_label_wrap {
+    width: 195px;
+    height: 100%;
+    margin-top: 10px;
+    background: #fff;
+    float: left;
+    position: fixed;
+    left: 0;
+    z-index: 3;
+
+}
+
+/**右侧的面板**/
+.cont_right_label_wrap {
+    width: 100%;
+    float: left;
+    position: relative;
+    margin-left: 193px;
+    background: #fff;
+    height: 360px;
+}
+
+/**公共的样式**/
+
+.label_cont_top_addlabel {
+    height: 49px;
+    background: #fff;
+    border-bottom: 2px solid #207ee7;
+    position: relative;
+    width: 97%;
+    margin: 0 auto;
+}
+
+.label_cont_top_l_addlabel {
+    font-size: 14px;
+    color: #3385ff;
+    float: left;
+    line-height: 49px;
+}
+
+/**标签名称，分类，更新周期**/
+.form_data {
+    height: 45px;
+    font-size: 12px;
+    padding: 10px 0px;
+    width: 100%;
+}
+
+/**业务含义**/
+.form_data_mean {
+    height: 80px;
+    width: 100%;
+    padding: 10px 0px;
+}
+
+/*已选标签*/
+.form_data_choose {
+    height: 163px;
+    width: 100%;
+}
+
+/**中间的内容**/
+.addlabel_name {
+    width: 150px;
+    height: 23px;
+}
+
+.addlabel_name_input {
+    margin-left: 13px;
+}
+
+.addlabel_user_input, .addlabel_email_input {
+    margin-left: 24px;
+}
+
+
+.form_data > span {
+    margin-left: 37px;
+    font-size: 12px;
+}
+
+.form_data > input {
+    width: 254px;
+    height: 28px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+}
+
+.tip {
+    color: red;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+}
+
+.usermessage {
+    padding-top: 20px;
+}
+
+.btnsbox {
+    margin-left: 112px;
+    margin-top: 20px;
+}
+
+.btns {
+    width: 77px;
+    background: #3385ff;
+    color: #fff;
+    border: 1px solid #3385ff;
+    border-radius: 4px;
+    margin-left: 25px;
+}
+
+.usermessage label.error {
+    color: red;
+    margin-left: 20px;
+    font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

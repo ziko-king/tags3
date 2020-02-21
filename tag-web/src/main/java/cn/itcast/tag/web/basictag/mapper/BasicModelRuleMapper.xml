@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.tag.web.basictag.mapper.BasicModelRuleMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap" type="cn.itcast.tag.web.basictag.bean.form.BasicModelRuleFormBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap" type="cn.itcast.tag.web.basictag.bean.form.BasicModelRuleFormBean"/>
+
+    <!-- 根据userid查询基础标签 -->
+    <!-- 状态：1申请中、2审核通过、3运行中、4未运行、5已禁用 -->
+    <select id="queryFourthBasicTagForId" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+		SELECT
+			tb.id AS tagId,
+			tb.`name` AS tagName,
+			tb.business,
+			tb.industry,
+			tb.`level`,
+			tb.rule,
+			tb.model_main AS modelMain,
+			tb.model_name AS modelName,
+			tb.model_path AS modelPath,
+			tb.sche_time AS schetime,
+			tb.args
+		FROM
+			(
+				SELECT
+					tb1.id,
+					tb1.`name`,
+					tb1.business,
+					tb1.industry,
+					tb1.`level`,
+					tb1.pid,
+					tb1.state,
+					tb2.model_main,
+					tb2.model_name,
+					tb2.model_path,
+					tb2.sche_time,
+					tb3.rule,
+					tb2.args
+				FROM
+					tbl_basic_tag tb1
+				INNER JOIN tbl_model tb2 ON tb1.id = tb2.tag_id
+				INNER JOIN tbl_rule tb3 ON tb1.id = tb3.tag_id
+			) tb
+		WHERE
+			1 = 1 
+		AND	tb.state != -1
+		AND tb.id = #{bean.tagId}
+	</select>
+
+    <!-- SELECT
+			tb.id AS tagId,
+			tb.`name` AS tagName,
+			tb.business,
+			tb.industry,
+			tb.`level`,
+			tb.rule,
+			tb.model_main AS modelMain,
+			tb.model_name AS modelName,
+			tb.model_path AS modelPath,
+			tb.sche_time AS schetime,
+			tb.args
+		FROM
+			(
+				SELECT
+					tb1.id,
+					tb1.`name`,
+					tb1.business,
+					tb1.industry,
+					tb1.`level`,
+					tb1.pid,
+					tb1.state,
+					tb2.model_main,
+					tb2.model_name,
+					tb2.model_path,
+					tb2.sche_time,
+					tb3.rule,
+					tb2.args
+				FROM
+					tbl_basic_tag tb1
+				INNER JOIN tbl_model tb2 ON tb1.id = tb2.tag_id
+				INNER JOIN tbl_rule tb3 ON tb1.id = tb3.tag_id
+				INNER JOIN (
+					SELECT
+						*
+					FROM
+						tbl_user_tag_map
+					<if test = "roleBean.id != 1">
+					WHERE user_id = #{loginUser.id}
+				</if>
+				) tb4 ON tb1.id = tb4.tag_id
+			) tb
+		WHERE
+			1 = 1 
+		AND	tb.state != -1
+		AND tb.id = #{bean.tagId} -->
+
+    <!-- 根据pid和level查询基础标签(根据名称模糊查询) -->
+    <select id="queryBasicTagAndModelForWithPid1" resultMap="BaseResultMap">
+        SELECT DISTINCT
+        tb.id AS tagId,
+        tb.`name` AS tagName,
+        tb.industry,
+        tb.rule,
+        tb.business,
+        tt.sche_time AS scheTime,
+        tb.`level`,
+        tb.pid,
+        tb.ctime,
+        tb.utime,
+        tb.state,
+        tb.remark
+        FROM
+        (
+        SELECT
+        bg.*
+        FROM
+        tbl_user_tag_map utm
+        INNER JOIN tbl_user u ON (utm.`user_id` = u.id)
+        INNER JOIN tbl_basic_tag bg ON (bg.`id` = utm.`tag_id`)
+        <if test="roleBean.id != 1">
+            WHERE u.id = #{loginUser.id}
+        </if>
+        GROUP BY bg.id
+        UNION ALL
+        SELECT
+        bt.*
+        FROM
+        tbl_role_data_map rdm
+        INNER JOIN tbl_basic_tag bt ON (bt.id = rdm.tag_id)
+        WHERE
+        rdm.tag_type = 1
+        <if test="roleBean.id != 1">
+            AND rdm.role_id = #{roleBean.id}
+        </if>
+        GROUP BY bt.id
+        ) tb
+        LEFT JOIN tbl_model tt ON tb.id = tt.tag_id
+        WHERE
+        tb.state != - 1
+        AND tb.pid = #{bean.tagId}
+        <if test="bean.tagName != null and bean.tagName != ''">
+            AND tb.`name` LIKE CONCAT('%',#{bean.tagName},'%')
+        </if>
+    </select>
+
+    <!-- 根据id查询基础标签 -->
+    <select id="queryBasicTagAndModelForWithPid2" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+		SELECT
+			tb1.id AS tagId,
+			tb1.`name` AS tagName,
+			tb1.industry,
+			tb1.rule,
+			tb1.business,
+			tt.sche_time AS scheTime,
+			tb1.`level`,
+			tb1.pid,
+			tb1.ctime,
+			tb1.utime,
+			tb1.state,
+			tb1.remark
+		FROM
+			tbl_basic_tag tb1 LEFT JOIN tbl_model tt ON tb1.id = tt.tag_id
+		WHERE
+			tb1.state != - 1
+		AND tb1.id = #{bean.tagId}
+	</select>
+
+
+    <!-- 根据行业名称查询基础标签 -->
+    <select id="searchBasicTagForName" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
+        SELECT
+        tb.id AS tagId,
+        tb.`name` tagName,
+        tb.industry,
+        tb.rule,
+        tb.business,
+        tb.`level`,
+        tb.pid,
+        tb.ctime,
+        tb.utime,
+        tb.state,
+        tb.remark
+        FROM
+        (
+        SELECT
+        tbt2.id,
+        tbt2.`name`,
+        tbt2.industry,
+        tbt2.rule,
+        tbt2.business,
+        tbt2.`level`,
+        tbt2.pid,
+        tbt2.ctime,
+        tbt2.utime,
+        tbt2.state,
+        tbt2.remark
+        FROM
+        (
+        SELECT
+        id,
+        `name`,
+        industry,
+        rule,
+        business,
+        `level`,
+        pid,
+        ctime,
+        utime,
+        state,
+        remark
+        FROM
+        tbl_basic_tag
+        WHERE
+        id = #{id,jdbcType=INTEGER}
+        AND state != - 1
+        ) tbt1
+        LEFT OUTER JOIN (
+        SELECT
+        id,
+        `name`,
+        industry,
+        rule,
+        business,
+        `level`,
+        pid,
+        ctime,
+        utime,
+        state,
+        remark
+        FROM
+        tbl_basic_tag
+        WHERE
+        state != - 1
+        ) tbt2 ON tbt1.id = tbt2.pid
+        ) tb
+        WHERE
+        1 = 1
+        <if test="name != null and name != ''">
+            AND tb.name LIKE CONCAT('%',#{name},'%')
+        </if>
+    </select>
+</mapper>

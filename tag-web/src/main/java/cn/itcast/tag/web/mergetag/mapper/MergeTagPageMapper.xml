@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mengyao.tag.mergetag.mapper.MergeTagPageMapper">
+    <!-- params -->
+    <parameterMap id="BaseParamsMap"
+                  type="cn.itcast.tag.web.mergetag.bean.form.MergeTagPageFormBean"/>
+
+    <!-- result -->
+    <resultMap id="BaseResultMap"
+               type="cn.itcast.tag.web.mergetag.bean.form.MergeTagPageFormBean"/>
+
+    <!-- 取得组合标签分页信息 -->
+    <select id="queryMergeTagPage" resultMap="BaseResultMap">
+        SELECT
+        tb1.id,
+        tb1.`name`,
+        tb1.intro,
+        tb1.purpose,
+        tb1.state,
+        tb1.ctime,
+        tb1.utime,
+        tb1.remark
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        tbl_merge_tag
+        WHERE
+        state != - 1
+        ) tb1
+        <if test="roleBean.id != 1">
+            INNER JOIN (
+            SELECT
+            *
+            FROM
+            tbl_user_merge_tag_map
+            WHERE 1=1
+            AND user_id = #{loginUser.id}
+            AND state != - 1
+            ) tb2 ON tb1.id = tb2.merge_tag_id
+        </if>
+        WHERE
+        1 = 1
+        <if test="bean.name != null and bean.name != ''">
+            AND tb1.name LIKE CONCAT('%',#{bean.name},'%')
+        </if>
+    </select>
+
+</mapper>
