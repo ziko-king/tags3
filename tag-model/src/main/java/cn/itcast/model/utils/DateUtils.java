@@ -257,7 +257,6 @@ public class DateUtils {
     /**
      * 比较两个日期的年差
      *
-     * @param befor
      * @param after
      * @return
      */
@@ -269,8 +268,6 @@ public class DateUtils {
 
     /**
      * 比较指定日期与当前日期的差
-     *
-     * @param befor
      * @param after
      * @return
      */
@@ -374,9 +371,6 @@ public class DateUtils {
 
     /**
      * 取得指定日期过 months 月后的日期 (当 months 为负数表示指定月之前);
-     *
-     * @param date  日期 为null时表示当天
-     * @param month 相加(相减)的月数
      */
     public static Date nextMonth(Date date, int months) {
         Calendar cal = Calendar.getInstance();
@@ -391,7 +385,6 @@ public class DateUtils {
      * 取得指定日期过 day 天后的日期 (当 day 为负数表示指日期之前);
      *
      * @param date  日期 为null时表示当天
-     * @param month 相加(相减)的月数
      */
     public static Date nextDay(Date date, int day) {
         Calendar cal = Calendar.getInstance();
@@ -551,7 +544,6 @@ public class DateUtils {
     /**
      * 获取当前时间的秒数 1970/01/01至今的秒数，,等于new Date().getTime()/1000
      *
-     * @param date
      * @return
      * @throws Exception
      */
@@ -571,7 +563,6 @@ public class DateUtils {
     /**
      * 获取当前时间的毫秒数 1970/01/01至今的毫秒数,等于new Date().getTime()
      *
-     * @param date
      * @return
      * @throws Exception
      */

@@ -12,7 +12,7 @@ import cn.itcast.tag.web.user.bean.UserBean;
 import cn.itcast.tag.web.utils.HdfsUtil;
 import cn.itcast.tag.web.utils.OozieUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.SystemUtils;
+import org.apache.oozie.client.OozieClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,12 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+@SuppressWarnings("PlaceholderCountMatchesArgumentCount")
 @Service
 @Transactional
 public class EngineServiceImpl implements EngineService {
@@ -43,129 +43,115 @@ public class EngineServiceImpl implements EngineService {
     private OozieUtil oozieUtil;
     @Value("${nameNode}")
     private String nameNode;
-    private String separator = "/";
-    private String workflowXMLFile = "workflow.xml";
-    private String coordinatorXMLFile = "coordinator.xml";
-    private String jobPROPERTIESFile = "job.properties";
-
-    public static void main(String[] args) {
-        Properties conf = new Properties();
-        String scheTime = "每天#2019-06-07 20:34#2019-06-07 20:34";
-        String[] arrSche = scheTime.split("#");
-        String freqStr = arrSche[0];
-        if (freqStr.equals("每天")) {
-            conf.setProperty("freq", "day");
-        } else if (freqStr.equals("每周")) {
-            conf.setProperty("freq", "week");
-        } else if (freqStr.equals("每月")) {
-            conf.setProperty("freq", "month");
-        } else if (freqStr.equals("每年")) {
-            conf.setProperty("freq", "year");
-        }
-        String[] startTimeArr = arrSche[1].split(" ");
-        String[] startTimeDayArr = startTimeArr[0].split("-");
-        String starttime = startTimeDayArr[0] + "-" + startTimeDayArr[1] + "-" + startTimeDayArr[2] + "T" + startTimeArr[1] + "Z+0800";
-        String[] endTimeArr = arrSche[2].split(" ");
-        String[] endTimeDayArr = endTimeArr[0].split("-");
-        String endtime = endTimeDayArr[0] + "-" + endTimeDayArr[1] + "-" + endTimeDayArr[2] + "T" + endTimeArr[1] + "Z+0800";
-        conf.setProperty("start", starttime);
-        conf.setProperty("end", endtime);
-        System.out.println(starttime + "\n" + endtime);
-    }
+    @Value("${oozie-config-dir-name}")
+    private String oozieConfigDirName;
+    @Value("${oozie-coordinator-file-name}")
+    private String coordinatorFileName;
+    @Value("${oozieWorkflowName}")
+    private String workflowFileName;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public boolean startEngine(EngineBean bean, UserBean userBean) {
-        int state = 0;
+    public boolean startEngine(EngineBean engineBean, UserBean userBean) {
         try {
-            //获取标签的模型配置
-            ModelBean model = modelMapper.get(new ModelBean(bean.getTagId()));
-            //获取标签的元数据配置
-            MetaDataBean metaData = metaDataMapper.get(new MetaDataBean(bean.getTagId()));
-            //判断模型是否存在
-            HdfsUtil hdfs = HdfsUtil.getInstance();
-            if (!hdfs.exist(model.getModelPath())) {
-                logger.error("==== 标签模型包不存在，启动失败! ====");
-                return false;
-            }
-            //判断元数据是否存在
-            if (StringUtils.isEmpty(metaData.getInType())) {
-                logger.error("==== 标签元数据不存在，启动失败! ====");
-                return false;
-            }
-            String classesDir = bean.getRemark();
-            String oozieConfigDir = "workflows" + separator;
-            //每次执行时都生成Oozie的workflow.xml并上传到HDFS中模型jar所在路径下（如果已存在则覆盖）
-            String tagModelPath = hdfs.getPath(model.getModelPath());
-            if (tagModelPath.endsWith("/lib")) {
-                tagModelPath = tagModelPath.substring(0, tagModelPath.length() - 4);
-            }
-            hdfs.uploadLocalFile2HDFS(classesDir + oozieConfigDir + workflowXMLFile, tagModelPath);
-            //每次执行时都生成Oozie的coordinator.xml并上传到HDFS中模型jar所在路径下（如果已存在则覆盖）
-            hdfs.uploadLocalFile2HDFS(classesDir + oozieConfigDir + coordinatorXMLFile, tagModelPath);
-            // 实例化oozie并获取配置,生成Oozie的workflow.xml对应的job.properties配置文件
-            OozieUtil oozie = oozieUtil.build();
-            Properties conf = oozie.getConf();
-            //oozie的Job名称
-            conf.setProperty("oozieWorkflowName", "Tag_" + bean.getTagId());
-            //oozie的SparkAction依赖jar路径
-            conf.setProperty("oozieSparkjobJar", "${nameNode}" + model.getModelPath());
-            //oozie的SparkAction运行main方法
-            conf.setProperty("oozieSparkjobMain", model.getModelMain());
-            //oozie的SparkAction参数
-            String args = model.getArgs();
-            if (!StringUtils.isEmpty(args)) {
-                conf.setProperty("oozieSparkjobOptions", args);
-            }
-            //oozie workflow.xml的地址
-            //conf.setProperty("oozie.wf.app.path", "${oozie.nameNode}"+tagModelPath+separator+workflowXMLFile);
-            conf.setProperty("oozieWorkflowAppPath", "${nameNode}" + tagModelPath + separator);
-            //oozie coordinator.xml的地址
-            conf.setProperty("oozie.coord.application.path", "${nameNode}" + tagModelPath + separator + coordinatorXMLFile);
-            //oozie定时频率,启动结束时间设置2018-06-019T20:01+0800
-            String scheTime = model.getScheTime();
-            String[] arrSche = scheTime.split("#");
-            String freqStr = arrSche[0];
-            if (freqStr.equals("每天")) {
-                conf.setProperty("freq", "day");
-            } else if (freqStr.equals("每周")) {
-                conf.setProperty("freq", "week");
-            } else if (freqStr.equals("每月")) {
-                conf.setProperty("freq", "month");
-            } else if (freqStr.equals("每年")) {
-                conf.setProperty("freq", "year");
-            }
-            String[] startTimeArr = arrSche[1].split(" ");
-            String[] startTimeDayArr = startTimeArr[0].split("-");
-            String starttime = startTimeDayArr[0] + "-" + startTimeDayArr[1] + "-" + startTimeDayArr[2] + "T" + startTimeArr[1] + "+0800";
-            String[] endTimeArr = arrSche[2].split(" ");
-            String[] endTimeDayArr = endTimeArr[0].split("-");
-            String endtime = endTimeDayArr[0] + "-" + endTimeDayArr[1] + "-" + endTimeDayArr[2] + "T" + endTimeArr[1] + "+0800";
-            conf.setProperty("start", starttime);
-            conf.setProperty("end", endtime);
-            // 将job.properties配置文件保存到本地
-            String userHomeDir = SystemUtils.getUserHome() + separator + jobPROPERTIESFile;
-            File file = new File(userHomeDir);
-            if (file.exists()) {
-                file.delete();
-            }
-            FileOutputStream out = new FileOutputStream(userHomeDir);
-            conf.store(out, conf.getProperty("name"));
-            out.close();
-            //将新生成的job.properties文件上传到HDFS中模型jar所在路径下
-            hdfs.uploadLocalFile2HDFS(userHomeDir, tagModelPath);
-            //提交Oozie任务
-            String jobid = oozie.start(conf);
-
-            EngineBean eBean = new EngineBean();
-            eBean.setJobid(jobid);
-            eBean.setTagId(bean.getTagId());
-            eBean.setStatus("3");
-            state = engineMapper.addMonitorInfo(eBean);
-            logger.info("==== 执行定时任务开始 ====" + jobid);
-        } catch (Exception e) {
-            e.printStackTrace();
+            return startEngineActually(engineBean);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            return false;
         }
+    }
+
+    private boolean startEngineActually(EngineBean engineBean) {
+        ModelBean modelBean = modelMapper.get(new ModelBean(engineBean.getTagId()));
+        MetaDataBean metaDataBean = metaDataMapper.get(new MetaDataBean(engineBean.getTagId()));
+
+        // 1. 判断模型和元数据是否存在, 如果不存在则启动失败
+        HdfsUtil hdfsUtil = HdfsUtil.getInstance();
+        if (!hdfsUtil.exist(modelBean.getModelPath())) {
+            logger.error("模型包不存在, 启动失败");
+            return false;
+        }
+        if (StringUtils.isBlank(metaDataBean.getInType())) {
+            logger.error("模型元信息不存在或者缺失 InType, 启动失败");
+            return false;
+        }
+
+        // 2. 上传 Oozie 配置到 HDFS
+        String localOozieConfigPath = engineBean.getRemark() + oozieConfigDirName + "/";
+        String tagModelPath = hdfsUtil.getPath(new File(modelBean.getModelPath()).getParent());
+
+        hdfsUtil.uploadLocalFile2HDFS(localOozieConfigPath + workflowFileName, tagModelPath);
+        hdfsUtil.uploadLocalFile2HDFS(localOozieConfigPath + coordinatorFileName, tagModelPath);
+
+        // 3. 构建 Oozie job 参数
+        OozieUtil oozie = oozieUtil.build();
+        Properties oozieConf = oozie.getConf();
+
+        // 3.1. Workflow 部分
+        String separator = "/";
+        oozieConf.setProperty("nameNode", nameNode);
+        oozieConf.setProperty("sparkJobMain", modelBean.getModelMain());
+
+        if (StringUtils.isNotBlank(modelBean.getArgs())) {
+            oozieConf.setProperty("sparkJobOpts", modelBean.getArgs());
+        }
+
+        oozieConf.setProperty("sparkJobJar", "${nameNode}" + modelBean.getModelPath());
+        oozieConf.setProperty("sparkContainerCacheFiles", "${nameNode}" + modelBean.getModelPath());
+        oozieConf.setProperty(OozieClient.APP_PATH, "${nameNode}" + tagModelPath + separator + workflowFileName);
+
+        // 3.2. Coordinator 部分, Coordinator 中的时间格式是 UTC, 如 2018-06-019T20:01Z
+//        oozieConf.setProperty("oozieWorkflowPath", "${nameNode}" + tagModelPath + separator);
+//        oozieConf.setProperty("oozie.coord.application.path", "${nameNode}" + tagModelPath + separator + coordinatorFileName);
+//
+//        // ScheTime 的格式为 每天#2018-06-01 20::01#2018-06-01 20::01
+//        String[] scheduleArr = modelBean.getScheTime().split("#");
+//        String freq = scheduleArr[0];
+//        String startDateTime = scheduleArr[1];
+//        String endDateTime = scheduleArr[2];
+//
+//        // 设置频率
+//        String freqStr = "";
+//        switch (freq) {
+//            case "每天":
+//                freqStr = "day";
+//                break;
+//            case "每周":
+//                freqStr = "week";
+//                break;
+//            case "每月":
+//                freqStr = "month";
+//                break;
+//            case "每年":
+//                freqStr = "year";
+//                break;
+//        }
+//        oozieConf.setProperty("freq", freqStr);
+//
+//        // 设置开始时间
+//        String[] startDateTimeArr = startDateTime.split(" ");
+//        String startDate = startDateTimeArr[0];
+//        String startTime = startDateTimeArr[1];
+//        oozieConf.setProperty("start", startDate + "T" + startTime + "Z");
+//
+//        // 设置结束时间
+//        String[] endDateTimeArr = endDateTime.split(" ");
+//        String endDate = endDateTimeArr[0];
+//        String endTime = endDateTimeArr[1];
+//        oozieConf.setProperty("end", endDate + "T" + endTime + "Z");
+//
+//        logger.info(oozieConf.toString());
+
+        // 4. 提交 Oozie 任务
+        String jobId = oozie.start(oozieConf);
+
+        // 5. 设置监控
+        EngineBean mEngineBean = new EngineBean();
+        mEngineBean.setJobid(jobId);
+        mEngineBean.setTagId(engineBean.getTagId());
+        mEngineBean.setStatus("3");
+        int state = engineMapper.addMonitorInfo(mEngineBean);
+
         return state > 0;
     }
 

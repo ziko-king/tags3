@@ -2,7 +2,7 @@ package cn.itcast.model.tools.oozie;
 
 import cn.itcast.model.models.ModelConfig;
 import cn.itcast.model.utils.DateUtil;
-import org.apache.commons.collections15.map.HashedMap;
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.oozie.client.CoordinatorJob;
 import org.apache.oozie.client.OozieClient;

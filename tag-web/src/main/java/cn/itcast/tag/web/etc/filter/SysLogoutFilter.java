@@ -7,6 +7,7 @@ import org.apache.shiro.web.filter.authc.LogoutFilter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 public class SysLogoutFilter extends LogoutFilter {
 
@@ -15,7 +16,7 @@ public class SysLogoutFilter extends LogoutFilter {
         //在这里执行退出系统前需要清空的数据
         Subject subject = getSubject(request, response);
         String redirectUrl = getRedirectUrl(request, response, subject);
-        ServletContext context = request.getServletContext();
+        ServletContext context = ((HttpServletRequest) request).getSession().getServletContext();
         try {
             subject.logout();
             context.removeAttribute("error");

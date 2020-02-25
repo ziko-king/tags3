@@ -819,7 +819,7 @@ public class BasicTagServiceImpl implements BasicTagService {
                 return MINUSONE;
             } else {
                 // 获取模型文件名
-                String name = bean.getModelPath().split("\\\\")[bean.getModelPath().split("\\\\").length - 1];
+                String name = bean.getModelPath().split("/")[bean.getModelPath().split("/").length - 1];
                 // 添加第四级标签
                 state1 = basicTagMapper.addFourthBasicTag(basicTagBean);
                 // 标签创建成功
@@ -835,7 +835,7 @@ public class BasicTagServiceImpl implements BasicTagService {
                         modelBean.setTagId(basicTagBean.getId());
                         modelBean.setType(1);
                         //初始化该标签模型在hdfs的路径
-                        String tagModelDir = "/Tag_" + basicTagBean.getId() + "/lib/";
+                        String tagModelDir = "Tag_" + basicTagBean.getId() + "/lib/";
                         modelBean.setModelPath(modelPath + tagModelDir + name);
                         modelBean.setModelMain(bean.getModelMian());
                         modelBean.setModelName(bean.getModelName());

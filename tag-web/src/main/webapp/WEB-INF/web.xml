@@ -5,7 +5,7 @@
     <display-name>tags</display-name>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring-mybatis.xml,classpath:spring-shiro.xml,classpath:cache/spring-*.xml</param-value>
+        <param-value>classpath:spring-mybatis.xml,classpath:spring-shiro.xml,classpath:config_cache/spring-*.xml</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

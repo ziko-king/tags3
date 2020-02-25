@@ -1,0 +1,23 @@
+<workflow-app name="Extra goods from hive to hbase fully" xmlns="uri:oozie:workflow:0.5">
+    <start to="tag-model-job"/>
+    <action name="tag-model-job">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <master>${sparkMaster}</master>
+            <mode>${sparkDeployMode}</mode>
+            <name>${oozieWFName}</name>
+            <class>${sparkJobMain}</class>
+            <jar>${sparkJobJar}</jar>
+            <spark-opts>${sparkJobOpts}</spark-opts>
+            <arg>${sparkMainOpts}</arg>
+            <file>${sparkContainerCacheFiles}</file>
+        </spark>
+        <ok to="End"/>
+        <error to="Kill"/>
+    </action>
+    <kill name="Kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="End"/>
+</workflow-app>

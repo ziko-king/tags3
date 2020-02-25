@@ -68,13 +68,11 @@ public class BaseController {
         }
         try {
             // 将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
-            ServletContext servletContext = request.getSession().getServletContext();
-            servletContext = request.getServletContext();
-            CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(servletContext);
             // 检查form中是否有enctype="multipart/form-data"
+            CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
             if (multipartResolver.isMultipart(request)) {
                 // 将request变成多部分request
-                MultipartHttpServletRequest multiRequest = multipartResolver.resolveMultipart((HttpServletRequest) request);
+                MultipartHttpServletRequest multiRequest = multipartResolver.resolveMultipart(request);
                 // 获取multiRequest 中所有的文件名
                 Iterator<String> iter = multiRequest.getFileNames();
 

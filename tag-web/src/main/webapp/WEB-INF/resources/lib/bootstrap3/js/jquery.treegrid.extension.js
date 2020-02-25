@@ -38,7 +38,7 @@
                                 td.html(item[column.field]);
                             }
                             tr.append(td);
-                            tr.append("<td><span class='labelEdit' title='编辑' style='display:none;'  data-id='" + item.id + "' data-toggle='modal' data-target='#maineditModal'><img src='../../../mengyao/res/imgs/user_edit.png'></span><span class='commondel' title='删除' id='" + item.id + "' level='" + item.level + "' style='display:none;'><img src='../../../mengyao/res/imgs/55.png'></span></td>")
+                            tr.append("<td><span class='labelEdit' title='编辑' style='display:none;'  data-id='" + item.id + "' data-toggle='modal' data-target='#maineditModal'><img src='../../../res/imgs/user_edit.png'></span><span class='commondel' title='删除' id='" + item.id + "' level='" + item.level + "' style='display:none;'><img src='../../../res/imgs/55.png'></span></td>")
                         }
                     });
                     tbody.append(tr);
@@ -64,7 +64,7 @@
                                 td.html(item[column.field]);
                             }
                             tr.append(td);
-                            tr.append("<td><span class='labelEdit' title='编辑' style='display:none;'  data-id='" + item.id + "' data-toggle='modal' data-target='#maineditModal'><img src='../../../mengyao/res/imgs/user_edit.png'></span><span class='commondel' title='删除' id='" + item.id + "' level='" + item.level + "' style='display:none;'><img src='../../../mengyao/res/imgs/55.png' id='" + item.id + "'></span></td>")
+                            tr.append("<td><span class='labelEdit' title='编辑' style='display:none;'  data-id='" + item.id + "' data-toggle='modal' data-target='#maineditModal'><img src='../../../res/imgs/user_edit.png'></span><span class='commondel' title='删除' id='" + item.id + "' level='" + item.level + "' style='display:none;'><img src='../../../mengyao/res/imgs/55.png' id='" + item.id + "'></span></td>")
                         }
                     });
                     tbody.append(tr);
@@ -116,7 +116,7 @@
                                     td.html(item[column.field]);
                                 }
                                 tr.append(td);
-                                tr.append("<td><span class='labelEdit' title='编辑' style='display:none;'  data-id='" + item.id + "' data-toggle='modal' data-target='#maineditModal'><img src='../../../mengyao/res/imgs/user_edit.png'></span><span class='commondel' title='删除' id='" + item.id + "' level='" + item.level + "' style='display:none;'><img src='../../../mengyao/res/imgs/55.png'></span></td>")
+                                tr.append("<td><span class='labelEdit' title='编辑' style='display:none;'  data-id='" + item.id + "' data-toggle='modal' data-target='#maineditModal'><img src='../../../res/imgs/user_edit.png'></span><span class='commondel' title='删除' id='" + item.id + "' level='" + item.level + "' style='display:none;'><img src='../../../mengyao/res/imgs/55.png'></span></td>")
                             }
 
                         });

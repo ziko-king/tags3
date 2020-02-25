@@ -40,28 +40,12 @@ public class HdfsUtil {
 
     public static void main(String[] args) {
         HdfsUtil hu = HdfsUtil.getInstance();
-        String dfsPath = "/apps/";
-//		try {
-//			hu.uploadLocalFile2HDFS("D:\\dspider\\apps\\DSA-20190529202246\\data\\DSA-20190529202246.dat", dfsPath);
-//			hu.list(dfsPath);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-        String tagModelPath = hu.getPath("/apps/tags/models/Tag_1738/lib/ant-1.6-20190607203510.jar");
-        if (tagModelPath.endsWith("/lib")) {
-            tagModelPath = tagModelPath.substring(0, tagModelPath.length() - 5);
-        }
-        System.out.println(tagModelPath);
-        /*
-         * String a = hu.readFileInfo("/user/hdfs/oozie/workflow3/lib/depenJar/");
-         *
-         * System.out.println(a);
-         */
+        String dfsPath = "/Users/lifangzhe/2020/2/5/tag-data-0.0.1-SNAPSHOT-20200223022059.jar";
 
-        //hu.uploadLocalFile2HDFS("C:\\Users\\12209\\Desktop\\重要.txt", "/data/liu");
-//		System.out.println(new Path("/mengyao/tag/engine/models/ant-1.6-20190602194446.jar").getName());
-//		System.out.println(new Path("/mengyao/tag/engine/models/ant-1.6-20190602194446.jar").getParent().toString());
+        String tagModelPath = hu.getPath("/apps/tags/models/Tag_0000/lib/tag-data-0.0.1-SNAPSHOT-20200223022059.jar");
 
+        hu.mkdir(tagModelPath);
+        hu.uploadLocalFile2HDFS(dfsPath, tagModelPath);
     }
 
     public boolean exist(String dfsNewDir) {

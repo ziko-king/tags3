@@ -1,6 +1,6 @@
 package cn.itcast.tag.web.utils;
 
-import org.apache.commons.collections15.map.HashedMap;
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.oozie.client.CoordinatorJob;
 import org.apache.oozie.client.OozieClient;
@@ -118,22 +118,21 @@ public class OozieUtil {
     // 初始化基本的oozie参数
     private void configure() {
         conf.setProperty(OozieClient.USER_NAME, user);
-        conf.setProperty("oozieUrl", oozieUrl);
+        conf.setProperty("oozie.use.system.libpath", "True");
+        conf.setProperty("security_enabled", "False");
+        conf.setProperty("send_email", "False");
+        conf.setProperty("dryrun", "False");
         conf.setProperty("nameNode", nameNode);
         conf.setProperty("jobTracker", jobTracker);
         conf.setProperty("queueName", queueName);
-        conf.setProperty("oozie.use.system.libpath", useSysLibpath);
-        conf.setProperty("oozie.action.sharelib.for.spark", sharelibForSpark);
-        conf.setProperty("oozie.rerun.fail.nodes", reRunFailNodes);
-        conf.setProperty("oozie.libpath", libpath);
-        conf.setProperty("oozieSparkjobMaster", master);
-        conf.setProperty("oozieSparkjobMode", mode);
-        conf.setProperty("oozieWorkflowName", wfName);
-        conf.setProperty("oozieWorkflowAppPath", wfAppPath);
-        conf.setProperty("oozieSparkjobJar", sparkjobJar);
-        conf.setProperty("oozieSparkjobMain", sparkjobMain);
-        conf.setProperty("oozieSparkjobOptions", sparkjobOpts);
-        conf.setProperty("oozie", oozie);
+        conf.setProperty("sparkMaster", master);
+        conf.setProperty("sparkDeployMode", mode);
+        conf.setProperty("oozieWFName", wfName);
+        conf.setProperty("sparkJobMain", sparkjobMain);
+        conf.setProperty("sparkJobJar", sparkjobJar);
+        conf.setProperty("sparkJobOpts", sparkjobOpts);
+        conf.setProperty("sparkMainOpts", oozie);
+        conf.setProperty("sparkContainerCacheFiles", "");
     }
 
     public void writeToXml(String tmpDir) {
@@ -156,6 +155,7 @@ public class OozieUtil {
         try {
             logger.info("conf=" + conf.toString());
             jobId = client.run(conf);
+            client.start(jobId);
             logger.info("==== submit job to cluster running! ====" + jobId);
         } catch (OozieClientException e) {
             e.printStackTrace();

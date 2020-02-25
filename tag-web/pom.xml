@@ -21,12 +21,12 @@
             <artifactId>tag-model</artifactId>
             <exclusions>
                 <exclusion>
-                    <artifactId>jsr305</artifactId>
-                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jasper-compiler</artifactId>
+                    <groupId>tomcat</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>guava</artifactId>
-                    <groupId>com.google.guava</groupId>
+                    <artifactId>jasper-runtime</artifactId>
+                    <groupId>tomcat</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
