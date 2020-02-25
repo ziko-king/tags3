@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coordinator-app name="cron-coordinator" frequency="${coord:days(1)}"
+                 start="${coord:now()}" end="${coord:dateOffset(coord:now(), 1, 'DAY')}"
+                 timezone="Asia/Shanghai" xmlns="uri:oozie:coordinator:0.5">
+    <action>
+        <workflow>
+            <app-path>${oozieWorkflowPath}</app-path>
+        </workflow>
+    </action>
+</coordinator-app>
