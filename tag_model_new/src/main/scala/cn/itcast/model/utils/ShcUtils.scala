@@ -1,6 +1,5 @@
 package cn.itcast.model.utils
 
-import cn.itcast.model.mtag.GenderModel.HBASE_USER_PROFILE
 import cn.itcast.model.{HBaseCatalog, HBaseColumn, HBaseTable}
 import org.apache.spark.sql.execution.datasources.hbase.HBaseTableCatalog
 import org.apache.spark.sql.{DataFrame, SparkSession}
@@ -13,6 +12,7 @@ object ShcUtils {
   val HBASE_COLUMN_DEFAULT_TYPE = "string"
   val HBASE_NAMESPACE = "default"
   val HBASE_DEFAULT_COLUMN_FAMILY = "default"
+  val HBASE_USER_PROFILE = "user_profile"
 
   /**
    * 给定读取参数, 读取 HBase 的数据
@@ -44,7 +44,7 @@ object ShcUtils {
   /**
    * 写入数据
    */
-  def write(outFields: Array[String], dataFrame: DataFrame, regionCount: String): Unit = {
+  def writeToHBase(outFields: Array[String], dataFrame: DataFrame, regionCount: String): Unit = {
     val columns = mutable.HashMap.empty[String, HBaseColumn]
     columns += HBASE_ROWKEY_FIELD -> HBaseColumn("rowkey", HBASE_ROWKEY_FIELD, HBASE_COLUMN_DEFAULT_TYPE)
 
