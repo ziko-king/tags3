@@ -61,6 +61,13 @@ public class EngineServiceImpl implements EngineService {
         }
     }
 
+    /**
+     * 开始一个标签的执行
+     * 组织这个标签的 Model 对应的 Oozie 脚本
+     * 调用 Oozie 开启 Spark Job
+     *
+     * @param engineBean id, remark
+     */
     private boolean startEngineActually(EngineBean engineBean) {
         ModelBean modelBean = modelMapper.get(new ModelBean(engineBean.getTagId()));
         MetaDataBean metaDataBean = metaDataMapper.get(new MetaDataBean(engineBean.getTagId()));

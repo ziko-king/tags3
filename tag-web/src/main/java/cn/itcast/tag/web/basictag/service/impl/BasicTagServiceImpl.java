@@ -841,7 +841,8 @@ public class BasicTagServiceImpl implements BasicTagService {
                         modelBean.setModelName(bean.getModelName());
                         modelBean.setScheTime(bean.getScheTime());
                         modelBean.setArgs(bean.getArgs());
-                        //上传标签模型到hdfs的中
+                        // 上传标签模型到hdfs的中
+                        // /app/tags/model/Tag_10
                         hdfsUtil.mkdir(modelPath + tagModelDir);
                         hdfsUtil.uploadLocalFile2HDFS(bean.getModelPath(), modelBean.getModelPath());
                         // 添加规则
