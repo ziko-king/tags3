@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -819,7 +820,9 @@ public class BasicTagServiceImpl implements BasicTagService {
                 return MINUSONE;
             } else {
                 // 获取模型文件名
-                String name = bean.getModelPath().split("/")[bean.getModelPath().split("/").length - 1];
+                String separatorRegex = File.separator.replace("\\","\\\\");
+                String[] pathArray = bean.getModelPath().split(separatorRegex);
+                String name = pathArray[pathArray.length - 1];
                 // 添加第四级标签
                 state1 = basicTagMapper.addFourthBasicTag(basicTagBean);
                 // 标签创建成功

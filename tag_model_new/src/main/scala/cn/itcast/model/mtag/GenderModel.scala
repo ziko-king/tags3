@@ -3,12 +3,9 @@ package cn.itcast.model.mtag
 import java.util.Properties
 
 import cn.itcast.model.utils.ShcUtils
-import cn.itcast.model.{CommonMeta, HBaseCatalog, HBaseColumn, HBaseTable, MetaData, Tag}
+import cn.itcast.model.{CommonMeta, MetaData, Tag}
 import com.typesafe.config.ConfigFactory
-import org.apache.spark.sql.execution.datasources.hbase.HBaseTableCatalog
 import org.apache.spark.sql.{Column, DataFrame, SparkSession}
-
-import scala.collection.mutable
 
 /**
  * 计算性别标签
@@ -40,6 +37,7 @@ object GenderModel {
 
     // 5. 匹配计算标签数据
     // 是将五级标签和数据进行匹配
+
     // 男,50,1   ->     id,gender
     val result = process(source, fiveTags, commonMeta.outFields)
 
@@ -81,8 +79,8 @@ object GenderModel {
    * 所以要区分开, 不同的元数据类型的数据
    */
   def readMetaData(fourTagID: String): MetaData = {
-    import spark.implicits._
     import org.apache.spark.sql.functions._
+    import spark.implicits._
 
     // 1. 元数据表的配置
     val url = config.getString("jdbc.basic_tag.url")
@@ -162,8 +160,8 @@ object GenderModel {
    * 匹配计算
    */
   def process(source: DataFrame, fiveTags: Array[Tag], outFields: Array[String]): DataFrame = {
-    import spark.implicits._
     import org.apache.spark.sql.functions._
+    import spark.implicits._
 
     // 1. 拼接匹配规则, 五级标签的 rule 就是匹配用的值
     var conditions: Column = null
@@ -185,7 +183,7 @@ object GenderModel {
    * 存储画像数据
    */
   def saveUserProfile(result: DataFrame, outFields: Array[String]): Unit = {
-    ShcUtils.write(outFields, result, "5")
+    ShcUtils.writeToHBase(outFields, result, "5")
 
     // 1. 编写 Catalog
     // 1.1. 拼装 Catalog 对象

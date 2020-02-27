@@ -31,13 +31,15 @@ public class HBaseParser extends MetaParser {
         MetaDataBean meta = new MetaDataBean()
                 .buildHBaseMeta(
                         ruleMap.get(ZK_HOSTS),
-                        Integer.valueOf(ruleMap.get(ZK_PORT)),
+                        0,
                         ruleMap.get(HBASE_TABLE),
                         ruleMap.get(FAMILY),
                         ruleMap.get(SELECT_FIELD_NAMES),
                         ruleMap.get(WHERE_FIELD_NAMES),
                         ruleMap.get(WHERE_FIELD_VALUES)
                 );
+        meta.setInFields(ruleMap.get("inFields"));
+        meta.setOutFields(ruleMap.get("outFields"));
         debugMeta(meta);
         return meta;
     }
