@@ -10,6 +10,7 @@ trait BasicModel {
 
   val spark: SparkSession = SparkSession.builder()
     .appName("job model")
+    .master("local[10]")
     .getOrCreate()
 
   val config: Config = ConfigFactory.load()
