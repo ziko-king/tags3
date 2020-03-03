@@ -32,10 +32,11 @@ trait BasicModel {
     // 4. 计算标签
     val result = process(source, fiveTag, commonMeta.outFields)
 
-    result.show()
-
     // 5. 写入 HBase
-    saveUserProfile(result, commonMeta.outFields)
+    if (result != null) {
+      result.show()
+      saveUserProfile(result, commonMeta.outFields)
+    }
   }
 
   def tagName(): String
