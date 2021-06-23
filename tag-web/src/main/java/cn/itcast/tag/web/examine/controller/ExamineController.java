@@ -6,19 +6,19 @@
  */
 package cn.itcast.tag.web.examine.controller;
 
-import cn.itcast.tag.web.basictag.bean.form.UserTagFormBean;
-import cn.itcast.tag.web.commons.bean.Result;
-import cn.itcast.tag.web.commons.bean.StateCode;
 import cn.itcast.tag.web.commons.controller.BaseController;
 import cn.itcast.tag.web.examine.bean.TagAuditBean;
 import cn.itcast.tag.web.examine.service.ExamineService;
 import cn.itcast.tag.web.mergetag.bean.UserMergeTagMapBean;
-import cn.itcast.tag.web.search.bean.PageDTO;
-import cn.itcast.tag.web.search.bean.QueryDTO;
 import cn.itcast.tag.web.user.bean.UserRoleMapBean;
 import cn.itcast.tag.web.user.service.MyShiro;
-import cn.itcast.tag.web.utils.JsonUtil;
 import cn.itcast.tag.web.utils.PageEnum;
+import cn.itcast.tag.web.basictag.bean.form.UserTagFormBean;
+import cn.itcast.tag.web.commons.bean.Result;
+import cn.itcast.tag.web.commons.bean.StateCode;
+import cn.itcast.tag.web.search.bean.PageDTO;
+import cn.itcast.tag.web.search.bean.QueryDTO;
+import cn.itcast.tag.web.utils.JsonUtil;
 import com.alibaba.fastjson.JSON;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;

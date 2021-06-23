@@ -1,8 +1,8 @@
 package cn.itcast.tag.web.commons.models.tag;
 
 import breeze.optimize.linear.LinearProgram.Result;
-import cn.itcast.tag.web.commons.models.pub.UserProfileBean;
 import cn.itcast.tag.web.commons.models.pub.business.RFMBean;
+import cn.itcast.tag.web.commons.models.pub.UserProfileBean;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;

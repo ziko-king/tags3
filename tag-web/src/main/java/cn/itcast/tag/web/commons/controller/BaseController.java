@@ -35,7 +35,7 @@ public class BaseController {
     public String exception(HttpServletRequest request, Exception e) {
         logger.debug("==== exception@error ===={}", e);
 
-        //对异常进行判断做相应的处理  
+        //对异常进行判断做相应的处理
         if (e instanceof AuthorizationException) {
             return "redirect:/logout";
         }
@@ -63,7 +63,7 @@ public class BaseController {
     protected File upload(HttpServletRequest request, String targetPath) throws IOException {
         File file_ = null;
         File dirname = new File(targetPath);
-        if (!dirname.isDirectory()) { //目录不存在 
+        if (!dirname.isDirectory()) { //目录不存在
             dirname.mkdirs(); //创建目录
         }
         try {

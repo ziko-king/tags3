@@ -1,10 +1,10 @@
 package cn.itcast.tag.web.basictag.service;
 
+import cn.itcast.tag.web.user.bean.RoleBean;
+import cn.itcast.tag.web.user.bean.UserBean;
 import cn.itcast.tag.web.basictag.bean.BasicTagBean;
 import cn.itcast.tag.web.basictag.bean.form.BasicModelRuleFormBean;
 import cn.itcast.tag.web.basictag.bean.form.BasicTagFormBean;
-import cn.itcast.tag.web.user.bean.RoleBean;
-import cn.itcast.tag.web.user.bean.UserBean;
 
 import java.util.List;
 

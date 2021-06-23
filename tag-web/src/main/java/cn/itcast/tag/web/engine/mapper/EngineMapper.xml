@@ -172,10 +172,10 @@
 			mt.in_fields,
 			mt.cond_fields,
 			mt.out_fields,
-			md.args 
-			from tbl_model md 
-			join tbl_metadata mt 
-			on md.tag_id = mt.tag_id 
+			md.args
+			from tbl_model md
+			join tbl_metadata mt
+			on md.tag_id = mt.tag_id
 		where md.tag_id = #{tagId,jdbcType=BIGINT}
 	</select>
 

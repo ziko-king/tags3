@@ -75,7 +75,7 @@ public class ResourceServiceImpl implements ResourceService {
     /* (non-Javadoc)
      * @see com.mengyao.tag.user.service.ResourceService#updateResource(com.mengyao.tag.user.bean.ResourceBean)
      */
-    // 更新userCache缓存  
+    // 更新userCache缓存
     @CachePut(value = "userCache", key = "'ResourceKey'+#bean.id")
     @Override
     public boolean updateResource(ResourceBean bean) {

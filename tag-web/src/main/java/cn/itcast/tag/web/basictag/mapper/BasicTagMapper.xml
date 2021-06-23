@@ -15,7 +15,7 @@
     <!-- 新增基础标签 (一至三级)-->
     <insert id="addMainBasicTag" useGeneratedKeys="true" keyProperty="id"
             parameterType="cn.itcast.tag.web.basictag.bean.BasicTagBean">
-		INSERT INTO 
+		INSERT INTO
 		tbl_basic_tag (
 			NAME,
 			industry,
@@ -30,22 +30,22 @@
 		)
 		VALUES
 		(
-			#{name,jdbcType=VARCHAR}, 
-			#{industry,jdbcType=VARCHAR}, 
+			#{name,jdbcType=VARCHAR},
+			#{industry,jdbcType=VARCHAR},
 			#{rule,jdbcType=VARCHAR},
-			#{business,jdbcType=VARCHAR}, 
-			#{level,jdbcType=INTEGER}, 
-			#{pid,jdbcType=INTEGER}, 
-			NOW(), 
+			#{business,jdbcType=VARCHAR},
+			#{level,jdbcType=INTEGER},
+			#{pid,jdbcType=INTEGER},
 			NOW(),
-			#{state,jdbcType=INTEGER}, 
+			NOW(),
+			#{state,jdbcType=INTEGER},
 			#{remark,jdbcType=INTEGER}
 		)
 	</insert>
 
     <!-- 更新用户和基础标签关联表-->
     <insert id="insertUserTagMap">
-		INSERT INTO 
+		INSERT INTO
 		tbl_user_tag_map (
 			user_id,
 			tag_id,
@@ -56,10 +56,10 @@
 		)
 		VALUES
 		(
-			#{userId,jdbcType=INTEGER}, 
-			#{tagId,jdbcType=INTEGER}, 
-			#{state,jdbcType=INTEGER}, 
-			NOW(), 
+			#{userId,jdbcType=INTEGER},
+			#{tagId,jdbcType=INTEGER},
+			#{state,jdbcType=INTEGER},
+			NOW(),
 			NOW(),
 			#{remark,jdbcType=INTEGER}
 		)
@@ -67,22 +67,22 @@
 
     <!-- 根据ID更新基础标签(一至三级) -->
     <update id="updateMainBasicTagForId" parameterMap="BaseParamsMap">
-		UPDATE 
+		UPDATE
 		tbl_basic_tag
-		SET 
+		SET
 			NAME = #{name,jdbcType=VARCHAR},
-			utime=NOW() 
+			utime=NOW()
 		WHERE
 			id = #{id,jdbcType=BIGINT}
 	</update>
 
     <!-- 根据ID更新基础标签状态 -->
     <update id="updateStateForId" parameterMap="BaseParamsMap">
-		UPDATE 
+		UPDATE
 		tbl_basic_tag
-		SET 
+		SET
 			state = #{state,jdbcType=INTEGER},
-			utime=NOW() 
+			utime=NOW()
 		WHERE
 			id = #{id,jdbcType=BIGINT}
 	</update>
@@ -90,7 +90,7 @@
     <!-- 新增基础标签(四级) -->
     <insert id="addFourthBasicTag" useGeneratedKeys="true" keyProperty="id"
             parameterType="cn.itcast.tag.web.basictag.bean.BasicTagBean">
-		INSERT INTO 
+		INSERT INTO
 		tbl_basic_tag (
 			NAME,
 			industry,
@@ -105,28 +105,28 @@
 		)
 		VALUES
 		(
-			#{name,jdbcType=VARCHAR}, 
-			#{industry,jdbcType=VARCHAR}, 
+			#{name,jdbcType=VARCHAR},
+			#{industry,jdbcType=VARCHAR},
 			#{rule,jdbcType=VARCHAR},
-			#{business,jdbcType=VARCHAR}, 
-			#{level,jdbcType=INTEGER}, 
-			#{pid,jdbcType=INTEGER}, 
-			NOW(), 
+			#{business,jdbcType=VARCHAR},
+			#{level,jdbcType=INTEGER},
+			#{pid,jdbcType=INTEGER},
 			NOW(),
-			#{state,jdbcType=INTEGER}, 
+			NOW(),
+			#{state,jdbcType=INTEGER},
 			#{remark,jdbcType=VARCHAR}
 		)
 	</insert>
 
     <!-- 根据ID更新基础标签(四级) -->
     <update id="updateFourthBasicTag" parameterMap="BaseParamsMap">
-		UPDATE 
+		UPDATE
 		tbl_basic_tag
-		SET 
-			NAME = #{name,jdbcType=VARCHAR}, 
-			industry=#{industry,jdbcType=VARCHAR}, 
+		SET
+			NAME = #{name,jdbcType=VARCHAR},
+			industry=#{industry,jdbcType=VARCHAR},
 			utime=NOW(),
-			rule=#{rule,jdbcType=VARCHAR}, 
+			rule=#{rule,jdbcType=VARCHAR},
 			business=#{business,jdbcType=VARCHAR}
 		WHERE
 			id = #{id,jdbcType=BIGINT}
@@ -135,7 +135,7 @@
     <!-- 新增基础标签(五级) -->
     <insert id="addFifthBasicTag" useGeneratedKeys="true" keyProperty="id"
             parameterType="cn.itcast.tag.web.basictag.bean.BasicTagBean">
-		INSERT INTO 
+		INSERT INTO
 		tbl_basic_tag (
 			NAME,
 			industry,
@@ -150,25 +150,25 @@
 		)
 		VALUES
 		(
-			#{name,jdbcType=VARCHAR}, 
-			#{industry,jdbcType=VARCHAR}, 
+			#{name,jdbcType=VARCHAR},
+			#{industry,jdbcType=VARCHAR},
 			#{rule,jdbcType=VARCHAR},
-			#{business,jdbcType=VARCHAR}, 
-			#{level,jdbcType=INTEGER}, 
+			#{business,jdbcType=VARCHAR},
+			#{level,jdbcType=INTEGER},
 			#{pid,jdbcType=INTEGER},
 			NOW(),
 			NOW(),
-			#{state,jdbcType=INTEGER}, 
+			#{state,jdbcType=INTEGER},
 			#{remark,jdbcType=INTEGER}
 		)
 	</insert>
 
     <!-- 根据ID更新基础标签(五级) -->
     <update id="updateFifthBasicTag" parameterMap="BaseParamsMap">
-		UPDATE 
+		UPDATE
 		tbl_basic_tag
-		SET 
-			NAME = #{name,jdbcType=VARCHAR}, 
+		SET
+			NAME = #{name,jdbcType=VARCHAR},
 			business=#{business,jdbcType=VARCHAR},
 			utime=NOW(),
 			rule = #{rule,jdbcType=VARCHAR}

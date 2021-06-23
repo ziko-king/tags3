@@ -58,7 +58,7 @@
 
     <!-- 角色（管理员、普通用户）持有的基础标签 -->
     <select id="getRoleBasicTag" resultMap="basicTag" parameterType="java.lang.Long">
-    	SELECT bt.* FROM tbl_role_data_map rdm INNER JOIN tbl_basic_tag bt ON (bt.id=rdm.tag_id) 
+    	SELECT bt.* FROM tbl_role_data_map rdm INNER JOIN tbl_basic_tag bt ON (bt.id=rdm.tag_id)
     	WHERE rdm.tag_type=1 AND rdm.role_id=#{roleId} GROUP BY bt.id
     </select>
 
@@ -80,7 +80,7 @@
 
     <!-- 统计组合标签含有基础标签个数 -->
     <select id="getBasicTagNum" resultMap="mergeTag" parameterType="java.lang.Long">
-		SELECT merge_tag_id AS id,COUNT(*) AS tagNum FROM tbl_merge_tag_tag_map 
+		SELECT merge_tag_id AS id,COUNT(*) AS tagNum FROM tbl_merge_tag_tag_map
 		WHERE merge_tag_id in (#{id}) GROUP BY merge_tag_id
     </select>
 

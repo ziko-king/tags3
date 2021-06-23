@@ -1,10 +1,10 @@
 package cn.itcast.tag.web.mergetag.service;
 
+import cn.itcast.tag.web.user.bean.RoleBean;
+import cn.itcast.tag.web.user.bean.UserBean;
 import cn.itcast.tag.web.commons.bean.Bean;
 import cn.itcast.tag.web.mergetag.bean.MergeTagBean;
 import cn.itcast.tag.web.mergetag.bean.form.UserMergeTagTagFormBean;
-import cn.itcast.tag.web.user.bean.RoleBean;
-import cn.itcast.tag.web.user.bean.UserBean;
 
 import java.util.List;
 import java.util.Map;

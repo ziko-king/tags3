@@ -30,28 +30,6 @@ $(document).ready(function () {
             $('input[name="rememberMe"]').val("false");
         }
         $('#loginForm').submit();
-//		var req=new Object();
-//		req.username=username;
-//		req.password=md5(password);
-//		req.rememberMe=rememberMe;
-//		$.ajax({  
-//			type: 'POST',  
-//			url: basePath + '/login',  
-//			async:false,
-//			contentType: 'application/json;charset=utf-8',
-//			dataType: 'json',  
-//			data: JSON.stringify(req),
-//			success: function(data){
-//				if(data.code==200){
-//		    		window.location.href = basePath + '/home';
-//		    	}else{
-//		    		popMessage(data.msg);
-//		    	}
-//			},  
-//			error: function(err){  
-//				popMessage("服务器错误");
-//			}  
-//		});  
     }
 
 });

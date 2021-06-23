@@ -6,11 +6,11 @@
  */
 package cn.itcast.tag.web.system.controller;
 
-import cn.itcast.tag.web.commons.controller.BaseController;
 import cn.itcast.tag.web.user.bean.OrganizationBean;
 import cn.itcast.tag.web.user.bean.UserBean;
 import cn.itcast.tag.web.user.bean.UserOrgMapBean;
 import cn.itcast.tag.web.user.service.MyShiro;
+import cn.itcast.tag.web.commons.controller.BaseController;
 import cn.itcast.tag.web.user.service.OrganizationService;
 import cn.itcast.tag.web.user.service.UserService;
 import cn.itcast.tag.web.utils.PageEnum;

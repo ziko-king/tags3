@@ -4,13 +4,13 @@ import cn.itcast.tag.web.basictag.bean.BasicTagBean;
 import cn.itcast.tag.web.basictag.service.BasicTagService;
 import cn.itcast.tag.web.mergetag.bean.MergeTagBean;
 import cn.itcast.tag.web.mergetag.service.MergeTagService;
-import cn.itcast.tag.web.micro.bean.MicroPortraitTag;
-import cn.itcast.tag.web.micro.bean.MicroPortraitUserBean;
-import cn.itcast.tag.web.micro.service.MicroService;
 import cn.itcast.tag.web.user.bean.RoleBean;
 import cn.itcast.tag.web.user.bean.UserBean;
 import cn.itcast.tag.web.user.bean.UserRoleMapBean;
-import cn.itcast.tag.web.user.service.MyShiro.Principal;
+import cn.itcast.tag.web.user.service.MyShiro;
+import cn.itcast.tag.web.micro.bean.MicroPortraitTag;
+import cn.itcast.tag.web.micro.bean.MicroPortraitUserBean;
+import cn.itcast.tag.web.micro.service.MicroService;
 import cn.itcast.tag.web.utils.AccountValidatorUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,7 +41,7 @@ public class MicroServiceImpl implements MicroService {
     public MicroPortraitUserBean queryByNum(String num) {
         MicroPortraitUserBean microPortraitUserBean = new MicroPortraitUserBean();
         String column = "";
-        Principal curUser = (Principal) SecurityUtils.getSubject().getPrincipal();
+        MyShiro.Principal curUser = (MyShiro.Principal) SecurityUtils.getSubject().getPrincipal();
         List<UserRoleMapBean> roleMaps = curUser.getRoleMaps();
         Long roleId = roleMaps.get(0).getRoleId();
         if (AccountValidatorUtil.isMobile(num)) {
@@ -240,7 +240,7 @@ public class MicroServiceImpl implements MicroService {
      * 根据id获取标签
      */
     public BasicTagBean getLevelOneTagBeanById(Long pid) {
-        Principal curUser = (Principal) SecurityUtils.getSubject().getPrincipal();
+        MyShiro.Principal curUser = (MyShiro.Principal) SecurityUtils.getSubject().getPrincipal();
         List<UserRoleMapBean> roleMaps = curUser.getRoleMaps();
         Long roleId = roleMaps.get(0).getRoleId();
         BasicTagBean paramTag = new BasicTagBean();
@@ -260,7 +260,7 @@ public class MicroServiceImpl implements MicroService {
      */
     public UserBean getCurrentUserBean() {
         UserBean userBean = new UserBean();
-        Principal curUser = (Principal) SecurityUtils.getSubject().getPrincipal();
+        MyShiro.Principal curUser = (MyShiro.Principal) SecurityUtils.getSubject().getPrincipal();
         userBean.setId(curUser.getId());
         return userBean;
     }

@@ -27,10 +27,8 @@
 <!--顶部logo-->
 <div><img src="${basePath}/res/imgs/logo.png" style="height:34px;margin-top:15px;margin-left:28px;"/></div>
 <div class="login_title">
-    <h1用户画像-能标签系统
-    </h1>
-    <p>
-        依托海量权威数据的深度挖掘分析，建立以行业纵深为基准的智能标签体系。丰富的标签算法模型，支持基于智能统计分析、大数据挖掘等分析。通过可视化查询实现标签的物理图谱构建，快速响应各种业务需求。通过安全多视角数据源分析，建立标准化API接口服务，增强数据应用性扩展性。</p>
+    <h1用户画像-能标签系统</h1>
+    <p>四川师范大学大数据可视化平台（用户画像）</p>
 </div>
 <div class="ui middle aligned center aligned grid">
     <!--悬浮框-->

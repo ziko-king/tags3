@@ -34,26 +34,6 @@ input.makeup {
     border: 1px solid #ccc;
 }
 
-/*         .second ul {  
-    position: absolute;  
-    top: 27px;  
-    border: 1px solid #999;  
-    left: 8px;  
-    width: 125px;  
-    line-height: 16px;  
-}  
-.ul li{  
-    list-style: none;  
-    width: 161px;  
-    left: 15px;  
-    margin-left: -40px;  
-    font-family: 寰蒋闆呴粦;  
-    padding-left: 4px;  
-}  
-.blue {   
-    background:#1e91ff;   
-}  */
-/**涓嬫媺鍒楄〃鐨勬彁绀�**/
 .typename_datatype {
     margin-top: 10px;
 }
@@ -108,7 +88,6 @@ input.makeup {
     margin-top: -3px;
 }
 
-/**涓氬姟鍚箟 鏍囩瑙勫垯 鏂囨湰妗� **/
 .type_wrap {
     margin: 5px 0 10px;
 }
@@ -130,13 +109,13 @@ input.makeup {
     color: #fff !important;
 }
 
-/*safari*/
+
 .safari_wrap {
-    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -webkit-box;
 }
 
 .safari_wrap_datatype {
-    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -webkit-box;
 }
 
 .taskmean {
@@ -167,7 +146,7 @@ input.makeup {
 }
 
 label.error {
-    color: red;
+    color: #0040ff;
     font-size: 12px;
     margin-left: 10px;
 }

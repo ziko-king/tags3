@@ -56,8 +56,8 @@
 
     <!-- 根据ID删除组合标签 -->
     <delete id="delMergeTagForId" parameterMap="BaseParamsMap">
-		DELETE 
-		FROM 
+		DELETE
+		FROM
 			tbl_merge_tag
 		WHERE id=#{id,jdbcType=BIGINT}
 	</delete>

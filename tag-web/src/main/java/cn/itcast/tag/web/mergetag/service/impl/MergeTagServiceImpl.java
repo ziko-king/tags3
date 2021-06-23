@@ -1,11 +1,5 @@
 package cn.itcast.tag.web.mergetag.service.impl;
 
-import cn.itcast.tag.web.basictag.mapper.BasicTagMapper;
-import cn.itcast.tag.web.commons.bean.Bean;
-import cn.itcast.tag.web.mergetag.bean.MergeTagBean;
-import cn.itcast.tag.web.mergetag.bean.MergeTagTagMapBean;
-import cn.itcast.tag.web.mergetag.bean.UserMergeTagMapBean;
-import cn.itcast.tag.web.mergetag.bean.form.UserMergeTagTagFormBean;
 import cn.itcast.tag.web.mergetag.mapper.MergeTagMapper;
 import cn.itcast.tag.web.mergetag.mapper.MergeTagTagMapMapper;
 import cn.itcast.tag.web.mergetag.mapper.UserMergeTagMapMapper;
@@ -14,8 +8,14 @@ import cn.itcast.tag.web.mergetag.service.MergeTagService;
 import cn.itcast.tag.web.user.bean.RoleBean;
 import cn.itcast.tag.web.user.bean.UserBean;
 import cn.itcast.tag.web.user.bean.UserRoleMapBean;
-import cn.itcast.tag.web.user.mapper.DataMapper;
 import cn.itcast.tag.web.user.service.MyShiro;
+import cn.itcast.tag.web.basictag.mapper.BasicTagMapper;
+import cn.itcast.tag.web.commons.bean.Bean;
+import cn.itcast.tag.web.mergetag.bean.MergeTagBean;
+import cn.itcast.tag.web.mergetag.bean.MergeTagTagMapBean;
+import cn.itcast.tag.web.mergetag.bean.UserMergeTagMapBean;
+import cn.itcast.tag.web.mergetag.bean.form.UserMergeTagTagFormBean;
+import cn.itcast.tag.web.user.mapper.DataMapper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;

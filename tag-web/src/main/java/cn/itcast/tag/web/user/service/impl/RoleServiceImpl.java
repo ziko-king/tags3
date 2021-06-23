@@ -57,7 +57,7 @@ public class RoleServiceImpl implements RoleService {
         return state > 0;
     }
 
-    // 更新userCache缓存  
+    // 更新userCache缓存
     @Override
     public Boolean updateRole(RoleBean bean) {
         int state = 0;

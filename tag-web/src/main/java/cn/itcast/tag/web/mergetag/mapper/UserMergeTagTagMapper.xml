@@ -121,7 +121,7 @@
 				INNER JOIN tbl_merge_tag_tag_map tb3 ON tb1.id = tb3.merge_tag_id
 				INNER JOIN tbl_basic_tag tb4 ON tb3.basic_tag_id = tb4.id
 			) tb
-		WHERE 1=1	
+		WHERE 1=1
 		AND tb.mergeTagId = #{mergeTagBean.id,jdbcType=BIGINT}
 	</select>
 

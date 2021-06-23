@@ -6,16 +6,16 @@
  */
 package cn.itcast.tag.web.system.controller;
 
-import cn.itcast.tag.web.commons.bean.Result;
-import cn.itcast.tag.web.commons.bean.StateCode;
-import cn.itcast.tag.web.commons.controller.BaseController;
 import cn.itcast.tag.web.user.bean.ResourceBean;
 import cn.itcast.tag.web.user.bean.RoleBean;
 import cn.itcast.tag.web.user.bean.RoleResMapBean;
 import cn.itcast.tag.web.user.bean.UserRoleMapBean;
+import cn.itcast.tag.web.user.service.*;
+import cn.itcast.tag.web.commons.bean.Result;
+import cn.itcast.tag.web.commons.bean.StateCode;
+import cn.itcast.tag.web.commons.controller.BaseController;
 import cn.itcast.tag.web.user.form.DataRes;
 import cn.itcast.tag.web.user.form.RoleResForm;
-import cn.itcast.tag.web.user.service.*;
 import cn.itcast.tag.web.utils.JsonUtil;
 import cn.itcast.tag.web.utils.UserUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -81,7 +81,7 @@ public class ResourceController extends BaseController {
             for (ResourceBean res : reses) {
 //                if(res.getPid() == -1 && res.getType() == 1) {
 //                    resources.add(new DataRes(res.getId(),res.getPid(),res.getName(),
-//                            "view","view", true,false)); 
+//                            "view","view", true,false));
 //                }else {
                 resources.add(new DataRes(res.getId(), res.getPid(), res.getName(),
                         "view", "add;del;edit;view", true, false));
@@ -134,7 +134,7 @@ public class ResourceController extends BaseController {
 //                    }
 //                    if(res.getPid()==-1) {
 //                        resources.add(new DataRes(res.getId(),res.getPid(),res.getName(),
-//                                "view","view", true,true)); 
+//                                "view","view", true,true));
 //                    }else {
                     resources.add(new DataRes(res.getId(), res.getPid(), res.getName(),
                             (res.getPermIds() != null ? res.getPermIds() : StringUtils.EMPTY),

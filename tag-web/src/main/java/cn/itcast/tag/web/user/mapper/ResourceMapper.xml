@@ -26,7 +26,7 @@
         <result column="ctime" property="ctime"/>
         <result column="utime" property="utime"/>
         <result column="remark" property="remark"/>
-        <!-- <collection property="children" ofType="com.mengyao.tag.user.bean.ResourceBean" 
+        <!-- <collection property="children" ofType="com.mengyao.tag.user.bean.ResourceBean"
             select="queryForPId" column="id">
         </collection> -->
     </resultMap>

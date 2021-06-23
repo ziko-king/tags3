@@ -22,12 +22,12 @@
         </if>
     </select>
 
-    <select id="queryForUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">  
-        select id,user_id,org_id,state,ctime,utime,remark from tbl_user_organization_map where user_id = #{id}  
+    <select id="queryForUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select id,user_id,org_id,state,ctime,utime,remark from tbl_user_organization_map where user_id = #{id}
     </select>
 
-    <select id="queryForOrgId" resultMap="BaseResultMap" parameterType="java.lang.Long">  
-        select id,user_id,org_id,state,ctime,utime,remark from tbl_user_organization_map where org_id = #{id}  
+    <select id="queryForOrgId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select id,user_id,org_id,state,ctime,utime,remark from tbl_user_organization_map where org_id = #{id}
     </select>
 
     <!-- 新增用户组织关联 -->

@@ -2,10 +2,10 @@ package cn.itcast.tag.web.api.inner.service.impl;
 
 import cn.itcast.tag.web.api.inner.bean.SearchTagUserBean;
 import cn.itcast.tag.web.api.inner.bean.SearchUserBean;
+import cn.itcast.tag.web.utils.MapToBeanUtil;
 import cn.itcast.tag.web.api.inner.service.InnerService;
 import cn.itcast.tag.web.utils.HBaseUtil;
 import cn.itcast.tag.web.utils.JsonUtil;
-import cn.itcast.tag.web.utils.MapToBeanUtil;
 import cn.itcast.tag.web.utils.SolrUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

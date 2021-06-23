@@ -17,7 +17,6 @@
     <meta name="format-detection" content="telephone=no"/>
     <!--忽略识别邮箱 -->
     <meta name="format-detection" content="email=no"/>
-    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
     <meta name="HandheldFriendly" content="true"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/res/lib/bootstrap3/css/bootstrap.css"/>
     <link href="${basePath}/res/lib/bootstrap3/css/bootstrap-table.css" rel="stylesheet" media="screen">
@@ -30,32 +29,12 @@
             top: 16px;
         }
 
-        /*.shu_name_img{
-            background: url('
-
-        ${basePath}
-
-                /res/imgs/hebing.png') no-repeat;
-                        }*/
-        .outlogin {
-            /* background: url('
-
-        ${basePath}  /res/imgs/outlogin.png') no-repeat 20px center; */
-        }
-
-        /*.gender2 {
-            background: #f5f5f5 url(
-
-        ${basePath}
-
-                /res/imgs/samllsj.png) no-repeat 0px;
-                        }*/
-        .drop_down::-webkit-scrollbar { /*滚动条整体样式*/
-            width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
+        .drop_down::-webkit-scrollbar {
+            width: 4px;
             height: 4px;
         }
 
-        .drop_down::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+        .drop_down::-webkit-scrollbar-thumb {
             border-radius: 5px;
             -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
             background: rgba(0, 0, 0, 0.2);

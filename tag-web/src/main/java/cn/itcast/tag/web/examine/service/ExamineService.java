@@ -1,8 +1,8 @@
 package cn.itcast.tag.web.examine.service;
 
-import cn.itcast.tag.web.basictag.bean.form.UserTagFormBean;
 import cn.itcast.tag.web.examine.bean.TagAuditBean;
 import cn.itcast.tag.web.mergetag.bean.UserMergeTagMapBean;
+import cn.itcast.tag.web.basictag.bean.form.UserTagFormBean;
 import cn.itcast.tag.web.search.bean.PageDTO;
 import cn.itcast.tag.web.search.bean.QueryDTO;
 

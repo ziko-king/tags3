@@ -1,5 +1,10 @@
 package cn.itcast.tag.web.mergetag.controller;
 
+import cn.itcast.tag.web.user.bean.RoleBean;
+import cn.itcast.tag.web.user.bean.UserBean;
+import cn.itcast.tag.web.user.bean.UserRoleMapBean;
+import cn.itcast.tag.web.user.service.MyShiro;
+import cn.itcast.tag.web.utils.PageEnum;
 import cn.itcast.tag.web.basictag.bean.BasicTagBean;
 import cn.itcast.tag.web.basictag.bean.form.BasicTagFormBean;
 import cn.itcast.tag.web.basictag.service.BasicTagService;
@@ -11,12 +16,7 @@ import cn.itcast.tag.web.mergetag.bean.MergeTagBean;
 import cn.itcast.tag.web.mergetag.bean.form.UserMergeTagTagFormBean;
 import cn.itcast.tag.web.mergetag.service.MergeTagService;
 import cn.itcast.tag.web.search.service.SearchService;
-import cn.itcast.tag.web.user.bean.RoleBean;
-import cn.itcast.tag.web.user.bean.UserBean;
-import cn.itcast.tag.web.user.bean.UserRoleMapBean;
-import cn.itcast.tag.web.user.service.MyShiro;
 import cn.itcast.tag.web.utils.JsonUtil;
-import cn.itcast.tag.web.utils.PageEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

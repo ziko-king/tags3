@@ -11,13 +11,9 @@
     <meta name="description" content="">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <!--优先使用 IE 最新版本和 Chrome -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <!--忽略数字自动识别为电话号码 -->
     <meta name="format-detection" content="telephone=no"/>
-    <!--忽略识别邮箱 -->
     <meta name="format-detection" content="email=no"/>
-    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
     <meta name="HandheldFriendly" content="true"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/res/lib/bootstrap3/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="${basePath}/res/commons/css/base.css"/>

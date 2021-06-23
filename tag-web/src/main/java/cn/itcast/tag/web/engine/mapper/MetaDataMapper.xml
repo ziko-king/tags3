@@ -75,9 +75,9 @@
 
     <!-- 根据ID删除元数据 -->
     <delete id="delMetaDataForId" parameterMap="BaseParamsMap">
-		DELETE FROM 
-			tbl_metadata 
-		WHERE 
+		DELETE FROM
+			tbl_metadata
+		WHERE
 			id=#{id,jdbcType=BIGINT}
 	</delete>
 

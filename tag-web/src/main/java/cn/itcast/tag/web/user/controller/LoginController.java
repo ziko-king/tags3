@@ -1,12 +1,12 @@
 package cn.itcast.tag.web.user.controller;
 
+import cn.itcast.tag.web.user.bean.ResourceBean;
+import cn.itcast.tag.web.user.bean.UserBean;
+import cn.itcast.tag.web.user.bean.UserRoleMapBean;
 import cn.itcast.tag.web.basictag.service.BasicTagService;
 import cn.itcast.tag.web.commons.bean.Result;
 import cn.itcast.tag.web.commons.bean.StateCode;
 import cn.itcast.tag.web.commons.controller.BaseController;
-import cn.itcast.tag.web.user.bean.ResourceBean;
-import cn.itcast.tag.web.user.bean.UserBean;
-import cn.itcast.tag.web.user.bean.UserRoleMapBean;
 import cn.itcast.tag.web.user.form.LoginForm;
 import cn.itcast.tag.web.user.service.UserService;
 import cn.itcast.tag.web.utils.JsonUtil;
@@ -67,24 +67,39 @@ public class LoginController extends BaseController {
         Result responseMsg = new Result();
         UserBean user = null;
         // 非空校验
+        System.out.println("000000");
+        System.out.println(form.getUsername()+"111"+form.getPassword());
+       if (form==null) System.out.println("yes");
+
         if (null == form || StringUtils.isBlank(form.getUsername()) || StringUtils.isBlank(form.getPassword())) {
+            System.out.println("111232131");
             responseMsg.set(StateCode.PARAM_NULL_FAILD, "参数输入错误");
             modelAndView.setViewName(PageEnum.LOGIN.getPage());
+
         } else {
             // 获取数据库中用户信息
+            System.out.println("111");
+
             logger.info("==== login@params:{} ====", form);
+            System.out.println("111.0");
+
             user = userService.login(new UserBean(form.getUsername(),
                     MD5Util.getMd5(form.getPassword() + UserUtil.ENCRYPTING_KEY)));
+            System.out.println("111.1");
+
             if (null == user) {
+                System.out.println("222");
                 responseMsg.set(StateCode.QUERY_ZERO_SUCCESS, "用户名或者密码错误");
                 modelAndView.setViewName(PageEnum.LOGIN.getPage());
                 logger.error(LOGIN_RESULT, responseMsg);
             } else if (user.getState() == 0 || null == user.getRoleMaps() || user.getRoleMaps().isEmpty()) {
+                System.out.println("333");
                 responseMsg.set(StateCode.RECORD_DISABLED, "用户没有权限或被禁用");
                 modelAndView.setViewName(PageEnum.LOGIN.getPage());
                 logger.error(LOGIN_RESULT, responseMsg);
             } else {
                 // 校验通过的处理
+                System.out.println("444");
                 return shiroLogin(user, form.getRememberMe() != null && form.getRememberMe().equals("true"), request);
             }
         }
@@ -107,7 +122,7 @@ public class LoginController extends BaseController {
             currentUser.login(token);// 验证角色和权限
         }
         if (currentUser.isAuthenticated()) {
-            // 登录成功 
+            // 登录成功
             Subject subject = SecurityUtils.getSubject();
             List<ResourceBean> resources = new ArrayList<>();
             if (subject.hasRole(UserUtil.RoleEnum.SUPPER_ADMIN.getStateInfo())) {
@@ -156,13 +171,6 @@ public class LoginController extends BaseController {
         }
     }
 
-    /**
-     * 登录校验
-     *
-     * @param pw
-     * @param loginUser
-     * @return
-     */
     @RequestMapping(value = "/loginChk")
     public ModelAndView loginChk(UserBean bean, HttpServletRequest request) {
         final ModelAndView modelAndView = new ModelAndView();

@@ -34,17 +34,17 @@
 
     <!-- 根据ID删除模型 -->
     <delete id="delModelForId" parameterMap="BaseParamsMap">
-		DELETE FROM 
+		DELETE FROM
 			tbl_model
-		WHERE 
+		WHERE
 			id=#{id,jdbcType=BIGINT}
 	</delete>
 
     <!-- 根据TagID删除模型 -->
     <delete id="delModelForTagId" parameterMap="BaseParamsMap">
-		DELETE FROM 
+		DELETE FROM
 			tbl_model
-		WHERE 
+		WHERE
 			tag_id=#{tagId,jdbcType=BIGINT}
 	</delete>
 
@@ -92,9 +92,9 @@
     <select id="get" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
 		SELECT
 			id,tag_id AS tagId,type,model_name AS modelName,model_main AS modelMain,model_path AS modelPath,sche_time AS scheTime,args,ctime,utime,state,remark
-		FROM 
-			tbl_model 
-		WHERE 
+		FROM
+			tbl_model
+		WHERE
 			tag_id=#{tagId,jdbcType=BIGINT}
 	</select>
 
@@ -102,9 +102,9 @@
     <select id="queryModelForTagId" parameterMap="BaseParamsMap" resultMap="BaseResultMap">
 		SELECT
 			id,tag_id AS tagId,type,model_name AS modelName,model_main AS modelMain,model_path AS modelPath,sche_time AS scheTime,ctime,utime,state,remark
-		FROM 
-			tbl_model 
-		WHERE 
+		FROM
+			tbl_model
+		WHERE
 			tag_id=#{tagId,jdbcType=BIGINT}
 	</select>
 

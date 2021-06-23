@@ -62,13 +62,13 @@
 }
 
 .failnum_wrap {
-    border-bottom: 1px solid #005fa5;
+    border-bottom: 1px solid #0b8eee;
     height: 28px;
     line-height: 28px;
 }
 
 .pusenum_wrap {
-    border-bottom: 1px solid #41af80;
+    border-bottom: 1px solid #11ee8f;
     height: 28px;
     line-height: 28px;
 }
@@ -491,12 +491,10 @@ tbody > tr > td .btn {
     color: #ff7165;
 }
 
-/**娑撳濯洪崚妤勩�冮惃鍕絹缁�锟�**/
 .typename_datatype {
-    /* margin-left:32px;*/
+
 }
 
-/**娑撴艾濮熼崥顐＄疅 閺嶅洨顒风憴鍕灟 閺傚洦婀板锟� **/
 .type_wrap {
     display: inline-flex;
 }
@@ -518,7 +516,7 @@ tbody > tr > td .btn {
 }
 
 .instruction_upload {
-    color: #999;
+    color: #262525;
     font-size: 12px;
     margin-left: 95px;
 }
@@ -534,7 +532,7 @@ tbody > tr > td .btn {
 }
 
 .cont_left_label {
-    background: #525c65
+    background: #070707
 }
 
 #treeDemo span {

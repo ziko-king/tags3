@@ -44,7 +44,7 @@
 				INNER JOIN tbl_rule tb3 ON tb1.id = tb3.tag_id
 			) tb
 		WHERE
-			1 = 1 
+			1 = 1
 		AND	tb.state != -1
 		AND tb.id = #{bean.tagId}
 	</select>
@@ -92,7 +92,7 @@
 				) tb4 ON tb1.id = tb4.tag_id
 			) tb
 		WHERE
-			1 = 1 
+			1 = 1
 		AND	tb.state != -1
 		AND tb.id = #{bean.tagId} -->
 

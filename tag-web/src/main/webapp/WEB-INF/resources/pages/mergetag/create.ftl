@@ -43,7 +43,6 @@
                 <!--S 左侧的动态的添加的树状列表-->
                 <div class="con_gr">
                     <div id="leftList" class="left_gr">
-                        <!-- <span class="set" data-toggle="modal" data-target="#setModal"><img src="${basePath}/res/imgs/set.png" alt="" style="width: 16px;height: 16px;margin-right: 5px;margin-left: 10px;margin-top: 0px;position: absolute;right: 12px;top:10px;display: block;"></span> -->
                         <#list basicTagList as levelOne>
                             <!-- 一级标签 -->
                             <div class="firstGr" style="transition: 0.5s;position: relative;">

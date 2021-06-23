@@ -7,7 +7,7 @@
     </property>
     <property>
         <name>dfs.namenode.secondary.http-address</name>
-        <value>bd001:50090</value>
+        <value>master:50090</value>
     </property>
     <property>
         <name>dfs.permissions.enabled</name>

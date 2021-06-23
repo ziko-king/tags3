@@ -1,9 +1,11 @@
-/*婵縿鍎甸鍐儍閸曨偆绌块悗纰夋嫹*/
+
 body {
     background: rgb(239, 245, 250);
+    background: url(../imgs/mic_bg.png) no-repeat;
+    background-size: 100% 100%;
 }
 
-/*缂佹鍏涚粩瀛樼▔椤忓拋鍔勫Δ鐙呮嫹*/
+
 .createusergroupguide_wrap {
     width: 100%;
     -ms-flex-align: center;
@@ -11,11 +13,11 @@ body {
     -webkit-box-align: center;
     align-items: center;
     height: 70px;
-    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox; /* TWEENER - IE 10 */
-    display: -webkit-flex; /* NEW - Chrome */
-    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
 
 }
 

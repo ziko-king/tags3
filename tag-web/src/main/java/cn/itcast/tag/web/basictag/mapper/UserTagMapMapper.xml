@@ -16,7 +16,7 @@
 
     <!-- 更新用户和基础标签关联表-->
     <insert id="insertUserTagMap">
-		INSERT INTO 
+		INSERT INTO
 		tbl_user_tag_map (
 			user_id,
 			tag_id,
@@ -27,10 +27,10 @@
 		)
 		VALUES
 		(
-			#{userId,jdbcType=INTEGER}, 
-			#{tagId,jdbcType=INTEGER}, 
-			#{state,jdbcType=INTEGER}, 
-			NOW(), 
+			#{userId,jdbcType=INTEGER},
+			#{tagId,jdbcType=INTEGER},
+			#{state,jdbcType=INTEGER},
+			NOW(),
 			NOW(),
 			#{remark,jdbcType=INTEGER}
 		)

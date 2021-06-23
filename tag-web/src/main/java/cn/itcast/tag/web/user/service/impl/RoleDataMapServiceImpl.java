@@ -7,8 +7,8 @@
 package cn.itcast.tag.web.user.service.impl;
 
 import cn.itcast.tag.web.user.bean.RoleDataMapBean;
-import cn.itcast.tag.web.user.mapper.RoleDataMapMapper;
 import cn.itcast.tag.web.user.service.RoleDataMapService;
+import cn.itcast.tag.web.user.mapper.RoleDataMapMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

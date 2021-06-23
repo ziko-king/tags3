@@ -1,6 +1,6 @@
 /***login CSS***/
 body {
-    background: url('../imgs/login_center.png') no-repeat;
+    background: url('../imgs/login_center_bak.gif') no-repeat;
     background-size: 100% 100%;
 }
 
@@ -113,8 +113,9 @@ body > .grid {
 }
 
 .login_title p {
-    line-height: 25px;
-    font-size: 18px;
+    line-height: 50px;
+    font-size: 50px;
     font-family: 宋体;
     font-weight: 500;
+    font-weight: bold;
 }

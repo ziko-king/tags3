@@ -13,15 +13,15 @@ import cn.itcast.tag.web.commons.controller.BaseController;
 import cn.itcast.tag.web.mergetag.bean.MergeTagBean;
 import cn.itcast.tag.web.user.bean.RoleBean;
 import cn.itcast.tag.web.user.bean.RoleDataMapBean;
+import cn.itcast.tag.web.user.service.MyShiro;
+import cn.itcast.tag.web.user.service.RoleDataMapService;
+import cn.itcast.tag.web.utils.JsonUtil;
 import cn.itcast.tag.web.user.form.DataTag;
 import cn.itcast.tag.web.user.form.PageBean;
 import cn.itcast.tag.web.user.form.RoleDataForm;
 import cn.itcast.tag.web.user.form.SystemForm;
 import cn.itcast.tag.web.user.service.DataService;
-import cn.itcast.tag.web.user.service.MyShiro.Principal;
-import cn.itcast.tag.web.user.service.RoleDataMapService;
 import cn.itcast.tag.web.user.service.RoleService;
-import cn.itcast.tag.web.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -218,7 +218,7 @@ public class RoleController extends BaseController {
             basicTags = dataService.getBasicTag();
             mergeTags = dataService.getMergeTag();
         } else {
-            Principal principal = (Principal) subject.getPrincipal();
+            MyShiro.Principal principal = (MyShiro.Principal) subject.getPrincipal();
             basicTags = dataService.getRoleBasicTag(principal.getRoleMaps().get(0).getRoleId());
             mergeTags = dataService.getRoleMergeTag(principal.getRoleMaps().get(0).getRoleId());
         }

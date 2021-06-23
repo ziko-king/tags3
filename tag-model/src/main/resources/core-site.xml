@@ -3,7 +3,7 @@
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://bd001:8020</value>
+        <value>hdfs://master:8020</value>
     </property>
     <property>
         <name>hadoop.tmp.dir</name>

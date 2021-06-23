@@ -1,8 +1,8 @@
 package cn.itcast.tag.web.mergetag.mapper;
 
+import cn.itcast.tag.web.user.bean.UserBean;
 import cn.itcast.tag.web.mergetag.bean.UserMergeTagMapBean;
 import cn.itcast.tag.web.mergetag.bean.form.UserMergeTagTagFormBean;
-import cn.itcast.tag.web.user.bean.UserBean;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

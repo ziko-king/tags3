@@ -1,11 +1,11 @@
 package cn.itcast.tag.web.home;
 
+import cn.itcast.tag.web.utils.PageEnum;
 import cn.itcast.tag.web.basictag.service.BasicTagService;
 import cn.itcast.tag.web.commons.bean.Result;
 import cn.itcast.tag.web.commons.bean.StateCode;
 import cn.itcast.tag.web.search.service.SearchService;
 import cn.itcast.tag.web.utils.JsonUtil;
-import cn.itcast.tag.web.utils.PageEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,7 +42,6 @@ public class HomeController {
     public void currentTagCount(PrintWriter pw) {
         Result result = new Result();
         try {
-//			Long count = basicTagService.queryTagCountByLevel(5);
             Long count = 5287L;
             result.set(StateCode.QUERY_SUCCESS, "查询成功", count);
         } catch (Exception e) {

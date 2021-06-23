@@ -1,10 +1,6 @@
 package cn.itcast.tag.web.api.inner.bean;
 
-/**
- * HBase用户bean
- *
- * @author 83717
- */
+
 public class SearchUserBean {
     /**
      * 身份证

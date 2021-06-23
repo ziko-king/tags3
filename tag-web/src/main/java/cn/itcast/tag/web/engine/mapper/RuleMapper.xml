@@ -30,9 +30,9 @@
 
     <!-- 根据ID删除规则 -->
     <delete id="delRuleForId" parameterMap="BaseParamsMap">
-		DELETE FROM 
+		DELETE FROM
 			tbl_rule
-		WHERE 
+		WHERE
 			id=#{id,jdbcType=BIGINT}
 	</delete>
 
